@@ -233,7 +233,7 @@ export default function App() {
               </div>
               <div className="flex flex-col gap-2 md:gap-3">
                 <h1 className="text-[52px] sm:text-[64px] md:text-[60px] lg:text-[84px] xl:text-[108px] font-bold tracking-tight text-white" style={{ lineHeight: 1.1 }}>
-                  Product<br />Designer1
+                  Product<br />Designer
                 </h1>
                 <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-white/50 tracking-wide">Senior UX/UI Designer</p>
               </div>
