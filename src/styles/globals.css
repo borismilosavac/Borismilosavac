@@ -1,0 +1,48 @@
+/* ─────────────────────────────────────────────
+   Hero section background animations
+   All durations are intentionally slow so the
+   motion reads as atmospheric rather than busy.
+───────────────────────────────────────────── */
+
+/* Aurora blob drifts — independent paths so blobs
+   never feel synchronised or repetitive           */
+@keyframes auroraDrift1 {
+  0%   { transform: translate(0px,   0px)  scale(1.00); }
+  20%  { transform: translate(70px, -55px) scale(1.07); }
+  45%  { transform: translate(110px, 30px) scale(0.96); }
+  70%  { transform: translate(-45px, 75px) scale(1.04); }
+  100% { transform: translate(0px,   0px)  scale(1.00); }
+}
+
+@keyframes auroraDrift2 {
+  0%   { transform: translate(0px,   0px)  scale(1.00); }
+  30%  { transform: translate(-80px, 50px) scale(1.06); }
+  55%  { transform: translate(50px, -70px) scale(0.93); }
+  80%  { transform: translate(30px,  40px) scale(1.02); }
+  100% { transform: translate(0px,   0px)  scale(1.00); }
+}
+
+@keyframes auroraDrift3 {
+  0%   { transform: translate(0px,  0px)  scale(1.00); }
+  35%  { transform: translate(60px, -50px) scale(1.12); }
+  65%  { transform: translate(-40px, 35px) scale(0.91); }
+  100% { transform: translate(0px,  0px)  scale(1.00); }
+}
+
+/* Constellation star twinkle — fade + micro-scale */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.06; transform: scale(0.85); }
+  50%       { opacity: 0.55; transform: scale(1.55); }
+}
+
+/* Grain texture gentle pulse */
+@keyframes grainBreathe {
+  0%, 100% { opacity: 0.022; }
+  50%       { opacity: 0.048; }
+}
+
+/* Slow orbit for the faint mesh ring */
+@keyframes meshOrbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}

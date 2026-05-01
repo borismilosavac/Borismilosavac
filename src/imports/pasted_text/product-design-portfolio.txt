@@ -1,0 +1,969 @@
+# MASTER PROMPT
+# PRODUCT DESIGN PORTFOLIO FOR MUNICH JOB MARKET
+# FIGMA MAKE / FIGMA PORTFOLIO PDF SYSTEM
+
+## 0. MAIN GOAL
+
+Create a premium, modern, recruiter-ready Product Design portfolio in Figma.
+
+The portfolio will be exported as a PDF and later adapted into a public Behance / online portfolio.
+
+The portfolio is for a Munich-based candidate applying for:
+
+- Product Designer
+- Senior UX/UI Designer
+- UX/UI Designer
+- Digital Product Designer
+- SaaS Product Designer
+- E-commerce UX/UI Designer
+- Design Systems / Figma-oriented Designer
+
+The portfolio must help compensate for the fact that the candidate does not have a university degree, does not currently have UX certificates, and does not have formal references.
+
+Do not mention the lack of degree directly in the portfolio.
+Instead, make the work, projects, process, systems thinking and real product experience strong enough to reduce that concern.
+
+The portfolio must communicate:
+
+“Munich-based Product Designer / Senior UX/UI Designer with 14+ years of hands-on digital design experience across SaaS platforms, e-commerce systems, Figma design systems, accessibility-aware UI and AI-assisted workflows.”
+
+---
+
+## 1. CANDIDATE POSITIONING
+
+Use the following positioning throughout the portfolio:
+
+Primary title:
+
+Product Designer / Senior UX/UI Designer
+
+Specialization:
+
+SaaS · E-commerce · Figma Design Systems · Accessibility · AI-assisted Workflows
+
+Candidate facts:
+
+- Based in Munich, Germany
+- Authorized to work in Germany
+- Fluent in English
+- Actively learning German
+- Digital design experience since 2010
+- Focused on practical, business-ready web and mobile product experiences
+- Strong in UX/UI, Figma, design systems, responsive design, e-commerce UX, SaaS flows and AI-assisted prototyping
+
+Tone:
+
+- professional
+- clear
+- senior
+- precise
+- calm
+- premium
+- no hype
+- no generic motivational language
+- no fake metrics
+- no exaggerated claims
+
+---
+
+## 2. OUTPUT FORMAT
+
+Create a Figma portfolio deck optimized for PDF export.
+
+Format:
+
+- Landscape 16:9
+- Frame size: 1920 × 1080 px
+- Total pages: 18
+- Language: English
+- Export target: PDF under 10–15 MB
+- Must be readable on laptop and tablet
+- Text must be clear and not too small
+- Use clickable link placeholders for LinkedIn, Behance, email and portfolio
+
+Create all pages as separate named frames.
+
+Frame naming:
+
+01_Cover
+02_Profile_Snapshot
+03_Skills_Positioning
+04_ZgradaPlus_Overview
+05_ZgradaPlus_Problem_Users
+06_ZgradaPlus_Key_Flows
+07_ZgradaPlus_Final_UI
+08_ZgradaPlus_System_Accessibility
+09_StockLog_Overview
+10_StockLog_Workflow_Dashboard
+11_StockLog_Key_Screens
+12_StockLog_Decisions_Outcome
+13_WineRoom_Overview
+14_WineRoom_Ecommerce_UX
+15_WineRoom_Mobile_Filtering
+16_AI_Assisted_Workflow
+17_Design_System_Snapshot
+18_Contact_Links
+
+Also create these support pages:
+
+19_Components
+20_Styles_Tokens
+21_Export_Checklist
+
+---
+
+## 3. VISUAL STYLE
+
+Create a premium product design portfolio, not a decorative Behance poster.
+
+Visual direction:
+
+- clean
+- minimal
+- high-end
+- structured
+- generous whitespace
+- strong grid
+- modern SaaS/product aesthetic
+- strong visual hierarchy
+- calm confidence
+- suitable for Munich / German / international product companies
+
+Avoid:
+
+- overly decorative gradients
+- fake 3D objects
+- loud colors
+- childish illustrations
+- huge walls of text
+- generic design thinking diagrams
+- fake numbers
+- visual clutter
+- too many different styles
+
+Recommended typography:
+
+Use a clean modern sans-serif such as:
+
+- Inter
+- Satoshi
+- Manrope
+- Neue Haas Grotesk style
+
+Typography system:
+
+- H1: 64–76 px
+- H2: 40–48 px
+- H3: 28–32 px
+- Body: 20–24 px
+- Small captions: 16–18 px
+- Line height: 125–145%
+
+Color system:
+
+- Background: #F8F9FB or #FFFFFF
+- Primary text: #111827
+- Secondary text: #4B5563
+- Muted text: #6B7280
+- Border: #E5E7EB
+- Accent: #2563EB or #2A6EF3
+- Dark section background: #0F172A
+- Light card background: #FFFFFF
+- Subtle surface: #F3F4F6
+
+Accessibility:
+
+- Maintain strong contrast
+- Do not place small text on busy images
+- Use color + label, not color alone
+- Keep spacing clear
+- Use readable sizes for PDF
+
+---
+
+## 4. LAYOUT SYSTEM
+
+Use a consistent grid:
+
+- 12-column layout
+- 96 px outer margin
+- 32 px gutter
+- Large hero visual zones
+- Cards with soft border
+- Minimal rounded corners, 16–24 px
+- Very subtle shadows only if needed
+- Consistent section labels and project tags
+
+Create reusable components:
+
+1. Case Header
+2. Problem Card
+3. Role Card
+4. Decision Block
+5. Flow Step
+6. Outcome Card
+7. Skill Tag
+8. Screen Mockup Frame
+9. Mobile Mockup Frame
+10. Desktop Mockup Frame
+11. Project Meta Card
+12. Accessibility Note
+13. AI Workflow Step
+14. Contact Card
+
+---
+
+## 5. PORTFOLIO NARRATIVE
+
+The portfolio must tell this story:
+
+1. The candidate is based in Munich and ready for the local market.
+2. The candidate has long hands-on experience, not just academic background.
+3. The candidate can handle complex SaaS and operational systems.
+4. The candidate can improve real e-commerce UX.
+5. The candidate works with Figma, design systems and accessibility.
+6. The candidate understands modern AI-assisted workflows.
+7. The candidate is practical, structured and product-focused.
+
+The portfolio must not feel like a collection of random visuals.
+
+Every page must answer one question:
+
+“Why should a recruiter or design lead invite this candidate to an interview?”
+
+---
+
+## 6. PAGE-BY-PAGE CONTENT
+
+### PAGE 01 — COVER
+
+Create a clean premium cover.
+
+Text:
+
+Product Designer / Senior UX/UI Designer
+
+Subtitle:
+
+SaaS · E-commerce · Figma Design Systems · Accessibility · AI-assisted Workflows
+
+Supporting line:
+
+Munich-based designer with 14+ years of hands-on digital design experience.
+
+Add placeholders:
+
+- Name: [Candidate Name]
+- Location: Munich, Germany
+- Email: [Email]
+- LinkedIn: [LinkedIn URL]
+- Portfolio: [Portfolio URL]
+
+Visual:
+
+- abstract clean product interface composition
+- 2–3 blurred UI cards or mockup fragments
+- no generic stock photo
+- no human portrait unless provided
+
+---
+
+### PAGE 02 — PROFILE SNAPSHOT
+
+Goal: explain who the candidate is in 30 seconds.
+
+Headline:
+
+Designing clear, scalable and business-ready digital product experiences.
+
+Body:
+
+I am a Munich-based Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience in digital design. My work focuses on SaaS platforms, e-commerce systems, responsive web/mobile interfaces, Figma-based design systems and AI-assisted prototyping workflows.
+
+Info cards:
+
+- Based in Munich
+- Authorized to work in Germany
+- English fluent
+- Actively learning German
+- Digital design experience since 2010
+- Open to onsite, hybrid and remote roles in Munich
+
+Use a clean card layout.
+
+---
+
+### PAGE 03 — SKILLS & POSITIONING
+
+Goal: show market fit for Munich UX/UI/Product roles.
+
+Create a structured skills map.
+
+Sections:
+
+1. Product & UX
+- User flows
+- Information architecture
+- Wireframing
+- Prototyping
+- Dashboard UX
+- Multi-role systems
+- Responsive design
+
+2. UI & Design Systems
+- Figma
+- Figma components
+- Design systems
+- Typography
+- Layout systems
+- Forms and states
+- Accessibility-aware UI
+
+3. Business Context
+- SaaS platforms
+- E-commerce UX
+- WooCommerce
+- Product listing
+- Filtering and search
+- Operational dashboards
+- Conversion clarity
+
+4. AI-assisted Workflow
+- Figma Make
+- Structured prompts
+- AI-assisted ideation
+- Rapid prototype exploration
+- Human-led design decisions
+
+Add short positioning statement:
+
+I combine UX structure, visual clarity, reusable UI systems and modern AI-assisted workflows to turn complex product requirements into clear digital experiences.
+
+---
+
+## 7. CASE STUDY 1 — ZGRADA PLUS
+
+Project type:
+
+SaaS platform / property management / multi-role web and mobile product
+
+Portfolio role:
+
+Main flagship SaaS case.
+
+Known facts:
+
+- Real project
+- Complex SaaS platform
+- Building management platform
+- Multiple user roles: resident, building manager, service partner, admin
+- Web and mobile experience
+- Onboarding flows
+- Dashboard logic
+- Announcements
+- Issue reporting
+- Documents/resources
+- Freemium/premium logic
+- Accessibility focus
+- WCAG 2.1 AA mindset
+- UntitledUI used as reference design system
+- Mobile-first approach
+
+Main message:
+
+I can structure complex SaaS platforms with multiple user roles into clear, accessible and scalable web/mobile product experiences.
+
+---
+
+### PAGE 04 — ZGRADA PLUS OVERVIEW
+
+Headline:
+
+Zgrada Plus — Multi-role SaaS platform for building management
+
+Subheadline:
+
+A web and mobile platform designed to make building communication, issue reporting, documents and management workflows clearer for residents, managers and service partners.
+
+Project meta cards:
+
+- Type: SaaS / Property Management
+- Platform: Web + Mobile
+- Role: UX/UI Design, Product Structure, User Flows, UI System
+- Focus: Multi-role UX, Dashboard, Mobile-first, Accessibility
+- Status: Real project
+
+Visual:
+
+- large dashboard mockup placeholder
+- smaller mobile screen placeholders
+- tags: SaaS, UX/UI, Dashboard, Mobile, Accessibility, Design System
+
+---
+
+### PAGE 05 — ZGRADA PLUS PROBLEM & USERS
+
+Headline:
+
+The challenge: one product, multiple user roles, different levels of digital confidence.
+
+Problem text:
+
+The platform needed to support different user groups with different needs, devices and digital confidence levels. Residents needed simple communication and issue reporting. Building managers needed control, overview and operational speed. Partners needed clear task handling and context.
+
+User cards:
+
+1. Resident
+Needs: simple updates, issue reporting, document access
+Risk: low digital confidence, mobile-first usage
+
+2. Building Manager
+Needs: overview, communication, building data, issue coordination
+Risk: workflow overload
+
+3. Service Partner
+Needs: assigned tasks, status updates, clear job context
+Risk: missing information and unclear responsibility
+
+4. Admin
+Needs: moderation, approvals, role management
+Risk: system complexity
+
+Add design challenge:
+
+Make complex building operations feel simple, clear and accessible.
+
+---
+
+### PAGE 06 — ZGRADA PLUS KEY FLOWS
+
+Headline:
+
+Key flows were designed around role clarity and task completion.
+
+Show 3–4 simplified flow diagrams:
+
+1. Onboarding and role selection
+2. Resident issue reporting
+3. Building manager announcement
+4. Partner task handling
+5. Document/resource access
+
+Use flow cards with arrows and small UI placeholders.
+
+Design decisions:
+
+- Split flows by user role
+- Keep mobile screens focused on one primary action
+- Use clear status labels
+- Reduce cognitive load for low digital confidence users
+- Separate premium controls without blocking basic usability
+- Use accessible contrast and predictable form patterns
+
+---
+
+### PAGE 07 — ZGRADA PLUS FINAL UI
+
+Headline:
+
+Final UI: clear dashboards, focused mobile flows and role-based actions.
+
+Visual layout:
+
+- large web dashboard mockup
+- 3 mobile screens
+- one role-based navigation example
+- one announcement or issue reporting example
+
+Caption examples:
+
+- Dashboard designed for overview and prioritization
+- Mobile issue reporting optimized for fast completion
+- Role-based navigation reduces irrelevant options
+- Clear status badges support quick scanning
+
+Do not overload the page with text.
+
+---
+
+### PAGE 08 — ZGRADA PLUS SYSTEM & ACCESSIBILITY
+
+Headline:
+
+A scalable UI system designed for clarity, consistency and accessibility.
+
+Show:
+
+- component samples
+- buttons
+- forms
+- cards
+- badges
+- status states
+- empty states
+- notification cards
+- mobile form components
+
+Accessibility notes:
+
+- WCAG 2.1 AA mindset
+- High contrast text and actions
+- Clear focus states
+- Readable typography
+- Redundant color + label status indicators
+- Mobile-friendly tap targets
+- Simple language for low digital confidence users
+
+Outcome text:
+
+The design system makes the product easier to scale across roles, modules and platforms while keeping the experience consistent and accessible.
+
+---
+
+## 8. CASE STUDY 2 — STOCKLOG
+
+Important:
+
+StockLog project details are not fully clarified yet. Do not invent specific business data or metrics.
+
+Project type:
+
+Potential B2B SaaS / logistics / inventory / stock management / dashboard-heavy operational product.
+
+Portfolio role:
+
+Potential second flagship case, depending on available screens and real workflow details.
+
+Use placeholder sections where real data is missing.
+
+Main message:
+
+I can design operational dashboards and workflow-heavy tools where clarity, status logic and task speed are critical.
+
+---
+
+### PAGE 09 — STOCKLOG OVERVIEW
+
+Headline:
+
+StockLog — Operational dashboard and workflow system
+
+Subheadline:
+
+A product interface concept / project focused on inventory, logistics or stock-related workflows, designed to improve clarity, task speed and operational control.
+
+Add label:
+
+Requires project clarification before final publication.
+
+Project meta placeholders:
+
+- Type: [SaaS / Internal Tool / Logistics / Inventory]
+- Platform: [Web / Mobile / Dashboard]
+- Role: [UX/UI Design / Product Structure / Dashboard Design]
+- Users: [Operations team / warehouse staff / managers / admins]
+- Status: [Real project / prototype / internal tool]
+
+Visual:
+
+- dashboard placeholder
+- table/list interface placeholder
+- status card placeholder
+- filters/search placeholder
+
+---
+
+### PAGE 10 — STOCKLOG WORKFLOW & DASHBOARD LOGIC
+
+Headline:
+
+Operational tools need fast scanning, clear status logic and low-friction actions.
+
+Create a generic but editable dashboard logic structure:
+
+- Overview metrics
+- Inventory or item table
+- Status indicators
+- Search and filters
+- Item details
+- Action history
+- Alerts or exceptions
+- User roles / permissions if applicable
+
+Design decisions:
+
+- Prioritize status visibility
+- Make search and filtering central
+- Reduce unnecessary clicks
+- Use tables only where they support decision-making
+- Keep primary actions visible
+- Separate overview from detailed item handling
+
+Mark all specific labels as placeholders until real project details are added.
+
+---
+
+### PAGE 11 — STOCKLOG KEY SCREENS
+
+Headline:
+
+Key interface areas
+
+Create placeholders for:
+
+1. Dashboard overview
+2. Item / stock list
+3. Detail view
+4. Status or activity log
+5. Filter/search system
+6. Mobile or compact view if available
+
+Use caption placeholders:
+
+- [Explain what this screen helps the user do]
+- [Explain the main UX decision]
+- [Explain the business or operational value]
+
+---
+
+### PAGE 12 — STOCKLOG DECISIONS & OUTCOME
+
+Headline:
+
+Design focus: clarity, control and faster operational decisions.
+
+Create decision cards:
+
+1. Dashboard hierarchy
+2. Status visibility
+3. Filtering and search
+4. Error prevention
+5. Scalable information structure
+
+Outcome placeholder:
+
+The final version should explain how the interface improves task clarity, reduces operational friction or supports faster decision-making. Do not use metrics unless real data exists.
+
+Add note:
+
+Final case content requires real project details, screenshots and confirmed user/workflow context.
+
+---
+
+## 9. CASE STUDY 3 — WINEROOM
+
+Project type:
+
+E-commerce / WooCommerce / online wine shop
+
+Portfolio role:
+
+Real e-commerce UX/UI proof.
+
+Known facts:
+
+- Real active web shop
+- WineRoom.ba
+- WooCommerce / WordPress
+- Product listing optimization
+- Filters
+- Sorting
+- FiboSearch
+- Mobile toolbar
+- Responsive layout
+- PHP/CSS customization
+- BeRocket filter UI
+- Product attributes and product layout
+- Mobile-first improvements
+
+Main message:
+
+I can improve e-commerce usability through clearer product browsing, filtering, search and responsive shopping flows.
+
+---
+
+### PAGE 13 — WINEROOM OVERVIEW
+
+Headline:
+
+WineRoom — E-commerce UX/UI optimization for an online wine shop
+
+Subheadline:
+
+A WooCommerce-based e-commerce project focused on improving product browsing, filtering, search and responsive shopping experience.
+
+Project meta cards:
+
+- Type: E-commerce / WooCommerce
+- Platform: Web + Mobile
+- Role: UX/UI Optimization, Layout, Product Listing, Front-end Collaboration
+- Focus: Product discovery, filters, search, responsive toolbar
+- Status: Real active project
+
+Visual:
+
+- product listing mockup
+- mobile browsing mockup
+- filter sidebar or mobile filter drawer
+- product card examples
+
+---
+
+### PAGE 14 — WINEROOM E-COMMERCE UX
+
+Headline:
+
+The main UX challenge was helping users find the right wine faster.
+
+Show:
+
+- product listing area
+- filters
+- sorting
+- search
+- product card structure
+- product attributes
+
+Design decisions:
+
+- Make filtering more visible and easier to access
+- Improve product listing hierarchy
+- Support faster search through FiboSearch
+- Keep product cards scannable
+- Improve mobile access to sorting and filters
+- Reduce friction in product discovery
+
+Caption:
+
+For e-commerce, clarity in browsing and filtering directly affects user confidence and shopping flow.
+
+---
+
+### PAGE 15 — WINEROOM MOBILE FILTERING
+
+Headline:
+
+Mobile-first toolbar for filtering, sorting and search.
+
+Show:
+
+- mobile toolbar
+- filter button
+- sort button
+- search button
+- product grid
+- responsive layout example
+
+Technical/context notes:
+
+- WooCommerce environment
+- PHP/CSS customization
+- BeRocket filter UI
+- FiboSearch integration
+- Responsive product listing behavior
+
+Outcome text:
+
+The redesigned mobile browsing structure makes product discovery clearer and more accessible on smaller screens.
+
+Do not claim conversion improvement unless real data exists.
+
+---
+
+## 10. AI-ASSISTED WORKFLOW
+
+### PAGE 16 — AI-ASSISTED WORKFLOW
+
+Headline:
+
+AI-assisted workflows for faster ideation, prototyping and product exploration.
+
+Subheadline:
+
+I use AI as a workflow accelerator, not as a replacement for design judgment.
+
+Create a visual process:
+
+1. Product problem
+2. Structured prompt
+3. Wireframe exploration
+4. Figma Make prototype
+5. Human design review
+6. UI refinement
+7. Accessibility and consistency check
+8. Final product-ready design
+
+Text:
+
+AI-assisted workflows help me explore directions faster, test interface structures earlier and move from idea to prototype more efficiently. Final decisions remain human-led, based on product goals, usability, consistency and accessibility.
+
+Show:
+
+- prompt card
+- wireframe preview
+- prototype preview
+- final UI preview
+- decision checklist
+
+Avoid hype language like “revolutionary” or “fully automated design”.
+
+---
+
+## 11. DESIGN SYSTEM SNAPSHOT
+
+### PAGE 17 — DESIGN SYSTEM SNAPSHOT
+
+Headline:
+
+Reusable UI systems for scalable product design.
+
+Subheadline:
+
+I design screens and the systems behind them.
+
+Show:
+
+- colors
+- typography
+- spacing scale
+- buttons
+- inputs
+- cards
+- badges
+- modals
+- empty states
+- error states
+- mobile components
+- accessibility notes
+
+Use labels:
+
+- Components
+- States
+- Tokens
+- Patterns
+- Accessibility
+- Responsive behavior
+
+Text:
+
+A strong UI system reduces inconsistency, speeds up iteration and makes products easier to scale across screens, roles and platforms.
+
+---
+
+## 12. CONTACT PAGE
+
+### PAGE 18 — CONTACT & LINKS
+
+Headline:
+
+Let’s build clearer digital product experiences.
+
+Body:
+
+Product Designer / Senior UX/UI Designer based in Munich, focused on SaaS, e-commerce, Figma design systems, accessibility and AI-assisted workflows.
+
+Contact placeholders:
+
+- Name: [Candidate Name]
+- Location: Munich, Germany
+- Email: [Email]
+- Phone: [Phone]
+- LinkedIn: [LinkedIn URL]
+- Behance / Portfolio: [Portfolio URL]
+- Figma prototype: [Optional Figma link]
+
+Add availability line:
+
+Available for Product Designer, Senior UX/UI Designer and UX/UI Designer roles in Munich — onsite, hybrid or remote.
+
+---
+
+## 13. WRITING RULES
+
+Keep all copy concise.
+
+Rules:
+
+- No large paragraphs
+- No fake metrics
+- No generic “passionate designer” language
+- No “I don’t have a degree” explanation
+- No invented StockLog details
+- Use real project evidence
+- Use clear project context
+- Emphasize decisions, not just visuals
+- Every screen must have a purpose
+- Use captions to explain why the design matters
+
+Use this writing style:
+
+- simple
+- confident
+- precise
+- professional
+- human
+- senior
+- practical
+
+---
+
+## 14. PDF EXPORT RULES
+
+Prepare the deck for PDF export.
+
+Checklist:
+
+- All pages are 1920 × 1080
+- Text is readable
+- Links are visible
+- Contact info is easy to find
+- No text smaller than 16 px
+- Images are optimized
+- File size target below 10–15 MB
+- Every project has a clear role and purpose
+- The first 3 pages explain the candidate quickly
+- The case studies prove real product design experience
+- The final page makes contact easy
+
+---
+
+## 15. QUALITY TESTS
+
+The portfolio must pass these tests:
+
+1. Recruiter scan test:
+A recruiter must understand the candidate in 30 seconds.
+
+2. Design lead test:
+A design lead must see product thinking, UX decisions and system thinking.
+
+3. No-degree compensation test:
+The portfolio must make practical experience stronger than academic absence.
+
+4. Munich market test:
+The portfolio must fit English-speaking UX/UI/Product roles in Munich.
+
+5. PDF usability test:
+The portfolio must be easy to open, read, share and export.
+
+6. Senior clarity test:
+The portfolio must feel like the work of an experienced designer, not a junior visual gallery.
+
+---
+
+## 16. FINAL DELIVERABLE
+
+Create a complete Figma portfolio deck with:
+
+- 18 final portfolio pages
+- clean visual system
+- reusable components
+- project case study layouts
+- placeholder areas for real screenshots
+- editable text
+- PDF export-ready structure
+- professional English copy
+- consistent product design narrative
+
+The final portfolio must feel like a premium Product Design / Senior UX/UI portfolio built for Munich-based job applications.
