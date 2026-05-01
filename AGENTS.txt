@@ -1,1 +1,33 @@
+# AGENTS.md
 
+## Project
+This is a personal UX/UI portfolio website exported from Figma Make and deployed through Vercel.
+
+## Tech stack
+- React
+- Vite
+- TypeScript if present
+- Tailwind CSS if present
+- Vercel deployment
+- GitHub as source of truth
+
+## Rules
+- Do not push directly to main.
+- Always create a separate branch and pull request.
+- Preserve the existing visual direction unless the task explicitly asks for redesign.
+- Keep the site responsive across mobile, tablet, and desktop.
+- Do not remove existing content unless requested.
+- Do not invent portfolio metrics, case study numbers, client names, or fake results.
+- Keep accessibility in mind: readable contrast, keyboard-safe interactions, semantic HTML where possible.
+- Before changing structure, inspect existing files and explain the plan.
+- After code changes, run or assume the required build command: npm run build.
+- If build errors appear, fix them before opening a pull request.
+
+## Review focus
+- Broken routes
+- Missing assets
+- Mobile layout issues
+- Bad spacing
+- Inconsistent typography
+- Accessibility regressions
+- Unused or broken imports
