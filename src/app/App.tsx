@@ -65,6 +65,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [navTheme, setNavTheme] = useState<'dark' | 'light'>('dark');
   const [navBg, setNavBg] = useState<string>('#080C14');
+  const [mobileNavVisible, setMobileNavVisible] = useState(true);
 
   const hexToRgba = (hex: string, alpha: number) => {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -108,15 +109,44 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    let lastY = window.scrollY;
+
+    const updateMobileNav = () => {
+      const currentY = window.scrollY;
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      const delta = currentY - lastY;
+
+      if (!isMobile || menuOpen || currentY < 16) {
+        setMobileNavVisible(true);
+      } else if (delta > 8) {
+        setMobileNavVisible(false);
+      } else if (delta < -8) {
+        setMobileNavVisible(true);
+      }
+
+      lastY = currentY;
+    };
+
+    window.addEventListener('scroll', updateMobileNav, { passive: true });
+    window.addEventListener('resize', updateMobileNav);
+    updateMobileNav();
+
+    return () => {
+      window.removeEventListener('scroll', updateMobileNav);
+      window.removeEventListener('resize', updateMobileNav);
+    };
+  }, [menuOpen]);
+
   return (
     <div className="min-h-screen bg-[#F8F9FB] overflow-x-hidden">
 
       {/* ── NAV ─────────────────────────────────────────────────────── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b ${navTheme === 'dark' ? 'border-white/[0.08]' : 'border-black/[0.06]'}`}
+        className={`fixed top-0 left-0 right-0 z-50 transform-gpu backdrop-blur-xl border-b ${mobileNavVisible ? 'translate-y-0' : '-translate-y-full md:translate-y-0'} ${navTheme === 'dark' ? 'border-white/[0.08]' : 'border-black/[0.06]'}`}
         style={{
           backgroundColor: hexToRgba(navBg, navTheme === 'dark' ? 0.72 : 0.88),
-          transition: 'background-color 500ms ease, border-color 500ms ease',
+          transition: 'background-color 500ms ease, border-color 500ms ease, transform 260ms ease',
         }}
       >
           <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-2 md:py-4 flex items-center justify-between">
