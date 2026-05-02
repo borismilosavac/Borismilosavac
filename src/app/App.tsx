@@ -2,6 +2,54 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Linkedin, Mail, Globe, ChevronDown, MapPin, Check, Globe2, Calendar, Briefcase, ArrowRight, Download } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 
+type Hotspot = {
+  n: string;
+  pos: string;
+  tip: string;
+  title: string;
+  desc: string;
+};
+
+function PhotoHotspot({
+  hotspot,
+  colorClass,
+  tooltipClass = 'w-44 sm:w-52',
+}: {
+  hotspot: Hotspot;
+  colorClass: string;
+  tooltipClass?: string;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      className={`absolute ${hotspot.pos} group`}
+      onBlur={(event) => {
+        const nextFocus = event.relatedTarget as Node | null;
+        if (!nextFocus || !event.currentTarget.contains(nextFocus)) {
+          setOpen(false);
+        }
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-label={`Show annotation: ${hotspot.title}`}
+        onClick={() => setOpen((current) => !current)}
+        className={`w-9 h-9 sm:w-8 sm:h-8 rounded-full ${colorClass} border-2 border-white flex items-center justify-center text-white text-sm font-bold cursor-pointer hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/90 focus:ring-offset-2 focus:ring-offset-transparent transition-transform`}
+      >
+        {hotspot.n}
+      </button>
+      <div
+        className={`absolute ${hotspot.tip} ${tooltipClass} max-w-[calc(100vw-3rem)] bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl ${open ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity pointer-events-none z-10`}
+      >
+        <div className="text-xs font-semibold text-[#0F172A] mb-1">{hotspot.title}</div>
+        <div className="text-xs text-[#64748B]">{hotspot.desc}</div>
+      </div>
+    </div>
+  );
+}
+
 /**
  * ═══════════════════════════════════════════════════════════════════
  *  UNIFIED COLOR SYSTEM — 2026 Portfolio
@@ -435,13 +483,7 @@ export default function App() {
               { n: '1', pos: 'top-6 sm:top-12 left-6 sm:left-12', tip: 'top-0 left-10 sm:left-12', title: 'Dashboard Structure', desc: 'Two-board system: Inventory + Performance' },
               { n: '2', pos: 'top-1/3 right-6 sm:right-12', tip: 'top-0 right-10 sm:right-12', title: 'Real-Time Updates', desc: 'Notifications for inventory changes & assignments' },
             ].map((h) => (
-              <div key={h.n} className={`absolute ${h.pos} group`}>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#3B82F6] border-2 border-white flex items-center justify-center text-white text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 transition-transform">{h.n}</div>
-                <div className={`absolute ${h.tip} w-44 sm:w-52 bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10`}>
-                  <div className="text-xs font-semibold text-[#0F172A] mb-1">{h.title}</div>
-                  <div className="text-xs text-[#64748B]">{h.desc}</div>
-                </div>
-              </div>
+              <PhotoHotspot key={h.n} hotspot={h} colorClass="bg-[#3B82F6]" />
             ))}
             <div className="absolute bottom-16 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8">
               <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -593,17 +635,11 @@ export default function App() {
               { n: '3', pos: 'bottom-20 sm:bottom-24 left-1/3',    tip: 'bottom-10 sm:bottom-12 left-0', title: 'Vehicle Cards', desc: 'VIN, price, status, salesperson assignment' },
               { n: '4', pos: 'top-1/2 left-6 sm:left-8',           tip: 'top-0 left-10 sm:left-12',  title: 'Role Permissions', desc: 'Control access to sensitive dealership data' },
             ].map((h) => (
-              <div key={h.n} className={`absolute ${h.pos} group`}>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#3B82F6] border-2 border-white flex items-center justify-center text-white text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 transition-transform">{h.n}</div>
-                <div className={`absolute ${h.tip} w-40 sm:w-48 bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10`}>
-                  <div className="text-xs font-semibold text-[#0F172A] mb-1">{h.title}</div>
-                  <div className="text-xs text-[#64748B]">{h.desc}</div>
-                </div>
-              </div>
+              <PhotoHotspot key={h.n} hotspot={h} colorClass="bg-[#3B82F6]" tooltipClass="w-40 sm:w-48" />
             ))}
             <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 text-white">
               <div className="text-base sm:text-xl font-medium">Board layout with vehicle cards, filters and real-time status</div>
-              <div className="text-xs sm:text-sm mt-1 sm:mt-2 text-[#8BA4BE]">Hover over numbered annotations for UX insights</div>
+              <div className="text-xs sm:text-sm mt-1 sm:mt-2 text-[#8BA4BE]">Tap or hover numbered annotations for UX insights</div>
             </div>
           </div>
         </div>
@@ -693,17 +729,11 @@ export default function App() {
               { n: '2', pos: 'top-1/3 right-6 sm:right-8',         tip: 'top-0 right-10 sm:right-12',  title: 'Mobile-First Resident UX',  desc: 'Issue reporting, announcements, financial overview' },
               { n: '3', pos: 'bottom-20 sm:bottom-24 left-1/3',    tip: 'bottom-10 sm:bottom-12 left-0', title: 'Status Tracking',          desc: 'Clear issue status updates across all roles' },
             ].map((h) => (
-              <div key={h.n} className={`absolute ${h.pos} group`}>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0EA5E9] border-2 border-white flex items-center justify-center text-white text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 transition-transform">{h.n}</div>
-                <div className={`absolute ${h.tip} w-44 sm:w-56 bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10`}>
-                  <div className="text-xs font-semibold text-[#0F172A] mb-1">{h.title}</div>
-                  <div className="text-xs text-[#64748B]">{h.desc}</div>
-                </div>
-              </div>
+              <PhotoHotspot key={h.n} hotspot={h} colorClass="bg-[#0EA5E9]" tooltipClass="w-44 sm:w-56" />
             ))}
             <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 text-white">
               <div className="text-base sm:text-xl font-medium">Role-based dashboard and mobile resident screens</div>
-              <div className="text-xs sm:text-sm mt-1 sm:mt-2 opacity-70">Hover numbered annotations for UX insights</div>
+              <div className="text-xs sm:text-sm mt-1 sm:mt-2 opacity-70">Tap or hover numbered annotations for UX insights</div>
             </div>
           </div>
         </div>
@@ -877,17 +907,11 @@ export default function App() {
               { n: '1', pos: 'top-6 sm:top-12 left-6 sm:left-12',  tip: 'top-0 left-10 sm:left-12',   title: 'Product Grid',   desc: 'Clean scannable layout for product browsing' },
               { n: '2', pos: 'top-6 sm:top-12 right-6 sm:right-12', tip: 'top-0 right-10 sm:right-12', title: 'Filter Access',  desc: 'Easy filtering by type, region, price' },
             ].map((h) => (
-              <div key={h.n} className={`absolute ${h.pos} group`}>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#BE185D] border-2 border-white flex items-center justify-center text-white text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 transition-transform">{h.n}</div>
-                <div className={`absolute ${h.tip} w-44 sm:w-52 bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10`}>
-                  <div className="text-xs font-semibold text-[#0F172A] mb-1">{h.title}</div>
-                  <div className="text-xs text-[#64748B]">{h.desc}</div>
-                </div>
-              </div>
+              <PhotoHotspot key={h.n} hotspot={h} colorClass="bg-[#BE185D]" />
             ))}
             <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 text-white">
               <div className="text-base sm:text-xl font-medium">Product listing and filtering interface</div>
-              <div className="text-xs sm:text-sm mt-1 sm:mt-2 text-[#FBBDCA]/70">Hover annotations for UX insights</div>
+              <div className="text-xs sm:text-sm mt-1 sm:mt-2 text-[#FBBDCA]/70">Tap or hover annotations for UX insights</div>
             </div>
           </div>
         </div>
@@ -939,13 +963,7 @@ export default function App() {
                 <ImageWithFallback src={panel.src} alt={panel.alt} className="w-full h-64 sm:h-96 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0C0409]/80 to-transparent"></div>
                 {panel.spots.map((h) => (
-                  <div key={h.n} className={`absolute ${h.pos} group`}>
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#BE185D] border-2 border-white flex items-center justify-center text-white text-xs sm:text-sm font-bold cursor-pointer hover:scale-110 transition-transform">{h.n}</div>
-                    <div className={`absolute ${h.tip} w-44 sm:w-56 bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10`}>
-                      <div className="text-xs font-semibold text-[#0F172A] mb-1">{h.title}</div>
-                      <div className="text-xs text-[#64748B]">{h.desc}</div>
-                    </div>
-                  </div>
+                  <PhotoHotspot key={h.n} hotspot={h} colorClass="bg-[#BE185D]" tooltipClass="w-44 sm:w-56" />
                 ))}
                 <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 text-white">
                   <div className="text-base sm:text-lg font-medium">{panel.caption}</div>
