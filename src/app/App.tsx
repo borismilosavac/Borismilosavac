@@ -119,17 +119,17 @@ export default function App() {
           transition: 'background-color 500ms ease, border-color 500ms ease',
         }}
       >
-          <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-3 md:py-4 flex items-center justify-between">
+          <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-2 md:py-4 flex items-center justify-between">
           <button
             onClick={() => scrollToSection('cover')}
             className="group flex items-center transition-all duration-500"
             aria-label="Back to top"
           >
-            {/* BM logomark — Frame10-1 geometry, 44% scale, navTheme-adaptive */}
+            {/* BM logomark — Frame10-1 geometry, responsive scale, navTheme-adaptive */}
             <div
-              className="relative flex-shrink-0 w-[52px] h-[26px] md:w-[63px] md:h-[32px] group-hover:scale-105 transition-transform duration-300"
+              className="relative flex-shrink-0 w-[44px] h-[22px] md:w-[63px] md:h-[32px] group-hover:scale-105 transition-transform duration-300"
             >
-              <div style={{ transform: 'scale(0.4375)', transformOrigin: 'top left', width: 144, height: 72 }}>
+              <div className="origin-top-left scale-[0.3056] md:scale-[0.4375]" style={{ width: 144, height: 72 }}>
                 <div className="relative w-full h-full">
                   {/* B — top bar */}
                   <div
