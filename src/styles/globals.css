@@ -46,3 +46,123 @@
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+/* Adjust Experience Panel modes */
+html.experience-large-text {
+  --font-size: 17.5px;
+}
+
+@media (max-width: 640px) {
+  html.experience-large-text {
+    --font-size: 17px;
+  }
+}
+
+html.experience-large-text .portfolio-experience-root section :is(p, li) {
+  line-height: 1.75 !important;
+}
+
+html.experience-large-text .portfolio-experience-root section .text-xs,
+html.experience-large-text .portfolio-experience-root section [class*="text-[11px]"] {
+  font-size: 0.82rem !important;
+}
+
+html.experience-high-contrast body {
+  background: #020617 !important;
+  color: #f8fafc !important;
+}
+
+.portfolio-experience-root.experience-high-contrast,
+.portfolio-experience-root.experience-high-contrast section,
+.portfolio-experience-root.experience-high-contrast nav {
+  background: #020617 !important;
+  background-image: none !important;
+  color: #f8fafc !important;
+}
+
+.portfolio-experience-root.experience-high-contrast section > .absolute {
+  display: none !important;
+}
+
+.portfolio-experience-root.experience-high-contrast section :is(h1, h2, h3, h4, p, li, span, div) {
+  color: #f8fafc !important;
+}
+
+.portfolio-experience-root.experience-high-contrast section :is(a, button):not(.photo-hotspot-button) {
+  color: #f8fafc !important;
+}
+
+.portfolio-experience-root.experience-high-contrast section [class*="bg-"],
+.portfolio-experience-root.experience-high-contrast section [class*="from-"],
+.portfolio-experience-root.experience-high-contrast section [class*="to-"] {
+  background-color: #0f172a !important;
+  background-image: none !important;
+}
+
+.portfolio-experience-root.experience-high-contrast section [class*="border"] {
+  border-color: #facc15 !important;
+}
+
+.portfolio-experience-root.experience-high-contrast section img {
+  filter: contrast(1.2) saturate(0.9);
+}
+
+.portfolio-experience-root.experience-high-contrast .photo-hotspot-button {
+  background: #facc15 !important;
+  color: #020617 !important;
+  border-color: #ffffff !important;
+}
+
+.portfolio-experience-root.experience-high-contrast .photo-hotspot-tooltip {
+  background: #facc15 !important;
+  color: #020617 !important;
+}
+
+.portfolio-experience-root.experience-high-contrast .photo-hotspot-tooltip * {
+  color: #020617 !important;
+}
+
+.portfolio-experience-root.experience-high-contrast .experience-panel button {
+  border-color: rgba(250, 204, 21, 0.45) !important;
+}
+
+html.experience-reduced-motion,
+html.experience-reduced-motion * {
+  scroll-behavior: auto !important;
+}
+
+html.experience-reduced-motion *,
+html.experience-reduced-motion *::before,
+html.experience-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+.portfolio-experience-root.experience-quick-scan section {
+  padding-top: 3.5rem !important;
+  padding-bottom: 3.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .portfolio-experience-root.experience-quick-scan section {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+  }
+}
+
+.portfolio-experience-root.experience-quick-scan section > .absolute {
+  display: none !important;
+}
+
+.portfolio-experience-root.experience-quick-scan section :is(p, li) {
+  max-width: 72ch;
+}
+
+.portfolio-experience-root.experience-quick-scan section [class*="shadow"] {
+  box-shadow: none !important;
+}
+
+.portfolio-experience-root.experience-quick-scan section img {
+  filter: saturate(0.92);
+}

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, Linkedin, Mail, Globe, ChevronDown, MapPin, Check, Globe2, Calendar, Briefcase, ArrowRight, Download } from 'lucide-react';
+import { useState, useEffect, useRef, type RefObject } from 'react';
+import { Menu, X, Linkedin, Mail, Globe, ChevronDown, MapPin, Check, Globe2, Calendar, Briefcase, ArrowRight, Download, SlidersHorizontal, RotateCcw } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 
 type Hotspot = {
@@ -36,16 +36,170 @@ function PhotoHotspot({
         aria-expanded={open}
         aria-label={`Show annotation: ${hotspot.title}`}
         onClick={() => setOpen((current) => !current)}
-        className={`w-9 h-9 sm:w-8 sm:h-8 rounded-full ${colorClass} border-2 border-white flex items-center justify-center text-white text-sm font-bold cursor-pointer hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/90 focus:ring-offset-2 focus:ring-offset-transparent transition-transform`}
+        className={`photo-hotspot-button w-9 h-9 sm:w-8 sm:h-8 rounded-full ${colorClass} border-2 border-white flex items-center justify-center text-white text-sm font-bold cursor-pointer hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/90 focus:ring-offset-2 focus:ring-offset-transparent transition-transform`}
       >
         {hotspot.n}
       </button>
       <div
-        className={`absolute ${hotspot.tip} ${tooltipClass} max-w-[calc(100vw-3rem)] bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl ${open ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity pointer-events-none z-10`}
+        className={`photo-hotspot-tooltip absolute ${hotspot.tip} ${tooltipClass} max-w-[calc(100vw-3rem)] bg-white/95 backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-2xl ${open ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity pointer-events-none z-10`}
       >
         <div className="text-xs font-semibold text-[#0F172A] mb-1">{hotspot.title}</div>
         <div className="text-xs text-[#64748B]">{hotspot.desc}</div>
       </div>
+    </div>
+  );
+}
+
+type ExperienceSettings = {
+  largeText: boolean;
+  highContrast: boolean;
+  reducedMotion: boolean;
+  quickScan: boolean;
+};
+
+type ExperienceSettingKey = keyof ExperienceSettings;
+
+const EXPERIENCE_STORAGE_KEY = 'portfolio-experience-settings';
+
+const DEFAULT_EXPERIENCE_SETTINGS: ExperienceSettings = {
+  largeText: false,
+  highContrast: false,
+  reducedMotion: false,
+  quickScan: false,
+};
+
+const EXPERIENCE_CLASS_NAMES: Record<ExperienceSettingKey, string> = {
+  largeText: 'experience-large-text',
+  highContrast: 'experience-high-contrast',
+  reducedMotion: 'experience-reduced-motion',
+  quickScan: 'experience-quick-scan',
+};
+
+const EXPERIENCE_OPTIONS: { key: ExperienceSettingKey; label: string; description: string }[] = [
+  { key: 'largeText', label: 'Large Text', description: 'Larger portfolio copy and controls.' },
+  { key: 'highContrast', label: 'High Contrast', description: 'Stronger surfaces, borders and text.' },
+  { key: 'reducedMotion', label: 'Reduced Motion', description: 'Disables ambient motion and smooth scroll.' },
+  { key: 'quickScan', label: 'Quick Scan / Reading Mode', description: 'Tighter sections with less visual noise.' },
+];
+
+const readExperienceSettings = (): ExperienceSettings => {
+  if (typeof window === 'undefined') return DEFAULT_EXPERIENCE_SETTINGS;
+
+  try {
+    const stored = window.localStorage.getItem(EXPERIENCE_STORAGE_KEY);
+    if (!stored) return DEFAULT_EXPERIENCE_SETTINGS;
+    const parsed = JSON.parse(stored) as Partial<ExperienceSettings>;
+
+    return {
+      largeText: Boolean(parsed.largeText),
+      highContrast: Boolean(parsed.highContrast),
+      reducedMotion: Boolean(parsed.reducedMotion),
+      quickScan: Boolean(parsed.quickScan),
+    };
+  } catch {
+    return DEFAULT_EXPERIENCE_SETTINGS;
+  }
+};
+
+function AdjustExperiencePanel({
+  settings,
+  open,
+  panelRef,
+  onOpenChange,
+  onToggle,
+  onReset,
+}: {
+  settings: ExperienceSettings;
+  open: boolean;
+  panelRef: RefObject<HTMLDivElement>;
+  onOpenChange: (open: boolean) => void;
+  onToggle: (key: ExperienceSettingKey) => void;
+  onReset: () => void;
+}) {
+  const activeCount = Object.values(settings).filter(Boolean).length;
+
+  return (
+    <div ref={panelRef} className="experience-panel fixed top-[58px] right-3 sm:top-[64px] sm:right-4 md:top-[76px] z-[999] flex flex-col items-end gap-2">
+      <button
+        type="button"
+        aria-label={open ? 'Close Adjust Experience panel' : 'Open Adjust Experience panel'}
+        aria-expanded={open}
+        aria-controls="adjust-experience-panel"
+        onClick={() => onOpenChange(!open)}
+        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#080C14]/[0.82] px-3.5 py-2 text-xs sm:text-sm font-semibold text-white shadow-2xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-[#111827]/[0.92] focus:outline-none focus:ring-2 focus:ring-[#60A5FA] focus:ring-offset-2 focus:ring-offset-[#080C14]"
+      >
+        <SlidersHorizontal size={15} aria-hidden="true" />
+        <span className="hidden sm:inline">Adjust Experience</span>
+        <span className="sm:hidden">Adjust</span>
+        {activeCount > 0 && (
+          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#60A5FA] px-1.5 text-[11px] text-[#020617]">
+            {activeCount}
+          </span>
+        )}
+      </button>
+
+      {open && (
+        <div
+          id="adjust-experience-panel"
+          role="region"
+          aria-label="Adjust Experience settings"
+          className="w-[min(calc(100vw-1.5rem),360px)] overflow-hidden rounded-2xl border border-white/[0.18] bg-[#080C14]/[0.94] text-white shadow-2xl shadow-black/[0.35] backdrop-blur-2xl"
+        >
+          <div className="border-b border-white/10 px-4 py-3">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8BA4BE]">Accessibility</div>
+            <div className="text-sm font-semibold text-white">Adjust Experience</div>
+          </div>
+
+          <div className="grid gap-2 p-2">
+            {EXPERIENCE_OPTIONS.map((option) => {
+              const active = settings[option.key];
+
+              return (
+                <button
+                  key={option.key}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => onToggle(option.key)}
+                  className={`flex items-center justify-between gap-4 rounded-xl border px-3 py-3 text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#60A5FA] ${
+                    active
+                      ? 'border-[#60A5FA]/70 bg-[#2563EB]/[0.24]'
+                      : 'border-white/10 bg-white/[0.045] hover:border-white/20 hover:bg-white/[0.075]'
+                  }`}
+                >
+                  <span>
+                    <span className="block text-sm font-semibold text-white">{option.label}</span>
+                    <span className="mt-0.5 block text-xs leading-snug text-[#8BA4BE]">{option.description}</span>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`relative h-5 w-9 shrink-0 rounded-full border transition-colors ${
+                      active ? 'border-[#60A5FA] bg-[#60A5FA]' : 'border-white/20 bg-white/10'
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full bg-white transition-transform ${
+                        active ? 'translate-x-[18px]' : 'translate-x-1'
+                      }`}
+                    />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center justify-between gap-3 border-t border-white/10 px-3 py-3">
+            <button
+              type="button"
+              onClick={onReset}
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-[#CBD5E1] transition-colors hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#60A5FA]"
+            >
+              <RotateCcw size={13} aria-hidden="true" />
+              Reset
+            </button>
+            <span className="text-[11px] text-[#64748B]">Saved on this device</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -114,6 +268,9 @@ export default function App() {
   const [navTheme, setNavTheme] = useState<'dark' | 'light'>('dark');
   const [navBg, setNavBg] = useState<string>('#080C14');
   const [mobileNavVisible, setMobileNavVisible] = useState(true);
+  const [experiencePanelOpen, setExperiencePanelOpen] = useState(false);
+  const [experienceSettings, setExperienceSettings] = useState<ExperienceSettings>(readExperienceSettings);
+  const experiencePanelRef = useRef<HTMLDivElement>(null);
 
   const hexToRgba = (hex: string, alpha: number) => {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -135,8 +292,27 @@ export default function App() {
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
-    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); setMenuOpen(false); }
+    if (el) {
+      el.scrollIntoView({ behavior: experienceSettings.reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      setMenuOpen(false);
+    }
   };
+
+  const toggleExperienceSetting = (key: ExperienceSettingKey) => {
+    setExperienceSettings((current) => ({ ...current, [key]: !current[key] }));
+  };
+
+  const resetExperienceSettings = () => {
+    setExperienceSettings(DEFAULT_EXPERIENCE_SETTINGS);
+  };
+
+  const experienceRootClassName = [
+    'portfolio-experience-root min-h-screen bg-[#F8F9FB] overflow-x-hidden',
+    experienceSettings.largeText ? EXPERIENCE_CLASS_NAMES.largeText : '',
+    experienceSettings.highContrast ? EXPERIENCE_CLASS_NAMES.highContrast : '',
+    experienceSettings.reducedMotion ? EXPERIENCE_CLASS_NAMES.reducedMotion : '',
+    experienceSettings.quickScan ? EXPERIENCE_CLASS_NAMES.quickScan : '',
+  ].filter(Boolean).join(' ');
 
   // Watch every section; flip nav palette when a section crosses the viewport centre
   useEffect(() => {
@@ -186,14 +362,62 @@ export default function App() {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(experienceSettings));
+    } catch {
+      // Non-critical: the controls still work for the current session.
+    }
+
+    const html = document.documentElement;
+    (Object.keys(EXPERIENCE_CLASS_NAMES) as ExperienceSettingKey[]).forEach((key) => {
+      html.classList.toggle(EXPERIENCE_CLASS_NAMES[key], experienceSettings[key]);
+    });
+
+    return () => {
+      Object.values(EXPERIENCE_CLASS_NAMES).forEach((className) => html.classList.remove(className));
+    };
+  }, [experienceSettings]);
+
+  useEffect(() => {
+    if (!experiencePanelOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setExperiencePanelOpen(false);
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (experiencePanelRef.current && !experiencePanelRef.current.contains(event.target as Node)) {
+        setExperiencePanelOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('pointerdown', handlePointerDown);
+    };
+  }, [experiencePanelOpen]);
+
   return (
-    <div className="min-h-screen bg-[#F8F9FB] overflow-x-hidden">
+    <div className={experienceRootClassName}>
+
+      <AdjustExperiencePanel
+        settings={experienceSettings}
+        open={experiencePanelOpen}
+        panelRef={experiencePanelRef}
+        onOpenChange={setExperiencePanelOpen}
+        onToggle={toggleExperienceSetting}
+        onReset={resetExperienceSettings}
+      />
 
       {/* ── NAV ─────────────────────────────────────────────────────── */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transform-gpu backdrop-blur-xl border-b ${mobileNavVisible ? 'translate-y-0' : '-translate-y-full md:translate-y-0'} ${navTheme === 'dark' ? 'border-white/[0.08]' : 'border-black/[0.06]'}`}
         style={{
-          backgroundColor: hexToRgba(navBg, navTheme === 'dark' ? 0.72 : 0.88),
+          backgroundColor: experienceSettings.highContrast ? 'rgba(2,6,23,0.96)' : hexToRgba(navBg, navTheme === 'dark' ? 0.72 : 0.88),
           transition: 'background-color 500ms ease, border-color 500ms ease, transform 260ms ease',
         }}
       >
