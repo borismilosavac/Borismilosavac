@@ -126,7 +126,7 @@ function AdjustExperiencePanel({
         aria-expanded={open}
         aria-controls="adjust-experience-panel"
         onClick={() => onOpenChange(!open)}
-        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#080C14]/[0.82] px-3.5 py-2 text-xs sm:text-sm font-semibold text-white shadow-2xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-[#111827]/[0.92] focus:outline-none focus:ring-2 focus:ring-[#60A5FA] focus:ring-offset-2 focus:ring-offset-[#080C14]"
+        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#080C14]/82 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white shadow-2xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-[#111827]/92 focus:outline-none focus:ring-2 focus:ring-[#60A5FA] focus:ring-offset-2 focus:ring-offset-[#080C14]"
       >
         <SlidersHorizontal size={15} aria-hidden="true" />
         <span className="hidden sm:inline">Adjust Experience</span>
@@ -143,7 +143,7 @@ function AdjustExperiencePanel({
           id="adjust-experience-panel"
           role="region"
           aria-label="Adjust Experience settings"
-          className="w-[min(calc(100vw-1.5rem),360px)] overflow-hidden rounded-2xl border border-white/[0.18] bg-[#080C14]/[0.94] text-white shadow-2xl shadow-black/[0.35] backdrop-blur-2xl"
+          className="w-[min(calc(100vw-1.5rem),360px)] overflow-hidden rounded-2xl border border-white/18 bg-[#080C14]/94 text-white shadow-2xl shadow-black/35 backdrop-blur-2xl"
         >
           <div className="border-b border-white/10 px-4 py-3">
             <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8BA4BE]">Accessibility</div>
@@ -162,7 +162,7 @@ function AdjustExperiencePanel({
                   onClick={() => onToggle(option.key)}
                   className={`flex items-center justify-between gap-4 rounded-xl border px-3 py-3 text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#60A5FA] ${
                     active
-                      ? 'border-[#60A5FA]/70 bg-[#2563EB]/[0.24]'
+                      ? 'border-[#60A5FA]/70 bg-[#2563EB]/24'
                       : 'border-white/10 bg-white/[0.045] hover:border-white/20 hover:bg-white/[0.075]'
                   }`}
                 >
@@ -701,7 +701,7 @@ export default function App() {
             ))}
           </div>
           <div className="relative rounded-3xl overflow-hidden border-2 border-white/[0.1] shadow-2xl hover:scale-[1.02] transition-all duration-500">
-            <ImageWithFallback src="https://images.unsplash.com/photo-1643142314913-0cf633d9bbb5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjBkZWFsZXJzaGlwJTIwc2hvd3Jvb20lMjBhdXRvbW90aXZlfGVufDF8fHx8MTc3NzQwMDUxM3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="StockLog operations dashboard" className="w-full h-[280px] sm:h-[400px] md:h-[500px] object-cover" />
+            <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/refs/heads/main/src/StockLog%20showroom.png" alt="StockLog operations dashboard" className="w-full h-[280px] sm:h-[400px] md:h-[500px] object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#080C14]/90 via-transparent to-transparent"></div>
             {[
               { n: '1', pos: 'top-6 sm:top-12 left-6 sm:left-12', tip: 'top-0 left-10 sm:left-12', title: 'Dashboard Structure', desc: 'Two-board system: Inventory + Performance' },

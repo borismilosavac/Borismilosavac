@@ -62,8 +62,7 @@ html.experience-large-text .portfolio-experience-root section :is(p, li) {
   line-height: 1.75 !important;
 }
 
-html.experience-large-text .portfolio-experience-root section .text-xs,
-html.experience-large-text .portfolio-experience-root section [class*="text-[11px]"] {
+html.experience-large-text .portfolio-experience-root section :is(.text-xs, .text-\[11px\]) {
   font-size: 0.82rem !important;
 }
 
