@@ -566,7 +566,7 @@ export default function App() {
             </div>
             <div className="relative h-[460px] lg:h-[520px] xl:h-[580px] hidden md:block">
               <div className="absolute top-0 right-0 w-[280px] lg:w-[310px] xl:w-[340px] h-[210px] lg:h-[232px] xl:h-[255px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl rotate-6 hover:rotate-3 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/b6aaba0ce4227f373d98143b6e50328c6c1d50d6/src/SotckLog%20desktop.svg" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
+                <ImageWithFallback src="https://chatgpt.com/backend-api/estuary/content?id=file_000000009a307243b12f90a0c7d788fe&ts=493842&p=fs&cid=1&sig=23430a3decb11ed767d4e459d0f803d4df32dc7d768e4bea2b0366b70ca94cce&v=0" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="absolute top-[140px] lg:top-[152px] left-0 w-[252px] lg:w-[278px] xl:w-[308px] h-[190px] lg:h-[210px] xl:h-[232px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl -rotate-6 hover:-rotate-3 transition-all duration-500 overflow-hidden">
                 <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/b6aaba0ce4227f373d98143b6e50328c6c1d50d6/src/SotckLog%20desktop.svg" alt="StockLog" className="w-full h-full object-cover opacity-80" />
