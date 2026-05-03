@@ -566,7 +566,7 @@ export default function App() {
             </div>
             <div className="relative h-[460px] lg:h-[520px] xl:h-[580px] hidden md:block">
               <div className="absolute top-0 right-0 w-[280px] lg:w-[310px] xl:w-[340px] h-[210px] lg:h-[232px] xl:h-[255px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl rotate-6 hover:rotate-3 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://images.unsplash.com/photo-1658953229625-aad99d7603b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBkYXNoYm9hcmQlMjBpbnRlcmZhY2UlMjB1aSUyMGRlc2lnbnxlbnwxfHx8fDE3Nzc0MDA1MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
+                <ImageWithFallback src="https://github.com/borismilosavac/Borismilosavac/blob/main/src/StockLog%20showroom.png?raw=true" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="absolute top-[140px] lg:top-[152px] left-0 w-[252px] lg:w-[278px] xl:w-[308px] h-[190px] lg:h-[210px] xl:h-[232px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl -rotate-6 hover:-rotate-3 transition-all duration-500 overflow-hidden">
                 <ImageWithFallback src="https://github.com/borismilosavac/Borismilosavac/blob/main/src/StockLog%20showroom.png?raw=true" alt="StockLog" className="w-full h-full object-cover opacity-80" />
