@@ -566,13 +566,13 @@ export default function App() {
             </div>
             <div className="relative h-[460px] lg:h-[520px] xl:h-[580px] hidden md:block">
               <div className="absolute top-0 right-0 w-[280px] lg:w-[310px] xl:w-[340px] h-[210px] lg:h-[232px] xl:h-[255px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl rotate-6 hover:rotate-3 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/4f6f6496b4c97a7066d16cd11bf213639492909b/src/sl-hero.svg" alt="Dashboard" className="w-full h-full object-contain opacity-95" />
+                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/88c5facb970e6219fa807e52e3fcd5eeb5acd1c8/src/sl-hero-1.svg" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="absolute top-[140px] lg:top-[152px] left-0 w-[252px] lg:w-[278px] xl:w-[308px] h-[190px] lg:h-[210px] xl:h-[232px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl -rotate-6 hover:-rotate-3 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/4f6f6496b4c97a7066d16cd11bf213639492909b/src/sl-hero.svg" alt="StockLog" className="w-full h-full object-contain opacity-95" />
+                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/88c5facb970e6219fa807e52e3fcd5eeb5acd1c8/src/sl-hero-1.svg" alt="StockLog" className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="absolute bottom-0 right-6 w-[218px] lg:w-[242px] xl:w-[268px] h-[164px] lg:h-[182px] xl:h-[200px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl rotate-3 hover:rotate-1 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/4f6f6496b4c97a7066d16cd11bf213639492909b/src/sl-hero.svg" alt="WineRoom" className="w-full h-full object-contain opacity-95" />
+                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/refs/heads/main/src/Frame%203064.png" alt="WineRoom" className="w-full h-full object-cover opacity-80" />
               </div>
             </div>
           </div>
