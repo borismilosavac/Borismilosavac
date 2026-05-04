@@ -566,13 +566,13 @@ export default function App() {
             </div>
             <div className="relative h-[460px] lg:h-[520px] xl:h-[580px] hidden md:block">
               <div className="absolute top-0 right-0 w-[280px] lg:w-[310px] xl:w-[340px] h-[210px] lg:h-[232px] xl:h-[255px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl rotate-6 hover:rotate-3 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/refs/heads/main/src/Frame%203063.png" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
+                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/refs/heads/main/src/Frame%203064.png" alt="Dashboard" className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="absolute top-[140px] lg:top-[152px] left-0 w-[252px] lg:w-[278px] xl:w-[308px] h-[190px] lg:h-[210px] xl:h-[232px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl -rotate-6 hover:-rotate-3 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/b6aaba0ce4227f373d98143b6e50328c6c1d50d6/src/SotckLog%20desktop.svg" alt="StockLog" className="w-full h-full object-cover opacity-80" />
+                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/refs/heads/main/src/Frame%203064.png" alt="StockLog" className="w-full h-full object-cover opacity-80" />
               </div>
               <div className="absolute bottom-0 right-6 w-[218px] lg:w-[242px] xl:w-[268px] h-[164px] lg:h-[182px] xl:h-[200px] bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl rotate-3 hover:rotate-1 transition-all duration-500 overflow-hidden">
-                <ImageWithFallback src="https://images.unsplash.com/photo-1743112194335-31f70ca7a64a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw1fHx3aW5lJTIwYm90dGxlcyUyMHNob3AlMjBlY29tbWVyY2V8ZW58MXx8fHwxNzc3NDAwNTEzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="WineRoom" className="w-full h-full object-cover opacity-80" />
+                <ImageWithFallback src="https://raw.githubusercontent.com/borismilosavac/Borismilosavac/refs/heads/main/src/Frame%203064.png" alt="WineRoom" className="w-full h-full object-cover opacity-80" />
               </div>
             </div>
           </div>
