@@ -624,6 +624,20 @@ export default function App() {
               </div>
             </div>
           </div>
+          {/*
+            TODO: Replace these ImagePlaceholder frames with real process
+            artefacts (an actual prompt, wireframe and refined screen) before
+            publishing. Per 04_GRAPHIC_PROOF_PLAN Visual 14, do not fabricate —
+            placeholders must not ship to production.
+          */}
+          <div className="mt-6">
+            <div role="img" aria-label="Three-step AI-assisted design example showing prompt, wireframe and refined interface direction." className="grid gap-2 sm:grid-cols-3">
+              <ImagePlaceholder variant="board" tone="dark" aspectOverride="aspect-[4/3]" />
+              <ImagePlaceholder variant="board" tone="dark" aspectOverride="aspect-[4/3]" />
+              <ImagePlaceholder variant="board" tone="dark" aspectOverride="aspect-[4/3]" />
+            </div>
+            <div className="mt-2 type-caption text-slate-400">Generated options are treated as draft material, not final design.</div>
+          </div>
           <div className="mt-6 grid gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6 md:grid-cols-[1fr_1.4fr] md:p-8">
             <p className="text-2xl font-semibold tracking-tight md:text-3xl">AI gives range.<br />Human review gives judgement.</p>
             <p className="leading-relaxed text-slate-300">Truth layer: AI-assisted exploration, prompt structuring, workflow acceleration and human-led review are claimed. Fully automated design, AI-generated final products, fake productivity metrics and replacement of design judgement are not claimed.</p>
@@ -638,6 +652,19 @@ export default function App() {
             <h2 className="mt-3 type-h2">Designing screens, and the reusable rules behind them.</h2>
             <p className="mt-5 type-lead text-slate-600">This section shows how I think about reusability across cards, tables, forms, filters, states, mobile controls and accessibility notes. It is evidence of scalable UI thinking, not a claim that every project has a finished enterprise library.</p>
           </div>
+          {/*
+            TODO: Replace this ImagePlaceholder with a real component board
+            (StockLog's can be cropped from existing UI) before publishing. Per
+            04_GRAPHIC_PROOF_PLAN Visual 15, placeholder must not ship; the
+            project-specific chip cards below remain the honest baseline.
+          */}
+          <ImagePlaceholder
+            variant="board"
+            tone="light"
+            className="mt-12"
+            alt="Portfolio design system snapshot showing reusable project-specific cards, badges, filters and controls."
+            caption="Reusable UI patterns make complex products easier to scale."
+          />
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {systemGroups.map(([title, ...items]) => (
               <article key={title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-7">
@@ -702,6 +729,19 @@ export default function App() {
               </div>
             </div>
           </div>
+          {/*
+            TODO: Replace this subtle ImagePlaceholder strip with a small real
+            preview of project interfaces before publishing. Per
+            04_GRAPHIC_PROOF_PLAN Visual 16, placeholder must not ship. Kept
+            secondary so it never competes with the contact CTAs above.
+          */}
+          <ImagePlaceholder
+            variant="board"
+            tone="dark"
+            className="mt-12 opacity-80"
+            aspectOverride="aspect-[5/1]"
+            alt="Small visual preview strip of Boris Milosavac's product design portfolio."
+          />
           <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 type-caption text-slate-400 sm:flex-row sm:items-center sm:justify-between">
             <span>© 2026 Boris Milosavac</span>
             <span>Munich, Germany · borism.design</span>
