@@ -253,8 +253,8 @@ export default function App() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 md:px-8 md:py-28 lg:min-h-[86vh] lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur"><MapPin size={15} /> Munich, Germany · Authorised to work in Germany</div>
-            <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl">I design complex digital products that people can actually use.</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
+            <h1 className="max-w-4xl text-balance type-display">I design complex digital products that people can actually use.</h1>
+            <p className="mt-7 max-w-2xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
             <p className="mt-4 max-w-2xl leading-relaxed text-slate-400">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
             <div className="mt-7 flex flex-wrap gap-2 text-sm text-slate-200">
               {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">{tag}</span>)}
@@ -266,13 +266,13 @@ export default function App() {
             </div>
           </div>
           <div className="grid content-center gap-3">
-            <div className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Selected work</div>
+            <div className="mb-1 type-eyebrow text-slate-500">Selected work</div>
             {caseStudies.map((item) => (
               <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition hover:border-white/25 hover:bg-white/[0.08]">
                 <span className="font-mono text-sm text-slate-500">{item.number}</span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-xl font-semibold tracking-tight">{item.title}</span>
-                  <span className="mt-1 block truncate text-sm text-slate-400">{item.eyebrow}</span>
+                  <span className="block type-h3">{item.title}</span>
+                  <span className="mt-1 block truncate type-caption text-slate-400">{item.eyebrow}</span>
                 </span>
                 <ArrowUpRight size={20} className="shrink-0 text-slate-500 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
               </button>
@@ -284,8 +284,8 @@ export default function App() {
       <section id="summary" className={`${sectionPad} px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className={`rounded-3xl border bg-white p-6 shadow-sm md:p-12 ${surface}`}>
-            <div className="mb-5 inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-blue-700">60-second recruiter summary</div>
-            <h2 className="max-w-4xl text-3xl font-semibold leading-[1.1] tracking-tight md:text-5xl">If you are hiring for a Munich-based Product Designer or Senior UX/UI Designer, here is the short version.</h2>
+            <div className="mb-5 inline-flex items-center rounded-full bg-blue-50 px-3 py-1 type-eyebrow text-blue-700">60-second recruiter summary</div>
+            <h2 className="max-w-4xl type-h2">If you are hiring for a Munich-based Product Designer or Senior UX/UI Designer, here is the short version.</h2>
             <div className="mt-8 grid gap-6 leading-relaxed text-slate-700 md:grid-cols-2">
               <p>I bring 14+ years of hands-on digital design experience, with the strongest fit in SaaS products, B2B dashboards, operational tools, e-commerce UX, and design-system-aware product teams.</p>
               <p>I work best on products that need structure: dashboards, complex workflows, multi-role permissions, responsive behaviour, and interface states that need to stay clear as products grow.</p>
@@ -307,9 +307,9 @@ export default function App() {
       <section id="work" className={`${sectionPad} border-y border-slate-200 bg-slate-100 px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 max-w-3xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Selected work</div>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-6xl">Three product design cases</h2>
-            <p className="mt-4 leading-relaxed text-slate-600">A B2B operations platform, a multi-role SaaS product, and a real e-commerce optimisation — each shown as a product problem, not a gallery.</p>
+            <div className="type-eyebrow text-slate-500">Selected work</div>
+            <h2 className="mt-3 type-h2">Three product design cases</h2>
+            <p className="mt-4 type-lead text-slate-600">A B2B operations platform, a multi-role SaaS product, and a real e-commerce optimisation — each shown as a product problem, not a gallery.</p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {caseStudies.map((item) => (
@@ -318,9 +318,9 @@ export default function App() {
                   <span className="font-mono text-sm text-slate-400">{item.number}</span>
                   <ArrowUpRight size={20} className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-slate-900" />
                 </div>
-                <div className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-blue-700">{item.eyebrow}</div>
-                <h3 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">{item.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">{item.intro}</p>
+                <div className="mt-5 type-eyebrow text-blue-700">{item.eyebrow}</div>
+                <h3 className="mt-2 type-h3-lg">{item.title}</h3>
+                <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-slate-600">{item.intro}</p>
                 <p className="mt-5 border-t border-slate-100 pt-4 text-sm leading-relaxed text-slate-500"><span className="font-semibold text-slate-900">Why it matters:</span> {item.why}</p>
               </button>
             ))}
@@ -338,17 +338,17 @@ export default function App() {
             <div className="relative mx-auto max-w-7xl">
               <div className="flex flex-wrap items-center gap-4">
                 <span className={`font-mono text-5xl font-semibold md:text-6xl ${dark ? 'text-white/15' : 'text-slate-900/15'}`}>{item.number}</span>
-                <span className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] ${dark ? 'border-white/15 bg-white/10 text-slate-200' : 'border-sky-200 bg-white/70 text-sky-800'}`}>{item.eyebrow}</span>
-                {item.id === 'stocklog' && <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-amber-200">Flagship case</span>}
+                <span className={`rounded-full border px-4 py-2 type-eyebrow ${dark ? 'border-white/15 bg-white/10 text-slate-200' : 'border-sky-200 bg-white/70 text-sky-800'}`}>{item.eyebrow}</span>
+                {item.id === 'stocklog' && <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-4 py-2 type-eyebrow text-amber-200">Flagship case</span>}
               </div>
-              <h2 className="mt-6 text-balance text-4xl font-semibold tracking-[-0.02em] md:text-6xl lg:text-7xl">{item.title}</h2>
+              <h2 className="mt-6 text-balance type-title">{item.title}</h2>
               <p className={`mt-5 max-w-4xl text-xl font-medium leading-snug md:text-2xl ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{item.headline}</p>
-              <p className={`mt-5 max-w-3xl leading-relaxed ${subText}`}>{item.intro}</p>
+              <p className={`mt-5 max-w-[65ch] leading-relaxed ${subText}`}>{item.intro}</p>
 
               {item.id === 'stocklog' && (
                 <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
                   <ImageWithFallback src={stocklogUi} alt="StockLog inventory board on desktop with the companion mobile app — vehicle cards grouped into columns by salesperson, with inventory, assignment and deal-status filters along the top." className="w-full" />
-                  <figcaption className="border-t border-white/10 px-5 py-3 text-xs text-slate-400">StockLog — inventory board with companion mobile app.</figcaption>
+                  <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">StockLog — inventory board with companion mobile app.</figcaption>
                 </figure>
               )}
 
@@ -369,11 +369,11 @@ export default function App() {
 
               <div className="mt-6 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
                 <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
-                  <h3 className="text-xl font-semibold tracking-tight md:text-2xl">The problem</h3>
+                  <h3 className="type-h3">The problem</h3>
                   <p className={`mt-4 leading-relaxed ${subText}`}>{item.problem}</p>
                 </article>
                 <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
-                  <h3 className="text-xl font-semibold tracking-tight md:text-2xl">Core UX challenge</h3>
+                  <h3 className="type-h3">Core UX challenge</h3>
                   <p className={`mt-4 leading-relaxed ${subText}`}>{item.challenge}</p>
                   <div className={`mt-5 rounded-2xl border p-4 font-mono text-sm leading-relaxed ${dark ? 'border-white/10 bg-black/25 text-slate-200' : 'border-sky-200 bg-sky-50 text-slate-800'}`}>{item.flow}</div>
                 </article>
@@ -381,16 +381,16 @@ export default function App() {
 
               <div className="mt-5 grid gap-5 lg:grid-cols-2">
                 <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
-                  <h3 className="text-xl font-semibold tracking-tight md:text-2xl">Users</h3>
+                  <h3 className="type-h3">Users</h3>
                   <ul className="mt-4 space-y-3">
-                    {item.users.map((user) => <li key={user} className={`rounded-xl border p-3.5 text-sm leading-relaxed ${listItem}`}>{user}</li>)}
+                    {item.users.map((user) => <li key={user} className={`rounded-xl border p-3.5 text-[0.9375rem] leading-relaxed ${listItem}`}>{user}</li>)}
                   </ul>
                 </article>
                 <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
-                  <h3 className="text-xl font-semibold tracking-tight md:text-2xl">Key design decisions</h3>
+                  <h3 className="type-h3">Key design decisions</h3>
                   <ol className="mt-4 space-y-3">
                     {item.decisions.map((decision, index) => (
-                      <li key={decision} className={`flex gap-3 rounded-xl border p-3.5 text-sm leading-relaxed ${listItem}`}>
+                      <li key={decision} className={`flex gap-3 rounded-xl border p-3.5 text-[0.9375rem] leading-relaxed ${listItem}`}>
                         <span className={`mt-px font-mono text-xs ${dark ? 'text-slate-400' : 'text-sky-700'}`}>{String(index + 1).padStart(2, '0')}</span>
                         <span>{decision}</span>
                       </li>
@@ -403,22 +403,22 @@ export default function App() {
                 <div className="mt-5 grid gap-5 lg:grid-cols-[1.7fr_1fr] lg:items-start">
                   <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
                     <ImageWithFallback src={stocklogBoard} alt="StockLog inventory board — vehicle cards arranged in columns, each card showing make, model, price and condition, with filter controls and status states along the board." className="w-full" />
-                    <figcaption className="border-t border-white/10 px-5 py-3 text-xs text-slate-400">Inventory board detail — vehicle cards, filters and status states in context.</figcaption>
+                    <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Inventory board detail — vehicle cards, filters and status states in context.</figcaption>
                   </figure>
                   <figure className="overflow-hidden rounded-3xl border border-white/10">
                     <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
-                    <figcaption className="border-t border-white/10 px-5 py-3 text-xs text-slate-400">Concept visualisation — context only.</figcaption>
+                    <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
                   </figure>
                 </div>
               )}
 
               <div className="mt-5 grid gap-5 lg:grid-cols-2">
                 <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
-                  <h3 className="text-xl font-semibold tracking-tight md:text-2xl">Design outcome</h3>
+                  <h3 className="type-h3">Design outcome</h3>
                   <p className={`mt-4 leading-relaxed ${subText}`}>{item.outcome}</p>
                 </article>
                 <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-amber-300/25 bg-amber-300/[0.08]' : 'border-amber-300 bg-amber-50'}`}>
-                  <h3 className={`text-xl font-semibold tracking-tight md:text-2xl ${dark ? 'text-amber-200' : 'text-amber-900'}`}>Truth layer</h3>
+                  <h3 className={`type-h3 ${dark ? 'text-amber-200' : 'text-amber-900'}`}>Truth layer</h3>
                   <p className={`mt-4 leading-relaxed ${dark ? 'text-amber-100/90' : 'text-amber-900'}`}>{item.truth}</p>
                 </article>
               </div>
@@ -431,13 +431,13 @@ export default function App() {
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_45%)]" />
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">AI-assisted workflow</div>
-            <h2 className="mt-3 text-4xl font-semibold leading-[1.1] tracking-tight md:text-6xl">Using AI to accelerate exploration without outsourcing design judgement.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-slate-300 md:text-xl">I use AI as a design accelerator for ideation, flow exploration, structured prompting and rapid prototyping. The final judgement, refinement and accessibility review stay human-led.</p>
+            <div className="type-eyebrow text-slate-400">AI-assisted workflow</div>
+            <h2 className="mt-3 type-h2">Using AI to accelerate exploration without outsourcing design judgement.</h2>
+            <p className="mt-5 type-lead text-slate-300">I use AI as a design accelerator for ideation, flow exploration, structured prompting and rapid prototyping. The final judgement, refinement and accessibility review stay human-led.</p>
           </div>
           <div className="mt-12 space-y-5">
             <div>
-              <div className="mb-3 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <div className="mb-3 flex flex-wrap items-center gap-3 type-eyebrow text-slate-400">
                 <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1">Steps 01–05</span>
                 AI-assisted exploration
               </div>
@@ -446,7 +446,7 @@ export default function App() {
                   <div key={step} className="bg-slate-950 p-5 transition-colors hover:bg-slate-900">
                     <div className="font-mono text-sm text-slate-500">{String(index + 1).padStart(2, '0')}</div>
                     <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400">{purpose}</p>
+                    <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
                   </div>
                 ))}
               </div>
@@ -460,7 +460,7 @@ export default function App() {
               <div className="flex flex-wrap items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-blue-500 text-white"><Eye size={20} /></span>
                 <span className="font-mono text-sm text-blue-300">06</span>
-                <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-blue-200">Human-led checkpoint</span>
+                <span className="rounded-full bg-blue-500/20 px-3 py-1 type-eyebrow text-blue-200">Human-led checkpoint</span>
               </div>
               <h3 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">{aiSteps[5][0]}</h3>
               <p className="mt-2 max-w-2xl leading-relaxed text-slate-200">{aiSteps[5][1]}</p>
@@ -471,7 +471,7 @@ export default function App() {
             </div>
 
             <div>
-              <div className="mb-3 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <div className="mb-3 flex flex-wrap items-center gap-3 type-eyebrow text-slate-400">
                 <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1">Steps 07–09</span>
                 Human-led refinement &amp; delivery
               </div>
@@ -480,7 +480,7 @@ export default function App() {
                   <div key={step} className="bg-slate-950 p-5 transition-colors hover:bg-slate-900">
                     <div className="font-mono text-sm text-slate-500">{String(index + 7).padStart(2, '0')}</div>
                     <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400">{purpose}</p>
+                    <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
                   </div>
                 ))}
               </div>
@@ -496,9 +496,9 @@ export default function App() {
       <section id="system" className={`${sectionPad} bg-white px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Design system snapshot</div>
-            <h2 className="mt-3 text-4xl font-semibold leading-[1.1] tracking-tight md:text-6xl">Designing screens, and the reusable rules behind them.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-slate-600 md:text-xl">This section shows how I think about reusability across cards, tables, forms, filters, states, mobile controls and accessibility notes. It is evidence of scalable UI thinking, not a claim that every project has a finished enterprise library.</p>
+            <div className="type-eyebrow text-blue-700">Design system snapshot</div>
+            <h2 className="mt-3 type-h2">Designing screens, and the reusable rules behind them.</h2>
+            <p className="mt-5 type-lead text-slate-600">This section shows how I think about reusability across cards, tables, forms, filters, states, mobile controls and accessibility notes. It is evidence of scalable UI thinking, not a claim that every project has a finished enterprise library.</p>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {systemGroups.map(([title, ...items]) => (
@@ -513,7 +513,7 @@ export default function App() {
           </div>
           <div className="mt-6 grid gap-5 md:grid-cols-2">
             <article className="rounded-3xl bg-slate-950 p-6 text-white md:p-8">
-              <h3 className="text-xl font-semibold tracking-tight md:text-2xl">Key system principles</h3>
+              <h3 className="type-h3">Key system principles</h3>
               <ul className="mt-5 space-y-3 text-slate-300">
                 {['Reuse patterns where products repeat decisions.', 'Design states, not only screens.', 'Make clarity scalable as roles, modules and data are added.', 'Treat accessibility as system quality.'].map((principle) => (
                   <li key={principle} className="flex gap-3"><Check size={18} className="mt-0.5 shrink-0 text-blue-400" /> {principle}</li>
@@ -521,7 +521,7 @@ export default function App() {
               </ul>
             </article>
             <article className="rounded-3xl border border-amber-300 bg-amber-50 p-6 text-amber-950 md:p-8">
-              <h3 className="text-xl font-semibold tracking-tight text-amber-900 md:text-2xl">Truth layer</h3>
+              <h3 className="type-h3 text-amber-900">Truth layer</h3>
               <p className="mt-5 leading-relaxed">Claimed: reusable UI thinking, state design, component grouping, accessibility-aware product patterns. Not claimed: a final production design system for every project unless verified.</p>
             </article>
           </div>
@@ -534,13 +534,13 @@ export default function App() {
         </div>
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-4xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Contact</div>
-            <h2 className="mt-3 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.02em] md:text-6xl lg:text-7xl">Let’s build clearer digital product experiences.</h2>
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">I am a Munich-based Product Designer focused on SaaS, B2B operations, e-commerce UX, reusable UI systems, accessibility, and AI-assisted product exploration.</p>
+            <div className="type-eyebrow text-slate-400">Contact</div>
+            <h2 className="mt-3 text-balance type-title">Let’s build clearer digital product experiences.</h2>
+            <p className="mt-6 max-w-3xl type-lead text-slate-300">I am a Munich-based Product Designer focused on SaaS, B2B operations, e-commerce UX, reusable UI systems, accessibility, and AI-assisted product exploration.</p>
           </div>
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
             <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 md:p-8">
-              <h3 className="text-xl font-semibold tracking-tight md:text-2xl">Contact details</h3>
+              <h3 className="type-h3">Contact details</h3>
               <dl className="mt-6 grid gap-5 sm:grid-cols-2">
                 <div><dt className="text-sm text-slate-400">Name</dt><dd className="mt-0.5 font-semibold">Boris Milosavac</dd></div>
                 <div><dt className="text-sm text-slate-400">Location</dt><dd className="mt-0.5 font-semibold">Munich, Germany</dd></div>
@@ -564,7 +564,7 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 type-caption text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <span>© 2026 Boris Milosavac</span>
             <span>Munich, Germany · borism.design</span>
           </div>
