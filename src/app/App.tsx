@@ -207,7 +207,7 @@ export default function App() {
       <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
           <button onClick={() => scrollTo('top', smooth)} className="flex items-center gap-2.5 text-left" aria-label="Back to top">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-slate-950 text-sm font-bold tracking-tight text-white">BM</span>
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-surface-dark text-sm font-bold tracking-tight text-white">BM</span>
             <span className="hidden text-sm font-semibold tracking-tight text-slate-900 sm:block">Boris Milosavac</span>
           </button>
           <div className="hidden items-center gap-0.5 text-sm md:flex">
@@ -216,7 +216,7 @@ export default function App() {
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800 sm:inline-flex">Get in touch</a>
+            <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-surface-dark px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800 sm:inline-flex">Get in touch</a>
             <button onClick={() => setPanelOpen((open) => !open)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100" aria-expanded={panelOpen}>
               <SlidersHorizontal size={16} /> <span className="hidden sm:inline">View options</span>
             </button>
@@ -244,7 +244,7 @@ export default function App() {
         )}
       </nav>
 
-      <section id="top" className="relative overflow-hidden bg-slate-950 text-white">
+      <section id="top" className="relative overflow-hidden bg-surface-dark text-white">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -top-44 left-1/3 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[130px]" />
           <div className="absolute -bottom-52 right-0 h-[36rem] w-[36rem] rounded-full bg-indigo-600/15 blur-[130px]" />
@@ -266,15 +266,15 @@ export default function App() {
             </div>
           </div>
           <div className="grid content-center gap-3">
-            <div className="mb-1 type-eyebrow text-slate-500">Selected work</div>
+            <div className="mb-1 type-eyebrow text-slate-400">Selected work</div>
             {caseStudies.map((item) => (
               <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition hover:border-white/25 hover:bg-white/[0.08]">
-                <span className="font-mono text-sm text-slate-500">{item.number}</span>
+                <span className="font-mono text-sm text-slate-400">{item.number}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block type-h3">{item.title}</span>
                   <span className="mt-1 block truncate type-caption text-slate-400">{item.eyebrow}</span>
                 </span>
-                <ArrowUpRight size={20} className="shrink-0 text-slate-500 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+                <ArrowUpRight size={20} className="shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
               </button>
             ))}
           </div>
@@ -427,7 +427,7 @@ export default function App() {
         );
       })}
 
-      <section id="ai" className={`relative overflow-hidden ${sectionPad} bg-slate-950 px-4 text-white md:px-8`}>
+      <section id="ai" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_45%)]" />
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-3xl">
@@ -443,8 +443,8 @@ export default function App() {
               </div>
               <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
                 {aiSteps.slice(0, 5).map(([step, purpose], index) => (
-                  <div key={step} className="bg-slate-950 p-5 transition-colors hover:bg-slate-900">
-                    <div className="font-mono text-sm text-slate-500">{String(index + 1).padStart(2, '0')}</div>
+                  <div key={step} className="bg-surface-dark p-5 transition-colors hover:bg-slate-900">
+                    <div className="font-mono text-sm text-slate-400">{String(index + 1).padStart(2, '0')}</div>
                     <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
                     <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
                   </div>
@@ -477,8 +477,8 @@ export default function App() {
               </div>
               <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
                 {aiSteps.slice(6).map(([step, purpose], index) => (
-                  <div key={step} className="bg-slate-950 p-5 transition-colors hover:bg-slate-900">
-                    <div className="font-mono text-sm text-slate-500">{String(index + 7).padStart(2, '0')}</div>
+                  <div key={step} className="bg-surface-dark p-5 transition-colors hover:bg-slate-900">
+                    <div className="font-mono text-sm text-slate-400">{String(index + 7).padStart(2, '0')}</div>
                     <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
                     <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
                   </div>
@@ -512,7 +512,7 @@ export default function App() {
             ))}
           </div>
           <div className="mt-6 grid gap-5 md:grid-cols-2">
-            <article className="rounded-3xl bg-slate-950 p-6 text-white md:p-8">
+            <article className="rounded-3xl bg-surface-dark p-6 text-white md:p-8">
               <h3 className="type-h3">Key system principles</h3>
               <ul className="mt-5 space-y-3 text-slate-300">
                 {['Reuse patterns where products repeat decisions.', 'Design states, not only screens.', 'Make clarity scalable as roles, modules and data are added.', 'Treat accessibility as system quality.'].map((principle) => (
@@ -528,7 +528,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="contact" className={`relative overflow-hidden ${sectionPad} bg-slate-950 px-4 text-white md:px-8`}>
+      <section id="contact" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -bottom-40 left-1/4 h-[34rem] w-[34rem] rounded-full bg-blue-600/15 blur-[130px]" />
         </div>
@@ -564,7 +564,7 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 type-caption text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 type-caption text-slate-400 sm:flex-row sm:items-center sm:justify-between">
             <span>© 2026 Boris Milosavac</span>
             <span>Munich, Germany · borism.design</span>
           </div>
