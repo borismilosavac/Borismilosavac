@@ -391,6 +391,22 @@ export default function App() {
                 />
               )}
 
+              {item.id === 'wineroom' && (
+                /*
+                  TODO: Replace this ImagePlaceholder with real WineRoom
+                  screenshot before publishing. Per 04_GRAPHIC_PROOF_PLAN
+                  Visual 10, the placeholder must not ship to production.
+                  Needs live site URL to capture desktop product listing.
+                */
+                <ImagePlaceholder
+                  variant="ecommerce"
+                  tone="dark"
+                  className="mt-10"
+                  alt="WineRoom e-commerce product listing with filters, sorting and scannable product cards."
+                  caption="Product discovery starts with clear listing, filtering and sorting."
+                />
+              )}
+
               <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-5">
                 {[
                   ['Status', item.status],
@@ -503,6 +519,32 @@ export default function App() {
                       aspectOverride="aspect-[4/3]"
                       alt="Zgrada Plus interface states showing status badges, consent controls and form feedback."
                       caption="Accessibility is shown through readable states, labels and predictable controls."
+                    />
+                  </div>
+                </>
+              )}
+
+              {item.id === 'wineroom' && (
+                <>
+                  {/*
+                    TODO: Replace these ImagePlaceholder frames with real WineRoom
+                    screenshots before publishing. Per 04_GRAPHIC_PROOF_PLAN
+                    Visuals 11 & 12, placeholders must not ship to production.
+                    Needs live site URL to capture mobile toolbar and filter state.
+                  */}
+                  <div className="mt-5 grid gap-5 lg:grid-cols-2 lg:items-start">
+                    <ImagePlaceholder
+                      variant="mobile"
+                      tone="dark"
+                      alt="WineRoom mobile product listing with filter, sort and search toolbar."
+                      caption="Mobile toolbar keeps filter, sort and search available during browsing."
+                    />
+                    <ImagePlaceholder
+                      variant="ecommerce"
+                      tone="dark"
+                      aspectOverride="aspect-[4/3]"
+                      alt="WineRoom filter and search interface for product discovery."
+                      caption="Search and filters reduce browsing friction before checkout."
                     />
                   </div>
                 </>
