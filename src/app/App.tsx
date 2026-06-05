@@ -376,8 +376,8 @@ export default function App() {
 
               {item.id === 'stocklog' && (
                 <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
-                  <ImageWithFallback src={stocklogUi} alt="StockLog inventory board on desktop with the companion mobile app — vehicle cards grouped into columns by salesperson, with inventory, assignment and deal-status filters along the top." className="w-full" />
-                  <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">StockLog — inventory board with companion mobile app.</figcaption>
+                  <ImageWithFallback src={stocklogUi} alt="StockLog dashboard concept showing dealership inventory cards, filters and sales performance structure." className="w-full" />
+                  <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Two-board structure separates inventory visibility from sales performance.</figcaption>
                 </figure>
               )}
 
@@ -429,16 +429,39 @@ export default function App() {
               </div>
 
               {item.id === 'stocklog' && (
-                <div className="mt-5 grid gap-5 lg:grid-cols-[1.7fr_1fr] lg:items-start">
-                  <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
-                    <ImageWithFallback src={stocklogBoard} alt="StockLog inventory board — vehicle cards arranged in columns, each card showing make, model, price and condition, with filter controls and status states along the board." className="w-full" />
-                    <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Inventory board detail — vehicle cards, filters and status states in context.</figcaption>
-                  </figure>
-                  <figure className="overflow-hidden rounded-3xl border border-white/10">
-                    <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
-                    <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
-                  </figure>
-                </div>
+                <>
+                  {/*
+                    TODO: Replace the ImagePlaceholder frames (vehicle card
+                    anatomy, mobile view) with real StockLog UI exports before
+                    publishing. Per 04_GRAPHIC_PROOF_PLAN Visuals 3 & 5, blank
+                    placeholders must not ship to production.
+                  */}
+                  <div className="mt-5 grid gap-5 lg:grid-cols-2 lg:items-start">
+                    <ImagePlaceholder
+                      variant="board"
+                      tone="dark"
+                      aspectOverride="aspect-[4/3]"
+                      alt="Vehicle card anatomy showing key dealership inventory data fields."
+                      caption="Vehicle cards keep operational data scannable at board level."
+                    />
+                    <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
+                      <ImageWithFallback src={stocklogBoard} alt="Search and filter interface for dealership inventory and sales workflow." className="w-full" />
+                      <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Precise search supports lookup-heavy dealership workflows.</figcaption>
+                    </figure>
+                  </div>
+                  <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_1.4fr] lg:items-start">
+                    <ImagePlaceholder
+                      variant="mobile"
+                      tone="dark"
+                      alt="Mobile StockLog interface showing vehicle cards and operational actions."
+                      caption="Mobile view supports quick access to inventory and deal status."
+                    />
+                    <figure className="overflow-hidden rounded-3xl border border-white/10">
+                      <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
+                      <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
+                    </figure>
+                  </div>
+                </>
               )}
 
               <div className="mt-5 grid gap-5 lg:grid-cols-2">
