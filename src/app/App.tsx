@@ -381,6 +381,16 @@ export default function App() {
                 </figure>
               )}
 
+              {item.id === 'zgrada-plus' && (
+                <ImagePlaceholder
+                  variant="ecosystem"
+                  tone="light"
+                  className="mt-10"
+                  alt="Zgrada Plus role ecosystem showing residents, managers, accounting, partners, city roles and admins."
+                  caption="Role-based structure keeps resident tasks simple while supporting dense manager workflows."
+                />
+              )}
+
               <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-5">
                 {[
                   ['Status', item.status],
@@ -460,6 +470,40 @@ export default function App() {
                       <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
                       <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
                     </figure>
+                  </div>
+                </>
+              )}
+
+              {item.id === 'zgrada-plus' && (
+                <>
+                  {/*
+                    TODO: Replace these ImagePlaceholder frames with real Zgrada Plus
+                    screen exports before publishing. Per 04_GRAPHIC_PROOF_PLAN
+                    Visuals 6-9, blank placeholders must not ship to production.
+                  */}
+                  <ImagePlaceholder
+                    variant="dashboard"
+                    tone="light"
+                    className="mt-5"
+                    alt="Zgrada Plus manager dashboard showing building management overview and operational modules."
+                    caption="Manager workflows use denser web layouts for overview and control."
+                  />
+                  <div className="mt-5 grid gap-5 lg:grid-cols-2 lg:items-start">
+                    <div role="img" aria-label="Mobile resident flow for building management, issue reporting and status tracking.">
+                      <div className="grid grid-cols-3 gap-2">
+                        <ImagePlaceholder variant="mobile" tone="light" />
+                        <ImagePlaceholder variant="mobile" tone="light" />
+                        <ImagePlaceholder variant="mobile" tone="light" />
+                      </div>
+                      <div className="mt-2 type-caption text-slate-500">Resident flows stay mobile-first and task-focused.</div>
+                    </div>
+                    <ImagePlaceholder
+                      variant="board"
+                      tone="light"
+                      aspectOverride="aspect-[4/3]"
+                      alt="Zgrada Plus interface states showing status badges, consent controls and form feedback."
+                      caption="Accessibility is shown through readable states, labels and predictable controls."
+                    />
                   </div>
                 </>
               )}
