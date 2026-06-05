@@ -125,6 +125,17 @@ html.experience-high-contrast body {
   border-color: rgba(250, 204, 21, 0.45) !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 html.experience-reduced-motion,
 html.experience-reduced-motion * {
   scroll-behavior: auto !important;

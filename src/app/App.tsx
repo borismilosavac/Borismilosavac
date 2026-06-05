@@ -197,6 +197,14 @@ export default function App() {
     localStorage.setItem('portfolio-view-options', JSON.stringify(preferences));
   }, [preferences]);
 
+  useEffect(() => {
+    if (preferences.lessMotion) {
+      document.documentElement.classList.add('experience-reduced-motion');
+    } else {
+      document.documentElement.classList.remove('experience-reduced-motion');
+    }
+  }, [preferences.lessMotion]);
+
   const textSize = preferences.largeText ? 'text-lg' : 'text-base';
   const sectionPad = preferences.quickScan ? 'py-14 md:py-20' : 'py-20 md:py-28';
   const surface = preferences.highContrast ? 'border-slate-900' : 'border-slate-200';
@@ -212,12 +220,12 @@ export default function App() {
           </button>
           <div className="hidden items-center gap-0.5 text-sm md:flex">
             {navItems.map(({ id, label }) => (
-              <button key={id} onClick={() => scrollTo(id, smooth)} className="rounded-full px-3.5 py-2 font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950">{label}</button>
+              <button key={id} onClick={() => scrollTo(id, smooth)} className="rounded-full px-3.5 py-2 font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-surface-dark px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800 sm:inline-flex">Get in touch</a>
-            <button onClick={() => setPanelOpen((open) => !open)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100" aria-expanded={panelOpen}>
+            <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-surface-dark px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none sm:inline-flex">Get in touch</a>
+            <button onClick={() => setPanelOpen((open) => !open)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" aria-expanded={panelOpen}>
               <SlidersHorizontal size={16} /> <span className="hidden sm:inline">View options</span>
             </button>
           </div>
@@ -231,13 +239,13 @@ export default function App() {
               </div>
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
                 {preferenceOptions.map((option) => (
-                  <button key={option.key} onClick={() => setPreferences((current) => ({ ...current, [option.key]: !current[option.key] }))} className={`rounded-xl border p-3 text-left transition-colors ${preferences[option.key] ? 'border-blue-600 bg-blue-50' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
+                  <button key={option.key} onClick={() => setPreferences((current) => ({ ...current, [option.key]: !current[option.key] }))} className={`rounded-xl border p-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${preferences[option.key] ? 'border-blue-600 bg-blue-50' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
                     <span className="block text-sm font-semibold text-slate-900">{option.label}</span>
                     <span className="mt-1 block text-xs leading-relaxed text-slate-600">{option.description}</span>
                   </button>
                 ))}
               </div>
-              <button onClick={() => setPreferences(defaultPreferences)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100"><RotateCcw size={15} /> Reset</button>
+              <button onClick={() => setPreferences(defaultPreferences)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><RotateCcw size={15} /> Reset</button>
             </div>
             <div className="mx-auto mt-3 max-w-7xl text-xs text-slate-500">Saved on this device only.</div>
           </div>
@@ -260,21 +268,21 @@ export default function App() {
               {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">{tag}</span>)}
             </div>
             <div className="mt-9 flex flex-wrap gap-3">
-              <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-semibold text-slate-950 transition-colors hover:bg-slate-200">View selected work <ArrowRight size={18} /></button>
-              <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors hover:bg-white/10">Read the 60-second summary</button>
-              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors hover:bg-white/10">Contact Boris</a>
+              <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">View selected work <ArrowRight size={18} /></button>
+              <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Read the 60-second summary</button>
+              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
           <div className="grid content-center gap-3">
             <div className="mb-1 type-eyebrow text-slate-400">Selected work</div>
             {caseStudies.map((item) => (
-              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition hover:border-white/25 hover:bg-white/[0.08]">
+              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition-all duration-200 hover:border-white/25 hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
                 <span className="font-mono text-sm text-slate-400">{item.number}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block type-h3">{item.title}</span>
                   <span className="mt-1 block truncate type-caption text-slate-400">{item.eyebrow}</span>
                 </span>
-                <ArrowUpRight size={20} className="shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+                <ArrowUpRight size={20} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
               </button>
             ))}
           </div>
@@ -295,7 +303,7 @@ export default function App() {
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {fitAreas.map((area) => (
-              <article key={area.title} className={`rounded-2xl border bg-white p-6 transition-colors hover:border-slate-300 ${surface}`}>
+              <article key={area.title} className={`rounded-2xl border bg-white p-6 transition-colors duration-150 hover:border-slate-300 ${surface}`}>
                 <h3 className="font-semibold tracking-tight text-slate-900">{area.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{area.body}</p>
               </article>
@@ -313,10 +321,10 @@ export default function App() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {caseStudies.map((item) => (
-              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-7 text-left shadow-sm transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl">
+              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-7 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-sm text-slate-400">{item.number}</span>
-                  <ArrowUpRight size={20} className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-slate-900" />
+                  <ArrowUpRight size={20} className="text-slate-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-slate-900" />
                 </div>
                 <div className="mt-5 type-eyebrow text-blue-700">{item.eyebrow}</div>
                 <h3 className="mt-2 type-h3-lg">{item.title}</h3>
@@ -443,7 +451,7 @@ export default function App() {
               </div>
               <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
                 {aiSteps.slice(0, 5).map(([step, purpose], index) => (
-                  <div key={step} className="bg-surface-dark p-5 transition-colors hover:bg-slate-900">
+                  <div key={step} className="bg-surface-dark p-5 transition-colors duration-150 hover:bg-slate-900">
                     <div className="font-mono text-sm text-slate-400">{String(index + 1).padStart(2, '0')}</div>
                     <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
                     <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
@@ -477,7 +485,7 @@ export default function App() {
               </div>
               <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
                 {aiSteps.slice(6).map(([step, purpose], index) => (
-                  <div key={step} className="bg-surface-dark p-5 transition-colors hover:bg-slate-900">
+                  <div key={step} className="bg-surface-dark p-5 transition-colors duration-150 hover:bg-slate-900">
                     <div className="font-mono text-sm text-slate-400">{String(index + 7).padStart(2, '0')}</div>
                     <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
                     <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
@@ -551,9 +559,9 @@ export default function App() {
               </dl>
             </div>
             <div className="grid content-start gap-3">
-              <a href="mailto:borismilosavac1985@gmail.com" className="group inline-flex items-center justify-between rounded-2xl bg-white p-5 font-semibold text-slate-950 transition-colors hover:bg-slate-200"><span className="inline-flex items-center gap-3"><Mail size={20} /> Email Boris</span><ArrowRight size={20} className="transition group-hover:translate-x-0.5" /></a>
-              <button onClick={() => window.print()} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors hover:bg-white/10"><span className="inline-flex items-center gap-3"><Download size={20} /> Print / Save as PDF</span><ArrowRight size={20} className="transition group-hover:translate-x-0.5" /></button>
-              <button onClick={() => scrollTo('top', smooth)} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors hover:bg-white/10"><span className="inline-flex items-center gap-3"><Eye size={20} /> Back to top</span><ArrowRight size={20} className="transition group-hover:translate-x-0.5" /></button>
+              <a href="mailto:borismilosavac1985@gmail.com" className="group inline-flex items-center justify-between rounded-2xl bg-white p-5 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Mail size={20} /> Email Boris</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></a>
+              <button onClick={() => window.print()} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Download size={20} /> Print / Save as PDF</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></button>
+              <button onClick={() => scrollTo('top', smooth)} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Eye size={20} /> Back to top</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></button>
               <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
                 <div className="inline-flex items-center gap-2 text-sm text-slate-300"><Briefcase size={18} /> Availability</div>
                 <p className="mt-2 font-semibold leading-relaxed">Open to Product Designer, Senior UX/UI Designer and UX/UI Designer roles in Munich, onsite, hybrid or remote.</p>
