@@ -479,6 +479,7 @@ export default function App() {
                     <ImagePlaceholder
                       variant="mobile"
                       tone="dark"
+                      className="mx-auto w-full max-w-[280px]"
                       alt="Mobile StockLog interface showing vehicle cards and operational actions."
                       caption="Mobile view supports quick access to inventory and deal status."
                     />
@@ -536,6 +537,7 @@ export default function App() {
                     <ImagePlaceholder
                       variant="mobile"
                       tone="dark"
+                      className="mx-auto w-full max-w-[280px]"
                       alt="WineRoom mobile product listing with filter, sort and search toolbar."
                       caption="Mobile toolbar keeps filter, sort and search available during browsing."
                     />
