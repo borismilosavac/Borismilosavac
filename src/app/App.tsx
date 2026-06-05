@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, RotateCcw, SlidersHorizontal } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
+import { ImagePlaceholder } from './components/ImagePlaceholder';
 import stocklogUi from '../stocklog-ui.png';
 import stocklogBoard from '../stocklog-board.svg';
 import stocklogShowroom from '../stocklog-showroom.png';
@@ -273,18 +274,38 @@ export default function App() {
               <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
-          <div className="grid content-center gap-3">
-            <div className="mb-1 type-eyebrow text-slate-400">Selected work</div>
-            {caseStudies.map((item) => (
-              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition-all duration-200 hover:border-white/25 hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
-                <span className="font-mono text-sm text-slate-400">{item.number}</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block type-h3">{item.title}</span>
-                  <span className="mt-1 block truncate type-caption text-slate-400">{item.eyebrow}</span>
-                </span>
-                <ArrowUpRight size={20} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
-              </button>
-            ))}
+          <div className="flex flex-col justify-center gap-4">
+            {/*
+              TODO: Replace ImagePlaceholder frames below with real project
+              screenshots before publishing to production. Per
+              docs/portfolio/04_GRAPHIC_PROOF_PLAN.md Visual 1, the hero
+              composite must not ship until Zgrada Plus (Visual 8) and
+              WineRoom (Visual 10) assets exist.
+            */}
+            <figure
+              role="img"
+              aria-label="Composite preview of Boris Milosavac's product design portfolio, showing dashboard, mobile and e-commerce interface work."
+              className="grid gap-2"
+            >
+              <ImagePlaceholder variant="dashboard" tone="dark" />
+              <div className="grid grid-cols-2 gap-2">
+                <ImagePlaceholder variant="mobile" tone="dark" aspectOverride="aspect-[4/3]" />
+                <ImagePlaceholder variant="ecommerce" tone="dark" />
+              </div>
+            </figure>
+            <div className="grid gap-2">
+              <div className="type-eyebrow text-slate-400">Selected work</div>
+              {caseStudies.map((item) => (
+                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition-all duration-200 hover:border-white/25 hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+                  <span className="font-mono text-sm text-slate-400">{item.number}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block type-h3">{item.title}</span>
+                    <span className="mt-1 block truncate type-caption text-slate-400">{item.eyebrow}</span>
+                  </span>
+                  <ArrowUpRight size={20} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>

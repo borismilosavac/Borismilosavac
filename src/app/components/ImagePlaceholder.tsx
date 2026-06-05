@@ -25,6 +25,7 @@ type ImagePlaceholderProps = {
   alt?: string;
   caption?: ReactNode;
   className?: string;
+  aspectOverride?: string;
 };
 
 const variantConfig: Record<PlaceholderVariant, { ratio: string; Icon: LucideIcon }> = {
@@ -37,8 +38,9 @@ const variantConfig: Record<PlaceholderVariant, { ratio: string; Icon: LucideIco
   contact: { ratio: 'aspect-[5/2]', Icon: UserRound },
 };
 
-export function ImagePlaceholder({ variant, tone = 'dark', alt, caption, className = '' }: ImagePlaceholderProps) {
+export function ImagePlaceholder({ variant, tone = 'dark', alt, caption, className = '', aspectOverride }: ImagePlaceholderProps) {
   const { ratio, Icon } = variantConfig[variant];
+  const aspectRatio = aspectOverride ?? ratio;
   const dark = tone === 'dark';
 
   const frame = dark ? 'border-white/10 bg-white/[0.03]' : 'border-slate-200 bg-slate-100';
@@ -49,7 +51,7 @@ export function ImagePlaceholder({ variant, tone = 'dark', alt, caption, classNa
   return (
     <figure className={`overflow-hidden rounded-3xl border ${frame} ${className}`}>
       <div
-        className={`relative grid w-full place-items-center ${ratio}`}
+        className={`relative grid w-full place-items-center ${aspectRatio}`}
         role={alt ? 'img' : undefined}
         aria-label={alt || undefined}
         aria-hidden={alt ? undefined : true}
