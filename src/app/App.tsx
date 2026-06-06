@@ -281,15 +281,16 @@ export default function App() {
       </header>
 
       <section id="top" data-header-theme="dark" className="relative overflow-hidden bg-surface-dark text-white">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-44 left-1/3 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[130px]" />
-          <div className="absolute -bottom-52 right-0 h-[36rem] w-[36rem] rounded-full bg-indigo-600/15 blur-[130px]" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="hero-aurora hero-aurora-1 absolute -top-44 left-1/3 h-[42rem] w-[42rem] max-w-[120vw] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[130px]" />
+          <div className="hero-aurora hero-aurora-2 absolute -bottom-52 right-0 h-[36rem] w-[36rem] max-w-[110vw] rounded-full bg-indigo-600/15 blur-[130px]" />
+          <div className="hero-aurora hero-aurora-3 absolute top-1/3 left-1/4 h-[30rem] w-[30rem] max-w-[100vw] rounded-full bg-sky-500/10 blur-[140px]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
         </div>
-        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 py-20 md:px-8 md:py-28 lg:min-h-[86vh] lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-14 px-4 pb-16 pt-28 md:px-8 md:pb-20 md:pt-32 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="min-w-0">
             <div className="mb-7 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
-            <h1 className="max-w-4xl text-balance type-display">I design complex digital products that people can actually use.</h1>
+            <h1 className="max-w-4xl text-balance type-display [overflow-wrap:break-word] hyphens-manual">I design <span className="hero-emphasis">complex digital products</span> that people can <span className="hero-emphasis">actually use</span>.</h1>
             <p className="mt-7 max-w-2xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
             <p className="mt-4 max-w-2xl leading-relaxed text-slate-400">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
             <div className="mt-7 flex flex-wrap gap-2 text-sm text-slate-200">
