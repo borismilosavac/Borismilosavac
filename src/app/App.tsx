@@ -1,28 +1,11 @@
-import { useEffect, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, Menu, RotateCcw, SlidersHorizontal, X } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, Menu, X } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { ImagePlaceholder } from './components/ImagePlaceholder';
 import stocklogUi from '../stocklog-ui.png';
 import stocklogBoard from '../stocklog-board.svg';
 import stocklogShowroom from '../stocklog-showroom.png';
 
-type PreferenceKey = 'largeText' | 'highContrast' | 'lessMotion' | 'quickScan';
-
-type Preferences = Record<PreferenceKey, boolean>;
-
-const preferenceOptions: { key: PreferenceKey; label: string; description: string }[] = [
-  { key: 'largeText', label: 'Larger text', description: 'Increase body copy and interface text for easier reading.' },
-  { key: 'highContrast', label: 'Higher contrast', description: 'Strengthen text, borders and surfaces for clearer separation.' },
-  { key: 'lessMotion', label: 'Less motion', description: 'Reduce animation and smooth scrolling.' },
-  { key: 'quickScan', label: 'Quick scan', description: 'Tighten spacing and reduce visual noise for faster reviewing.' },
-];
-
-const defaultPreferences: Preferences = {
-  largeText: false,
-  highContrast: false,
-  lessMotion: false,
-  quickScan: false,
-};
 
 const navItems: { id: string; label: string }[] = [
   { id: 'summary', label: 'Summary' },
@@ -185,40 +168,22 @@ function scrollTo(id: string, smooth: boolean) {
 }
 
 export default function App() {
-  const [panelOpen, setPanelOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [preferences, setPreferences] = useState<Preferences>(() => {
-    try {
-      return { ...defaultPreferences, ...JSON.parse(localStorage.getItem('portfolio-view-options') || '{}') };
-    } catch {
-      return defaultPreferences;
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem('portfolio-view-options', JSON.stringify(preferences));
-  }, [preferences]);
-
-  useEffect(() => {
-    if (preferences.lessMotion) {
-      document.documentElement.classList.add('experience-reduced-motion');
-    } else {
-      document.documentElement.classList.remove('experience-reduced-motion');
-    }
-  }, [preferences.lessMotion]);
-
-  const textSize = preferences.largeText ? 'text-lg' : 'text-base';
-  const sectionPad = preferences.quickScan ? 'py-14 md:py-20' : 'py-20 md:py-28';
-  const surface = preferences.highContrast ? 'border-slate-900' : 'border-slate-200';
-  const smooth = !preferences.lessMotion;
+  const sectionPad = 'py-20 md:py-28';
+  const surface = 'border-slate-200';
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   return (
-    <main className={`min-h-screen bg-slate-50 text-slate-950 antialiased ${textSize}`}>
+    <main className="min-h-screen bg-slate-50 text-slate-950 antialiased">
       <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
-          <button onClick={() => scrollTo('top', smooth)} className="flex items-center gap-2.5 text-left" aria-label="Back to top">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-surface-dark text-sm font-bold tracking-tight text-white">BM</span>
-            <span className="hidden text-sm font-semibold tracking-tight text-slate-900 sm:block">Boris Milosavac</span>
+          <button onClick={() => scrollTo('top', smooth)} className="flex items-center" aria-label="Boris Milosavac portfolio home">
+            <svg viewBox="0 0 71 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-7 w-auto text-slate-950">
+              <path d="M0 0.00292969H17.5C21.366 0.00292969 24.5 3.13694 24.5 7.00293V7.00293C24.5 10.8689 21.366 14.0029 17.5 14.0029H0V0.00292969Z" fill="currentColor"/>
+              <path d="M0 17.5029H17.5C21.366 17.5029 24.5 20.6369 24.5 24.5029V24.5029C24.5 28.3689 21.366 31.5029 17.5 31.5029H0V17.5029Z" fill="currentColor"/>
+              <path d="M27.9932 31.499V7.87402C27.9932 3.52478 31.5189 -0.000976562 35.8682 -0.000976562V-0.000976562C40.2174 -0.000976562 43.7432 3.52478 43.7432 7.87402V31.499H27.9932Z" fill="currentColor"/>
+              <path d="M47.2432 31.499V7.87402C47.2432 3.52478 50.7689 -0.000976562 55.1182 -0.000976562V-0.000976562C59.4674 -0.000976562 62.9932 3.52478 62.9932 7.87402V31.499H47.2432Z" fill="currentColor"/>
+            </svg>
           </button>
           <div className="hidden items-center gap-0.5 text-sm md:flex">
             {navItems.map(({ id, label }) => (
@@ -227,9 +192,6 @@ export default function App() {
           </div>
           <div className="flex items-center gap-2">
             <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-surface-dark px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none sm:inline-flex">Get in touch</a>
-            <button onClick={() => setPanelOpen((open) => !open)} className="hidden items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:inline-flex" aria-expanded={panelOpen}>
-              <SlidersHorizontal size={16} /> <span className="hidden sm:inline">View options</span>
-            </button>
             <button onClick={() => setMenuOpen((open) => !open)} className="inline-flex items-center justify-center rounded-xl border border-slate-300 p-2 text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none md:hidden" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}>
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -243,31 +205,10 @@ export default function App() {
                   <button key={id} onClick={() => { scrollTo(id, smooth); setMenuOpen(false); }} className="rounded-xl px-4 py-3 text-left font-medium text-slate-700 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
                 ))}
               </div>
-              <div className="mt-3 border-t border-slate-100 pt-3 flex flex-col gap-2">
+              <div className="mt-3 border-t border-slate-100 pt-3">
                 <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} className="inline-flex items-center gap-2 rounded-xl bg-surface-dark px-4 py-3 font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
-                <button onClick={() => { setPanelOpen((open) => !open); setMenuOpen(false); }} className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-3 font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><SlidersHorizontal size={16} /> View options</button>
               </div>
             </nav>
-          </div>
-        )}
-        {panelOpen && (
-          <div className="border-t border-slate-200 bg-white px-4 py-5 md:px-8">
-            <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-[1fr_2fr_auto] md:items-start">
-              <div>
-                <div className="font-semibold tracking-tight text-slate-900">Adjust this portfolio for easier review</div>
-                <p className="mt-1 text-sm text-slate-600">Change readability, contrast and motion preferences for a more comfortable viewing experience.</p>
-              </div>
-              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-                {preferenceOptions.map((option) => (
-                  <button key={option.key} onClick={() => setPreferences((current) => ({ ...current, [option.key]: !current[option.key] }))} className={`rounded-xl border p-3 text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${preferences[option.key] ? 'border-blue-600 bg-blue-50' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
-                    <span className="block text-sm font-semibold text-slate-900">{option.label}</span>
-                    <span className="mt-1 block text-xs leading-relaxed text-slate-600">{option.description}</span>
-                  </button>
-                ))}
-              </div>
-              <button onClick={() => setPreferences(defaultPreferences)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><RotateCcw size={15} /> Reset</button>
-            </div>
-            <div className="mx-auto mt-3 max-w-7xl text-xs text-slate-500">Saved on this device only.</div>
           </div>
         )}
       </nav>
