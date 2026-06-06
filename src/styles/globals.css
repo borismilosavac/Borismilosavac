@@ -136,23 +136,19 @@ header[data-header='light'] {
   }
 }
 
-/* Headline keyword emphasis — Newsreader italic with a
-   soft gradient fill. Readable on dark/light/dynamic
-   backgrounds; falls back to currentColor if the clip
-   is unsupported. */
+/* Headline keyword emphasis — subtle pixel-style accent.
+   Pixelify Sans only inside the highlight spans; sized
+   below the main cap height so its wider pixel metrics
+   don't clip in the tight headline line-height or cause
+   mobile overflow. Soft blue accent keeps strong contrast
+   on the dark hero without a loud neon effect. */
 .hero-emphasis {
-  font-style: italic;
-  background-image: linear-gradient(100deg, #c7d2fe 0%, #93c5fd 50%, #a5b4fc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  /* nudge italic so the gradient doesn't clip descenders */
-  padding-right: 0.04em;
-}
-
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .hero-emphasis {
-    color: #bfdbfe;
-    background-image: none;
-  }
+  font-family: var(--font-pixel);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.82em;
+  letter-spacing: 0.01em;
+  color: #93c5fd;
+  /* avoid clipping the rightmost pixel column */
+  padding-right: 0.06em;
 }
