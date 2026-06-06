@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, Menu, X } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { ImagePlaceholder } from './components/ImagePlaceholder';
@@ -169,51 +169,118 @@ function scrollTo(id: string, smooth: boolean) {
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('dark');
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const sectionPad = 'py-20 md:py-28';
   const surface = 'border-slate-200';
   const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Smart sticky: compact on scroll, hide on scroll-down past a safe
+  // threshold, reappear on scroll-up. Disabled under reduced motion.
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lastY = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      setScrolled(y > 8);
+      if (reduce) {
+        setHidden(false);
+      } else if (y > 160 && y > lastY + 4) {
+        setHidden(true);
+      } else if (y < lastY - 4 || y <= 160) {
+        setHidden(false);
+      }
+      lastY = y;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Section-aware header colour: a thin trip-line just below the header
+  // detects which section sits under it and adopts its light/dark theme.
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-header-theme]'));
+    if (sections.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const theme = entry.target.getAttribute('data-header-theme');
+            if (theme === 'light' || theme === 'dark') setHeaderTheme(theme);
+          }
+        });
+      },
+      { rootMargin: '-64px 0px -80% 0px', threshold: 0 },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const headerHidden = hidden && !menuOpen;
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-950 antialiased">
-      <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
-          <button onClick={() => scrollTo('top', smooth)} className="flex items-center" aria-label="Boris Milosavac portfolio home">
-            <svg viewBox="0 0 71 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-7 w-auto text-slate-950">
-              <path d="M0 0.00292969H17.5C21.366 0.00292969 24.5 3.13694 24.5 7.00293V7.00293C24.5 10.8689 21.366 14.0029 17.5 14.0029H0V0.00292969Z" fill="currentColor"/>
-              <path d="M0 17.5029H17.5C21.366 17.5029 24.5 20.6369 24.5 24.5029V24.5029C24.5 28.3689 21.366 31.5029 17.5 31.5029H0V17.5029Z" fill="currentColor"/>
-              <path d="M27.9932 31.499V7.87402C27.9932 3.52478 31.5189 -0.000976562 35.8682 -0.000976562V-0.000976562C40.2174 -0.000976562 43.7432 3.52478 43.7432 7.87402V31.499H27.9932Z" fill="currentColor"/>
-              <path d="M47.2432 31.499V7.87402C47.2432 3.52478 50.7689 -0.000976562 55.1182 -0.000976562V-0.000976562C59.4674 -0.000976562 62.9932 3.52478 62.9932 7.87402V31.499H47.2432Z" fill="currentColor"/>
-            </svg>
-          </button>
-          <div className="hidden items-center gap-0.5 text-sm md:flex">
-            {navItems.map(({ id, label }) => (
-              <button key={id} onClick={() => scrollTo(id, smooth)} className="rounded-full px-3.5 py-2 font-medium text-slate-600 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-surface-dark px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none sm:inline-flex">Get in touch</a>
-            <button onClick={() => setMenuOpen((open) => !open)} className="inline-flex items-center justify-center rounded-xl border border-slate-300 p-2 text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none md:hidden" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}>
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+      <header
+        data-header={headerTheme}
+        style={{ color: 'var(--header-fg)' }}
+        className={`fixed inset-x-0 top-0 z-50 transition-transform duration-300 will-change-transform ${headerHidden ? '-translate-y-full' : 'translate-y-0'}`}
+      >
+        <div
+          className={`transition-colors duration-300 ${scrolled || menuOpen ? 'border-b backdrop-blur-xl' : 'border-b border-transparent'}`}
+          style={{
+            backgroundColor: scrolled || menuOpen ? 'var(--header-surface)' : 'transparent',
+            borderColor: scrolled || menuOpen ? 'var(--header-border)' : 'transparent',
+          }}
+        >
+          <div className={`mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 transition-[padding] duration-300 md:px-8 ${scrolled ? 'py-2' : 'py-3.5'}`}>
+            <button onClick={() => scrollTo('top', smooth)} className="flex items-center rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" aria-label="Boris Milosavac portfolio home">
+              <svg viewBox="0 0 71 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-7 w-auto">
+                <path d="M0 0.00292969H17.5C21.366 0.00292969 24.5 3.13694 24.5 7.00293V7.00293C24.5 10.8689 21.366 14.0029 17.5 14.0029H0V0.00292969Z" fill="currentColor"/>
+                <path d="M0 17.5029H17.5C21.366 17.5029 24.5 20.6369 24.5 24.5029V24.5029C24.5 28.3689 21.366 31.5029 17.5 31.5029H0V17.5029Z" fill="currentColor"/>
+                <path d="M27.9932 31.499V7.87402C27.9932 3.52478 31.5189 -0.000976562 35.8682 -0.000976562V-0.000976562C40.2174 -0.000976562 43.7432 3.52478 43.7432 7.87402V31.499H27.9932Z" fill="currentColor"/>
+                <path d="M47.2432 31.499V7.87402C47.2432 3.52478 50.7689 -0.000976562 55.1182 -0.000976562V-0.000976562C59.4674 -0.000976562 62.9932 3.52478 62.9932 7.87402V31.499H47.2432Z" fill="currentColor"/>
+              </svg>
             </button>
+            <div className="hidden items-center gap-0.5 text-sm md:flex">
+              {navItems.map(({ id, label }) => (
+                <button key={id} onClick={() => scrollTo(id, smooth)} className="header-link rounded-full px-3.5 py-2 font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <a href="mailto:borismilosavac1985@gmail.com" style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:inline-flex">Get in touch</a>
+              <button onClick={() => setMenuOpen((open) => !open)} style={{ borderColor: 'var(--header-fg-muted)' }} className="header-control inline-flex items-center justify-center rounded-xl border p-2 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none md:hidden" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}>
+                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
         </div>
         {menuOpen && (
-          <div className="border-t border-slate-200 bg-white px-4 py-4 md:hidden">
+          <div className={`border-t px-4 py-4 backdrop-blur-xl md:hidden ${headerTheme === 'dark' ? 'border-white/10 bg-surface-dark/95 text-white' : 'border-slate-200 bg-white/95 text-slate-900'}`}>
             <nav aria-label="Mobile navigation">
               <div className="flex flex-col gap-1">
                 {navItems.map(({ id, label }) => (
-                  <button key={id} onClick={() => { scrollTo(id, smooth); setMenuOpen(false); }} className="rounded-xl px-4 py-3 text-left font-medium text-slate-700 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
+                  <button key={id} onClick={() => { scrollTo(id, smooth); setMenuOpen(false); }} className={`rounded-xl px-4 py-3 text-left font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${headerTheme === 'dark' ? 'text-slate-200 hover:bg-white/10 hover:text-white' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950'}`}>{label}</button>
                 ))}
               </div>
-              <div className="mt-3 border-t border-slate-100 pt-3">
-                <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} className="inline-flex items-center gap-2 rounded-xl bg-surface-dark px-4 py-3 font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
+              <div className={`mt-3 border-t pt-3 ${headerTheme === 'dark' ? 'border-white/10' : 'border-slate-100'}`}>
+                <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="inline-flex items-center gap-2 rounded-xl px-4 py-3 font-semibold transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
               </div>
             </nav>
           </div>
         )}
-      </nav>
+      </header>
 
-      <section id="top" className="relative overflow-hidden bg-surface-dark text-white">
+      <section id="top" data-header-theme="dark" className="relative overflow-hidden bg-surface-dark text-white">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -top-44 left-1/3 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[130px]" />
           <div className="absolute -bottom-52 right-0 h-[36rem] w-[36rem] rounded-full bg-indigo-600/15 blur-[130px]" />
@@ -270,7 +337,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="summary" className={`${sectionPad} px-4 md:px-8`}>
+      <section id="summary" data-header-theme="light" className={`${sectionPad} px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className={`rounded-3xl border bg-white p-6 shadow-sm md:p-12 ${surface}`}>
             <div className="mb-5 inline-flex items-center rounded-full bg-blue-50 px-3 py-1 type-eyebrow text-blue-700">60-second recruiter summary</div>
@@ -293,7 +360,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="work" className={`${sectionPad} border-y border-slate-200 bg-slate-100 px-4 md:px-8`}>
+      <section id="work" data-header-theme="light" className={`${sectionPad} border-y border-slate-200 bg-slate-100 px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 max-w-3xl">
             <div className="type-eyebrow text-slate-500">Selected work</div>
@@ -323,7 +390,7 @@ export default function App() {
         const subText = dark ? 'text-slate-300' : 'text-slate-600';
         const listItem = dark ? 'border-white/10 bg-white/[0.04] text-slate-300' : 'border-sky-100 bg-sky-50/80 text-slate-700';
         return (
-          <section key={item.id} id={item.id} className={`relative overflow-hidden ${sectionPad} px-4 md:px-8 bg-gradient-to-br ${item.palette} ${dark ? 'text-white' : 'text-slate-950'}`}>
+          <section key={item.id} id={item.id} data-header-theme={dark ? 'dark' : 'light'} className={`relative overflow-hidden ${sectionPad} px-4 md:px-8 bg-gradient-to-br ${item.palette} ${dark ? 'text-white' : 'text-slate-950'}`}>
             <div className="relative mx-auto max-w-7xl">
               <div className="flex flex-wrap items-center gap-4">
                 <span className={`font-mono text-5xl font-semibold md:text-6xl ${dark ? 'text-white/15' : 'text-slate-900/15'}`}>{item.number}</span>
@@ -527,7 +594,7 @@ export default function App() {
         );
       })}
 
-      <section id="ai" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
+      <section id="ai" data-header-theme="dark" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_45%)]" />
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-3xl">
@@ -607,7 +674,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="system" className={`${sectionPad} bg-white px-4 md:px-8`}>
+      <section id="system" data-header-theme="light" className={`${sectionPad} bg-white px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <div className="type-eyebrow text-blue-700">Design system snapshot</div>
@@ -655,7 +722,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="contact" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
+      <section id="contact" data-header-theme="dark" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -bottom-40 left-1/4 h-[34rem] w-[34rem] rounded-full bg-blue-600/15 blur-[130px]" />
         </div>

@@ -57,3 +57,52 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ─────────────────────────────────────────────
+   Smart header theming.
+   The fixed header overlays sections; foreground
+   colour adapts to the section currently beneath it
+   via the data-header attribute. All header colours
+   resolve from these CSS variables so the logo
+   (currentColor), nav, CTA and controls stay in sync.
+───────────────────────────────────────────── */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+header[data-header='dark'] {
+  --header-fg: #f8fafc;
+  --header-fg-muted: rgba(248, 250, 252, 0.74);
+  --header-surface: rgba(11, 17, 32, 0.55);
+  --header-border: rgba(255, 255, 255, 0.12);
+  --header-hover: rgba(255, 255, 255, 0.1);
+  --header-cta-bg: #ffffff;
+  --header-cta-fg: #0b1120;
+}
+
+header[data-header='light'] {
+  --header-fg: #0f172a;
+  --header-fg-muted: #475569;
+  --header-surface: rgba(248, 250, 252, 0.74);
+  --header-border: rgba(15, 23, 42, 0.1);
+  --header-hover: rgba(15, 23, 42, 0.06);
+  --header-cta-bg: #0b1120;
+  --header-cta-fg: #ffffff;
+}
+
+.header-link {
+  color: var(--header-fg-muted);
+}
+
+.header-link:hover {
+  color: var(--header-fg);
+  background-color: var(--header-hover);
+}
+
+.header-control {
+  color: var(--header-fg);
+}
+
+.header-control:hover {
+  background-color: var(--header-hover);
+}
