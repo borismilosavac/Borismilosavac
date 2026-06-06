@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, RotateCcw, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, Menu, RotateCcw, SlidersHorizontal, X } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { ImagePlaceholder } from './components/ImagePlaceholder';
 import stocklogUi from '../stocklog-ui.png';
@@ -186,6 +186,7 @@ function scrollTo(id: string, smooth: boolean) {
 
 export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [preferences, setPreferences] = useState<Preferences>(() => {
     try {
       return { ...defaultPreferences, ...JSON.parse(localStorage.getItem('portfolio-view-options') || '{}') };
@@ -226,11 +227,29 @@ export default function App() {
           </div>
           <div className="flex items-center gap-2">
             <a href="mailto:borismilosavac1985@gmail.com" className="hidden items-center gap-2 rounded-full bg-surface-dark px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none sm:inline-flex">Get in touch</a>
-            <button onClick={() => setPanelOpen((open) => !open)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" aria-expanded={panelOpen}>
+            <button onClick={() => setPanelOpen((open) => !open)} className="hidden items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:inline-flex" aria-expanded={panelOpen}>
               <SlidersHorizontal size={16} /> <span className="hidden sm:inline">View options</span>
+            </button>
+            <button onClick={() => setMenuOpen((open) => !open)} className="inline-flex items-center justify-center rounded-xl border border-slate-300 p-2 text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none md:hidden" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}>
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
+        {menuOpen && (
+          <div className="border-t border-slate-200 bg-white px-4 py-4 md:hidden">
+            <nav aria-label="Mobile navigation">
+              <div className="flex flex-col gap-1">
+                {navItems.map(({ id, label }) => (
+                  <button key={id} onClick={() => { scrollTo(id, smooth); setMenuOpen(false); }} className="rounded-xl px-4 py-3 text-left font-medium text-slate-700 transition-colors duration-150 hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
+                ))}
+              </div>
+              <div className="mt-3 border-t border-slate-100 pt-3 flex flex-col gap-2">
+                <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} className="inline-flex items-center gap-2 rounded-xl bg-surface-dark px-4 py-3 font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
+                <button onClick={() => { setPanelOpen((open) => !open); setMenuOpen(false); }} className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-3 font-semibold text-slate-700 transition-colors duration-150 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><SlidersHorizontal size={16} /> View options</button>
+              </div>
+            </nav>
+          </div>
+        )}
         {panelOpen && (
           <div className="border-t border-slate-200 bg-white px-4 py-5 md:px-8">
             <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-[1fr_2fr_auto] md:items-start">
@@ -259,9 +278,9 @@ export default function App() {
           <div className="absolute -bottom-52 right-0 h-[36rem] w-[36rem] rounded-full bg-indigo-600/15 blur-[130px]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
         </div>
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 md:px-8 md:py-28 lg:min-h-[86vh] lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur"><MapPin size={15} /> Munich, Germany · Authorised to work in Germany</div>
+        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 py-20 md:px-8 md:py-28 lg:min-h-[86vh] lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="min-w-0">
+            <div className="mb-7 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
             <h1 className="max-w-4xl text-balance type-display">I design complex digital products that people can actually use.</h1>
             <p className="mt-7 max-w-2xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
             <p className="mt-4 max-w-2xl leading-relaxed text-slate-400">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
@@ -274,7 +293,7 @@ export default function App() {
               <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
-          <div className="flex flex-col justify-center gap-4">
+          <div className="flex min-w-0 flex-col justify-center gap-4">
             {/*
               TODO: Replace ImagePlaceholder frames below with real project
               screenshots before publishing to production. Per
@@ -285,7 +304,7 @@ export default function App() {
             <figure
               role="img"
               aria-label="Composite preview of Boris Milosavac's product design portfolio, showing dashboard, mobile and e-commerce interface work."
-              className="grid gap-2"
+              className="grid w-full gap-2"
             >
               <ImagePlaceholder variant="dashboard" tone="dark" />
               <div className="grid grid-cols-2 gap-2">
