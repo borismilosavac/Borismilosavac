@@ -141,7 +141,7 @@ header[data-header='light'] {
   max-width: 100%;
   font-family: var(--font-display);
   font-weight: inherit;
-  letter-spacing: -0.01em;
+  letter-spacing: inherit;
   color: #93c5fd;
   overflow-wrap: break-word;
   animation: heroGlitchBase var(--glitch-cycle) steps(1, end) infinite;
@@ -149,7 +149,9 @@ header[data-header='light'] {
 }
 
 .hero-emphasis::after {
-  content: attr(data-text);
+  /* '/ ""' gives the generated text an empty accessible name so screen
+     readers ignore it — prevents duplicate announcement of the phrase. */
+  content: attr(data-text) / "";
   position: absolute;
   inset: 0;
   pointer-events: none;
