@@ -46,6 +46,12 @@
   --font-display: var(--font-serif);
   --font-pixel: 'Pixelify Sans', 'Silkscreen', monospace;
 
+  /* Harmonic glitch timing for highlighted headline phrases */
+  --glitch-cycle: 9s;
+  --glitch-delay-a: 0s;
+  --glitch-delay-b: 4.5s;
+  --glitch-shift: 2px;
+
   /* Typography scale tokens */
   --text-body: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);
   --text-caption: 0.8125rem;
