@@ -51,6 +51,7 @@
   --glitch-delay-b: 4.5s;
   --glitch-shift: 2px;
   --glitch-burst-opacity: 0.85;
+  --pixel-burst-opacity: 1;
 
   /* Typography scale tokens */
   --text-body: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);

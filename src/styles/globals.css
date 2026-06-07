@@ -127,31 +127,30 @@ header[data-header='light'] {
   will-change: auto;
 }
 
-/* Headline keyword emphasis.
-   Default = Plus Jakarta Sans (matches the headline, soft-blue accent).
-   The real text stays semantic + stable. A pixel-font overlay (::after,
-   content: attr(data-text)) cross-fades in only during the glitch burst,
-   then back to Jakarta — Jakarta → glitch → pixel → correction → Jakarta.
-   Overlay is absolute (out of flow) so there is no layout shift; only
-   opacity + transform animate. inline-block keeps the box stable while the
-   phrase still wraps internally. */
+/* Headline keyword emphasis — real two-layer system.
+   Wrapper holds a stable Plus Jakarta Sans base layer (the accessible text)
+   and an aria-hidden Pixelify Sans overlay layer (absolute, out of flow).
+   During the burst the base fades out and the pixel layer fades in, then
+   back — Jakarta → glitch → pixel → correction → Jakarta. Only opacity +
+   tiny transform animate, so there is no layout shift. */
 .hero-emphasis {
   position: relative;
   display: inline-block;
   max-width: 100%;
+  color: #93c5fd;
+  overflow-wrap: break-word;
+}
+
+.hero-emphasis__base {
+  display: inline-block;
   font-family: var(--font-display);
   font-weight: inherit;
   letter-spacing: inherit;
-  color: #93c5fd;
-  overflow-wrap: break-word;
   animation: heroGlitchBase var(--glitch-cycle) steps(1, end) infinite;
   animation-delay: var(--glitch-delay, 0s);
 }
 
-.hero-emphasis::after {
-  /* '/ ""' gives the generated text an empty accessible name so screen
-     readers ignore it — prevents duplicate announcement of the phrase. */
-  content: attr(data-text) / "";
+.hero-emphasis__pixel {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -165,10 +164,10 @@ header[data-header='light'] {
   animation-delay: var(--glitch-delay, 0s);
 }
 
-/* Base Jakarta text: stable, then a 1-frame pre-glitch dim/shift, hidden
-   while the pixel overlay shows, a correction shift, then stable. */
+/* Base Jakarta text: stable, a 1-frame pre-glitch dim/shift, hidden while
+   the pixel layer shows, a correction shift, then stable. */
 @keyframes heroGlitchBase {
-  0%, 30%, 38%, 100% {
+  0%, 30%, 40%, 100% {
     opacity: 1;
     transform: translate(0, 0);
   }
@@ -176,47 +175,52 @@ header[data-header='light'] {
     opacity: var(--glitch-burst-opacity);
     transform: translate(calc(var(--glitch-shift) * -1), 0);
   }
-  32%, 36% {
+  32%, 38% {
     opacity: 0;
     transform: translate(0, 0);
   }
-  37% {
+  39% {
     opacity: 1;
     transform: translate(var(--glitch-shift), 0);
   }
 }
 
-/* Pixel overlay: hidden, then appears for the burst with micro-jitter, gone. */
+/* Pixel layer: hidden, then clearly visible across the burst (~0.5s) with
+   micro-jitter, then gone. */
 @keyframes heroGlitchPixel {
-  0%, 31%, 37%, 100% {
+  0%, 31%, 39%, 100% {
     opacity: 0;
     transform: translate(0, 0);
   }
   32% {
-    opacity: 1;
+    opacity: var(--pixel-burst-opacity);
     transform: translate(var(--glitch-shift), 0);
   }
   34% {
-    opacity: 1;
+    opacity: var(--pixel-burst-opacity);
     transform: translate(calc(var(--glitch-shift) * -1), 0);
   }
   36% {
-    opacity: 1;
+    opacity: var(--pixel-burst-opacity);
     transform: translate(0, 0);
+  }
+  38% {
+    opacity: var(--pixel-burst-opacity);
+    transform: translate(var(--glitch-shift), 0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-aurora-1,
   .hero-aurora-2,
-  .hero-emphasis,
-  .hero-emphasis::after {
+  .hero-emphasis__base,
+  .hero-emphasis__pixel {
     animation: none !important;
   }
-  .hero-emphasis {
+  .hero-emphasis__base {
     opacity: 1;
   }
-  .hero-emphasis::after {
+  .hero-emphasis__pixel {
     opacity: 0;
   }
 }
