@@ -126,13 +126,29 @@ header[data-header='light'] {
   animation-play-state: paused;
   will-change: auto;
 }
+.motion-paused .hero-signal {
+  animation-play-state: paused;
+}
 
-/* Headline keyword emphasis — real two-layer system.
-   Wrapper holds a stable Plus Jakarta Sans base layer (the accessible text)
-   and an aria-hidden Pixelify Sans overlay layer (absolute, out of flow).
-   During the burst the base fades out and the pixel layer fades in, then
-   back — Jakarta → glitch → pixel → correction → Jakarta. Only opacity +
-   tiny transform animate, so there is no layout shift. */
+/* Subtle background response synced to the headline glitch cycle:
+   a faint signal bump at the decode moment and the clarity moment.
+   Opacity-only (composited) and paused offscreen — no scroll cost. */
+.hero-signal {
+  animation: heroSignalPulse var(--glitch-cycle) ease-in-out infinite;
+}
+@keyframes heroSignalPulse {
+  0%, 15%, 30%, 43%, 56%, 100% { opacity: 0; }
+  21% { opacity: 0.06; }
+  49% { opacity: 0.04; }
+}
+
+/* Headline keyword emphasis — "Signal → Decode → Clarity".
+   Real two-layer system per phrase: a stable Plus Jakarta Sans base
+   (accessible) + an aria-hidden Pixelify Sans overlay (absolute, out of
+   flow). Two distinct behaviours support the meaning:
+   • --decode ("complex digital products"): crisp sliced data-decode.
+   • --clarity ("actually use"): calm stabilisation + clarity underline.
+   Only opacity / transform / clip-path animate — no layout shift. */
 .hero-emphasis {
   position: relative;
   display: inline-block;
@@ -146,8 +162,6 @@ header[data-header='light'] {
   font-family: var(--font-display);
   font-weight: inherit;
   letter-spacing: inherit;
-  animation: heroGlitchBase var(--glitch-cycle) steps(1, end) infinite;
-  animation-delay: var(--glitch-delay, 0s);
 }
 
 .hero-emphasis__pixel {
@@ -160,67 +174,93 @@ header[data-header='light'] {
   letter-spacing: 0.01em;
   color: #bfdbfe;
   opacity: 0;
-  animation: heroGlitchPixel var(--glitch-cycle) steps(1, end) infinite;
-  animation-delay: var(--glitch-delay, 0s);
 }
 
-/* Base Jakarta text: stable, a 1-frame pre-glitch dim/shift, hidden while
-   the pixel layer shows, a correction shift, then stable. */
-@keyframes heroGlitchBase {
-  0%, 30%, 40%, 100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-  31% {
-    opacity: var(--glitch-burst-opacity);
-    transform: translate(calc(var(--glitch-shift) * -1), 0);
-  }
-  32%, 38% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-  39% {
-    opacity: 1;
-    transform: translate(var(--glitch-shift), 0);
-  }
+/* Phrase A — DECODE: crisp step cuts, base hides, pixel reveals in
+   horizontal slices with a small data-shift, then snaps back. */
+.hero-emphasis--decode .hero-emphasis__base {
+  animation: decodeBase var(--glitch-cycle) steps(1, end) infinite;
+}
+.hero-emphasis--decode .hero-emphasis__pixel {
+  animation: decodePixel var(--glitch-cycle) steps(1, end) infinite;
 }
 
-/* Pixel layer: hidden, then clearly visible across the burst (~0.5s) with
-   micro-jitter, then gone. */
-@keyframes heroGlitchPixel {
-  0%, 31%, 39%, 100% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-  32% {
-    opacity: var(--pixel-burst-opacity);
-    transform: translate(var(--glitch-shift), 0);
-  }
-  34% {
-    opacity: var(--pixel-burst-opacity);
-    transform: translate(calc(var(--glitch-shift) * -1), 0);
-  }
-  36% {
-    opacity: var(--pixel-burst-opacity);
-    transform: translate(0, 0);
-  }
-  38% {
-    opacity: var(--pixel-burst-opacity);
-    transform: translate(var(--glitch-shift), 0);
-  }
+/* Phrase B — CLARITY: smooth cross-fade, brief pixel signal resolves back
+   into Jakarta, then a soft underline clarity pulse. */
+.hero-emphasis--clarity .hero-emphasis__base {
+  animation: clarityBase var(--glitch-cycle) ease-out infinite;
+}
+.hero-emphasis--clarity .hero-emphasis__pixel {
+  animation: clarityPixel var(--glitch-cycle) ease-out infinite;
+}
+.hero-emphasis--clarity::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.08em;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #93c5fd, transparent);
+  opacity: 0;
+  transform: scaleX(0.5);
+  transform-origin: center;
+  pointer-events: none;
+  animation: clarityUnderline var(--glitch-cycle) ease-out infinite;
+}
+
+@keyframes decodeBase {
+  0%, 17%, 27%, 100% { opacity: 1; transform: translate(0, 0); }
+  18% { opacity: var(--glitch-burst-opacity); transform: translate(calc(var(--glitch-shift) * -1), 0); }
+  19%, 25% { opacity: 0; transform: translate(0, 0); }
+  26% { opacity: 1; transform: translate(var(--glitch-shift), 0); }
+}
+
+@keyframes decodePixel {
+  0%, 18%, 26%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+  19% { opacity: var(--pixel-burst-opacity); transform: translate(var(--glitch-shift), 0); clip-path: inset(0 0 55% 0); }
+  21% { opacity: var(--pixel-burst-opacity); transform: translate(calc(var(--glitch-shift) * -1), 0); clip-path: inset(45% 0 25% 0); }
+  23% { opacity: var(--pixel-burst-opacity); transform: translate(var(--glitch-shift), 0); clip-path: inset(72% 0 0 0); }
+  25% { opacity: var(--pixel-burst-opacity); transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+}
+
+@keyframes clarityBase {
+  0%, 43% { opacity: 1; }
+  46% { opacity: 0.15; }
+  48% { opacity: 0.15; }
+  51% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes clarityPixel {
+  0%, 44% { opacity: 0; }
+  46% { opacity: var(--pixel-burst-opacity); }
+  48% { opacity: var(--pixel-burst-opacity); }
+  51% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes clarityUnderline {
+  0%, 49% { opacity: 0; transform: scaleX(0.5); }
+  52% { opacity: 0.9; transform: scaleX(1); }
+  58% { opacity: 0; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-aurora-1,
   .hero-aurora-2,
+  .hero-signal,
   .hero-emphasis__base,
-  .hero-emphasis__pixel {
+  .hero-emphasis__pixel,
+  .hero-emphasis--clarity::after {
     animation: none !important;
   }
   .hero-emphasis__base {
     opacity: 1;
   }
-  .hero-emphasis__pixel {
+  .hero-emphasis__pixel,
+  .hero-emphasis--clarity::after {
     opacity: 0;
   }
 }

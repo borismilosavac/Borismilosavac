@@ -46,7 +46,7 @@
   --font-pixel: 'Pixelify Sans', 'Silkscreen', monospace;
 
   /* Harmonic glitch timing for highlighted headline phrases */
-  --glitch-cycle: 9s;
+  --glitch-cycle: 13s;
   --glitch-delay-a: 0s;
   --glitch-delay-b: 4.5s;
   --glitch-shift: 2px;
