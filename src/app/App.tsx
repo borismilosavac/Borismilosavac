@@ -301,50 +301,40 @@ export default function App() {
           <div className="hero-signal absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(120,170,255,0.45),transparent_55%)] opacity-0" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
         </div>
-        <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-14 px-4 pb-16 pt-28 md:px-8 md:pb-20 md:pt-32 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 md:pb-16 md:pt-28 lg:gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="min-w-0">
-            <div className="mb-7 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
-            <h1 className="max-w-4xl text-balance type-display [overflow-wrap:break-word] hyphens-manual">I design <span className="hero-emphasis hero-emphasis--decode"><span className="hero-emphasis__base">complex digital products</span><span className="hero-emphasis__pixel" aria-hidden="true">complex digital products</span></span> that people can <span className="hero-emphasis hero-emphasis--clarity"><span className="hero-emphasis__base">actually use</span><span className="hero-emphasis__pixel" aria-hidden="true">actually use</span></span>.</h1>
-            <p className="mt-7 max-w-2xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
-            <p className="mt-4 max-w-2xl leading-relaxed text-slate-400">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
-            <div className="mt-7 flex flex-wrap gap-2 text-sm text-slate-200">
-              {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">{tag}</span>)}
+            <div className="mb-5 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
+            <h1 className="max-w-[24ch] text-balance type-display [overflow-wrap:break-word] hyphens-manual">I design <span className="hero-emphasis hero-emphasis--decode"><span className="hero-emphasis__base">complex digital products</span><span className="hero-emphasis__pixel" aria-hidden="true">complex digital products</span></span> that people can <span className="hero-emphasis hero-emphasis--clarity"><span className="hero-emphasis__base">actually use</span><span className="hero-emphasis__pixel" aria-hidden="true">actually use</span></span>.</h1>
+            <p className="mt-5 max-w-xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
+            <div className="mt-5 flex flex-wrap gap-2 text-sm text-slate-200">
+              {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{tag}</span>)}
             </div>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">View selected work <ArrowRight size={18} /></button>
-              <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Read the 60-second summary</button>
-              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold font-[family-name:var(--font-display)] text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">View selected work <ArrowRight size={18} /></button>
+              <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Read the 60-second summary</button>
+              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 font-semibold font-[family-name:var(--font-display)] text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
-          <div className="flex min-w-0 flex-col justify-center gap-4">
+          <div className="flex min-w-0 flex-col justify-center gap-5">
             {/*
-              TODO: Replace ImagePlaceholder frames below with real project
-              screenshots before publishing to production. Per
-              docs/portfolio/04_GRAPHIC_PROOF_PLAN.md Visual 1, the hero
-              composite must not ship until Zgrada Plus (Visual 8) and
-              WineRoom (Visual 10) assets exist.
+              TODO: Replace this ImagePlaceholder with a real StockLog product
+              screenshot before publishing (docs/portfolio/04_GRAPHIC_PROOF_PLAN
+              Visual 1). Placeholder must not ship to production.
             */}
-            <figure
-              role="img"
-              aria-label="Composite preview of Boris Milosavac's product design portfolio, showing dashboard, mobile and e-commerce interface work."
-              className="grid w-full gap-2"
-            >
-              <ImagePlaceholder variant="dashboard" tone="dark" />
-              <div className="grid grid-cols-2 gap-2">
-                <ImagePlaceholder variant="mobile" tone="dark" aspectOverride="aspect-[4/3]" />
-                <ImagePlaceholder variant="ecommerce" tone="dark" />
-              </div>
-            </figure>
+            <ImagePlaceholder
+              variant="dashboard"
+              tone="dark"
+              aspectOverride="aspect-[16/9]"
+              alt="Compact preview of Boris Milosavac's product interface work."
+            />
             <div className="grid gap-2">
               <div className="type-eyebrow text-slate-400">Selected work</div>
               {caseStudies.map((item) => (
-                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left transition-all duration-200 hover:border-white/25 hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3.5 text-left transition-all duration-200 hover:border-white/25 hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
                   <span className="font-mono text-sm text-slate-400">{item.number}</span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block type-h3">{item.title}</span>
-                    <span className="mt-1 block truncate type-caption text-slate-400">{item.eyebrow}</span>
-                  </span>
-                  <ArrowUpRight size={20} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+                  <span className="min-w-0 flex-1 truncate text-base font-semibold">{item.title}</span>
+                  <ArrowUpRight size={18} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
                 </button>
               ))}
             </div>

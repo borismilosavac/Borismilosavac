@@ -57,7 +57,7 @@
   --text-body: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);
   --text-caption: 0.8125rem;
   --text-meta: 0.8125rem;
-  --heading-hero: clamp(2.625rem, 5vw + 0.75rem, 6rem);
+  --heading-hero: clamp(2.625rem, 1.5vw + 1.5rem, 3.5rem);
   --heading-section: clamp(2rem, 2.75vw + 0.75rem, 4rem);
   --heading-case: clamp(2.125rem, 3.5vw + 0.75rem, 4.5rem);
   --line-body: 1.62;
