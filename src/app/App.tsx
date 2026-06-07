@@ -301,12 +301,12 @@ export default function App() {
           <div className="hero-signal absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(120,170,255,0.45),transparent_55%)] opacity-0" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
         </div>
-        <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 md:pb-16 md:pt-28 lg:gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 lg:gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="min-w-0">
             <div className="mb-5 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
             <h1 className="max-w-[24ch] text-balance type-display [overflow-wrap:break-word] hyphens-manual">I design <span className="hero-emphasis hero-emphasis--decode"><span className="hero-emphasis__base">complex digital products</span><span className="hero-emphasis__pixel" aria-hidden="true">complex digital products</span></span> that people can <span className="hero-emphasis hero-emphasis--clarity"><span className="hero-emphasis__base">actually use</span><span className="hero-emphasis__pixel" aria-hidden="true">actually use</span></span>.</h1>
             <p className="mt-5 max-w-xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
+            <p className="hero-subcopy mt-3 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
             <div className="mt-5 flex flex-wrap gap-2 text-sm text-slate-200">
               {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{tag}</span>)}
             </div>

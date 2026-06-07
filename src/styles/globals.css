@@ -65,6 +65,16 @@ section[id] {
   scroll-margin-top: 4.5rem;
 }
 
+/* On short desktop/laptop viewports, drop the supplementary hero paragraph
+   so the full two-column Hero fits in the first screen without scrolling.
+   The copy stays in the DOM and shows on taller screens and on mobile
+   (where vertical scrolling is expected). */
+@media (min-width: 1024px) and (max-height: 730px) {
+  .hero-subcopy {
+    display: none;
+  }
+}
+
 header[data-header='dark'] {
   --header-fg: #f8fafc;
   --header-fg-muted: rgba(248, 250, 252, 0.74);
