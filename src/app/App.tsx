@@ -271,7 +271,7 @@ export default function App() {
               ))}
             </div>
             <div className="flex items-center gap-2">
-              <a href="mailto:borismilosavac1985@gmail.com" style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:inline-flex">Get in touch</a>
+              <a href="mailto:borismilosavac1985@gmail.com" style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold font-[family-name:var(--font-display)] transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:inline-flex">Get in touch</a>
               <button onClick={() => setMenuOpen((open) => !open)} style={{ borderColor: 'var(--header-fg-muted)' }} className="header-control inline-flex items-center justify-center rounded-xl border p-2 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none md:hidden" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}>
                 {menuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -287,7 +287,7 @@ export default function App() {
                 ))}
               </div>
               <div className={`mt-3 border-t pt-3 ${headerTheme === 'dark' ? 'border-white/10' : 'border-slate-100'}`}>
-                <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="inline-flex items-center gap-2 rounded-xl px-4 py-3 font-semibold transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
+                <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="inline-flex items-center gap-2 rounded-xl px-4 py-3 font-semibold font-[family-name:var(--font-display)] transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
               </div>
             </nav>
           </div>
@@ -312,7 +312,7 @@ export default function App() {
             <div className="mt-9 flex flex-wrap gap-3">
               <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">View selected work <ArrowRight size={18} /></button>
               <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Read the 60-second summary</button>
-              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
+              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold font-[family-name:var(--font-display)] text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
           <div className="flex min-w-0 flex-col justify-center gap-4">
@@ -759,7 +759,7 @@ export default function App() {
               </dl>
             </div>
             <div className="grid content-start gap-3">
-              <a href="mailto:borismilosavac1985@gmail.com" className="group inline-flex items-center justify-between rounded-2xl bg-white p-5 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Mail size={20} /> Email Boris</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></a>
+              <a href="mailto:borismilosavac1985@gmail.com" className="group inline-flex items-center justify-between rounded-2xl bg-white p-5 font-semibold font-[family-name:var(--font-display)] text-slate-950 transition-colors duration-150 hover:bg-slate-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Mail size={20} /> Email Boris</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></a>
               <button onClick={() => window.print()} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Download size={20} /> Print / Save as PDF</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></button>
               <button onClick={() => scrollTo('top', smooth)} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Eye size={20} /> Back to top</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></button>
               <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">

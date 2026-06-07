@@ -86,6 +86,7 @@ header[data-header='light'] {
 }
 
 .header-link {
+  font-family: var(--font-display);
   color: var(--header-fg-muted);
 }
 
