@@ -127,68 +127,94 @@ header[data-header='light'] {
   will-change: auto;
 }
 
-/* Headline keyword emphasis — subtle pixel-style accent.
-   Pixelify Sans only inside the highlight spans; sized
-   below the main cap height so its wider pixel metrics
-   don't clip in the tight headline line-height or cause
-   mobile overflow. Soft blue accent keeps strong contrast
-   on the dark hero without a loud neon effect. */
+/* Headline keyword emphasis.
+   Default = Plus Jakarta Sans (matches the headline, soft-blue accent).
+   The real text stays semantic + stable. A pixel-font overlay (::after,
+   content: attr(data-text)) cross-fades in only during the glitch burst,
+   then back to Jakarta — Jakarta → glitch → pixel → correction → Jakarta.
+   Overlay is absolute (out of flow) so there is no layout shift; only
+   opacity + transform animate. inline-block keeps the box stable while the
+   phrase still wraps internally. */
 .hero-emphasis {
-  font-family: var(--font-pixel);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.82em;
-  letter-spacing: 0.01em;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-weight: inherit;
+  letter-spacing: -0.01em;
   color: #93c5fd;
-  /* avoid clipping the rightmost pixel column */
-  padding-right: 0.06em;
-  /* harmonic glitch — paint-only (text-shadow + opacity), inline-safe so
-     phrases keep wrapping; hard step cuts for a precise digital feel */
-  animation: heroGlitch var(--glitch-cycle) steps(1, end) infinite;
+  overflow-wrap: break-word;
+  animation: heroGlitchBase var(--glitch-cycle) steps(1, end) infinite;
+  animation-delay: var(--glitch-delay, 0s);
 }
 
-/* Three crisp ~0.09s flashes with stable gaps, then a fully stable tail —
-   no held/dimmed state. Chromatic offset uses em units (~1.5px at hero
-   size) — subtle, paint-only, no layout. */
-@keyframes heroGlitch {
-  0%, 84% {
+.hero-emphasis::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--font-pixel);
+  font-weight: 500;
+  font-size: 0.9em;
+  letter-spacing: 0.01em;
+  color: #bfdbfe;
+  opacity: 0;
+  animation: heroGlitchPixel var(--glitch-cycle) steps(1, end) infinite;
+  animation-delay: var(--glitch-delay, 0s);
+}
+
+/* Base Jakarta text: stable, then a 1-frame pre-glitch dim/shift, hidden
+   while the pixel overlay shows, a correction shift, then stable. */
+@keyframes heroGlitchBase {
+  0%, 30%, 38%, 100% {
     opacity: 1;
-    text-shadow: none;
+    transform: translate(0, 0);
   }
-  85% {
-    opacity: 0.9;
-    text-shadow: -0.045em 0 rgba(56, 189, 248, 0.55), 0.045em 0 rgba(244, 114, 182, 0.45);
+  31% {
+    opacity: var(--glitch-burst-opacity);
+    transform: translate(calc(var(--glitch-shift) * -1), 0);
   }
-  86% {
+  32%, 36% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  37% {
     opacity: 1;
-    text-shadow: none;
+    transform: translate(var(--glitch-shift), 0);
   }
-  89% {
-    opacity: 0.85;
-    text-shadow: 0.04em 0 rgba(56, 189, 248, 0.5), -0.04em 0 rgba(244, 114, 182, 0.4);
+}
+
+/* Pixel overlay: hidden, then appears for the burst with micro-jitter, gone. */
+@keyframes heroGlitchPixel {
+  0%, 31%, 37%, 100% {
+    opacity: 0;
+    transform: translate(0, 0);
   }
-  90% {
+  32% {
     opacity: 1;
-    text-shadow: none;
+    transform: translate(var(--glitch-shift), 0);
   }
-  92% {
-    opacity: 0.92;
-    text-shadow: -0.03em 0 rgba(56, 189, 248, 0.45), 0.03em 0 rgba(244, 114, 182, 0.35);
-  }
-  93%, 100% {
+  34% {
     opacity: 1;
-    text-shadow: none;
+    transform: translate(calc(var(--glitch-shift) * -1), 0);
+  }
+  36% {
+    opacity: 1;
+    transform: translate(0, 0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-aurora-1,
   .hero-aurora-2,
-  .hero-emphasis {
+  .hero-emphasis,
+  .hero-emphasis::after {
     animation: none !important;
   }
   .hero-emphasis {
     opacity: 1;
-    text-shadow: none;
+  }
+  .hero-emphasis::after {
+    opacity: 0;
   }
 }
