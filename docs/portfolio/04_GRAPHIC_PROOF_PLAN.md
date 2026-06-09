@@ -62,17 +62,20 @@ No assets exist for Zgrada Plus, WineRoom, AI artefacts, Design System boards, o
 
 ---
 
-## 1. Hero abstract system illustration
+## 1. Hero narrative illustration — "From Complexity to Clarity"
 
 - **Section:** Hero (`#top`)
 - **Implementation:** `src/app/components/HeroSystemArt.tsx` — pure inline SVG, decorative (`aria-hidden`, `pointer-events-none`). **No screenshots, no project images, no readable data/metrics.**
-- **Position:** Desktop — large right-side background layer (`variant="panel"`, `right-[-4vw] w-[60vw] max-w-[1080px]`, behind the Selected Work list, masked/faded toward the headline). Tablet/mobile — one compact board-centred card (`variant="card"`, `aspect-[3/2]`) above the Selected Work list.
-- **Purpose:** Signal senior product-system thinking above the fold without claiming any specific product. Represents (abstractly): a central system board / dashboard, multi-role sidebar, workflow columns, a mobile flow, an e-commerce/search fragment, reusable-UI tiles, an AI/process node, and connector lines/nodes.
-- **Composition:** One dominant central board (focal anchor, right-weighted), secondary floating fragments for depth, atmospheric connectors + nodes, back layer of grid + faint orbit + blue/violet glow. `panel` canvas `840×900` (matches the tall desktop slot); `card` reframes via a centred viewBox window.
-- **Motion:** CSS-only, transform/opacity only — ambient drift (16s), staggered node + line opacity pulse, secondary-fragment float (−3px). Paused offscreen via `motion-paused`; disabled under `prefers-reduced-motion`.
-- **Truth note:** Honest by construction — abstract, not a depiction of any real or fake product, so it carries no launch/metric claim. This **supersedes** the earlier "tri-product composite" idea (which could not be built honestly without Zgrada + WineRoom assets).
+- **Position:** Desktop — large right-side background layer (`variant="panel"`, `right-[-4vw] w-[60vw] max-w-[1080px]`, behind the Selected Work list, masked/faded toward the headline). Tablet/mobile — one compact board-centred card (`variant="card"`, `aspect-[3/2]`, complexity zone hidden) above the Selected Work list.
+- **Narrative:** A visual transformation supporting the headline ("complex digital products that people can actually use"):
+  - **Zone 1 — Complexity** (background, faint): scattered nodes, disconnected workflow lines, tilted card fragments — raw, messy systems before design.
+  - **Zone 2 — Structure** (focal): the central system board — roles sidebar, workflow columns, design-system tiles; connectors resolve into clean rails. The main anchor.
+  - **Zone 3 — Human-use** (foreground, brighter): clean mobile surface, action card, status + search chips — the usable, clear product experience.
+  - **Selected Work** = the system's output nodes: clarity rails sweep from the board toward the real (DOM) case-study cards, which are linked via `:has()` (hover the art → outputs activate; hover an output → feeding rails brighten).
+- **Motion:** CSS-only, transform/opacity/stroke only — complexity counter-drift (22s), staggered node pulse, human-use float, and an occasional "clarity signal" sweeping the output rail (9s, faster on hover). Paused offscreen via `motion-paused`; disabled under `prefers-reduced-motion` (story still reads statically).
+- **Truth note:** Honest by construction — abstract, not a depiction of any real or fake product, so it carries no launch/metric claim. Supersedes the earlier "tri-product composite" idea (un-buildable without Zgrada + WineRoom assets).
 - **Caption / Alt text:** *(none — decorative `aria-hidden`)*
-- **Replacement TODO:** None required. Optional: fine-tune composition/mask on the Vercel preview.
+- **Replacement TODO:** None required. Optional: fine-tune zone density / mask / signal on the Vercel preview.
 
 ## 2. StockLog main dashboard
 

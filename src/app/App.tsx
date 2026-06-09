@@ -327,7 +327,7 @@ export default function App() {
             <div aria-hidden className={`pointer-events-none overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 lg:hidden ${heroInView ? '' : 'motion-paused'}`}>
               <HeroSystemArt variant="card" className="aspect-[3/2] w-full" />
             </div>
-            <div className="grid gap-2">
+            <div className="hero-selected-work grid gap-2">
               <div className="type-eyebrow text-slate-400">Selected work</div>
               {caseStudies.map((item) => (
                 <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-surface-dark/80 p-3.5 text-left transition-all duration-200 hover:border-blue-400/40 hover:bg-surface-dark/90 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">

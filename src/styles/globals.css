@@ -140,7 +140,9 @@ header[data-header='light'] {
 .motion-paused .hero-art,
 .motion-paused .hero-art-node,
 .motion-paused .hero-art-line,
-.motion-paused .hero-art-float {
+.motion-paused .hero-art-float,
+.motion-paused .hero-art-complexity,
+.motion-paused .hero-art-signal {
   animation-play-state: paused;
 }
 .motion-paused .hero-art {
@@ -162,9 +164,21 @@ header[data-header='light'] {
   --sys-line-opacity: 0.82;
   --sys-board-lift: 0px;
   --sys-board-edge: 0.12;
+  --sys-complexity: 0.55;
 }
 .hero-art svg {
   pointer-events: none;
+}
+/* Zone 1 — complexity recedes (background); dims further on hover so the
+   system reads as "becoming understandable". Slow counter-drift for depth. */
+.hero-art-complexity {
+  opacity: var(--sys-complexity, 0.55);
+  transition: opacity 360ms ease;
+  animation: heroArtComplexity 22s ease-in-out infinite;
+}
+@keyframes heroArtComplexity {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(1.1%, -0.8%, 0); }
 }
 .hero-art-node {
   animation: heroArtNode 4.6s ease-in-out infinite;
@@ -219,6 +233,7 @@ header[data-header='light'] {
   --sys-line-opacity: 1;
   --sys-board-lift: -5px;
   --sys-board-edge: 0.3;
+  --sys-complexity: 0.3;
 }
 .hero-art-glow {
   opacity: var(--sys-glow, 0.92);
@@ -240,28 +255,44 @@ header[data-header='light'] {
 .hero-art:focus-within .hero-art-node {
   animation-name: heroArtNodeStrong;
 }
+/* Zone 3 — occasional "clarity signal" that sweeps the output rail toward the
+   Selected Work cards. Subtle and ambient; runs faster + brighter on hover. */
 .hero-art-signal {
   opacity: 0;
-  transition: opacity 260ms ease;
+  animation: heroArtSignal 9s linear infinite;
 }
 .hero-art:hover .hero-art-signal,
 .hero-art:focus-within .hero-art-signal {
-  opacity: 0.85;
-  animation: heroArtSignal 2.4s linear infinite;
+  animation-duration: 3.4s;
 }
 @keyframes heroArtNodeStrong {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 @keyframes heroArtSignal {
-  from { stroke-dashoffset: 150; }
-  to { stroke-dashoffset: -12; }
+  0% { stroke-dashoffset: 150; opacity: 0; }
+  12% { opacity: 0.45; }
+  80% { opacity: 0.45; }
+  100% { stroke-dashoffset: -12; opacity: 0; }
+}
+
+/* Narrative link — Selected Work are the system's output nodes. Hovering the
+   illustration gently activates the outputs; hovering an output brightens the
+   rails that feed it. :has() degrades gracefully where unsupported. */
+#top:has(.hero-art:hover) .hero-selected-work > button,
+#top:has(.hero-art:focus-within) .hero-selected-work > button {
+  border-color: rgba(96, 165, 250, 0.28);
+}
+#top:has(.hero-selected-work:hover) .hero-art-lines,
+#top:has(.hero-selected-work:focus-within) .hero-art-lines {
+  opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-art,
   .hero-art-node,
   .hero-art-line,
-  .hero-art-float {
+  .hero-art-float,
+  .hero-art-complexity {
     animation: none !important;
   }
   /* keep only the gentle opacity/stroke brightness on hover; drop motion */
