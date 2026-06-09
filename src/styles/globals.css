@@ -142,6 +142,7 @@ header[data-header='light'] {
 .motion-paused .hero-art-line,
 .motion-paused .hero-art-float,
 .motion-paused .hero-art-complexity,
+.motion-paused .hero-art-focal,
 .motion-paused .hero-art-signal {
   animation-play-state: paused;
 }
@@ -160,11 +161,12 @@ header[data-header='light'] {
   /* the panel layer is the single hover/focus target; its decorative
      children below stay pointer-events:none so hover resolves to the wrapper */
   pointer-events: auto;
-  --sys-glow: 0.92;
-  --sys-line-opacity: 0.82;
+  --sys-glow: 1;
+  --sys-line-opacity: 0.95;
   --sys-board-lift: 0px;
-  --sys-board-edge: 0.12;
-  --sys-complexity: 0.55;
+  --sys-board-edge: 0.2;
+  --sys-complexity: 0.5;
+  --sys-focal: 0.55;
 }
 .hero-art svg {
   pointer-events: none;
@@ -179,6 +181,19 @@ header[data-header='light'] {
 @keyframes heroArtComplexity {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50% { transform: translate3d(1.1%, -0.8%, 0); }
+}
+/* Zone 3 focal glow — soft "breathe" via transform-scale (no animated blur);
+   brightness comes from --sys-focal so hover can intensify it. */
+.hero-art-focal {
+  opacity: var(--sys-focal, 0.55);
+  transition: opacity 400ms ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: heroArtFocal 7s ease-in-out infinite;
+}
+@keyframes heroArtFocal {
+  0%, 100% { transform: scale(0.96); }
+  50% { transform: scale(1.04); }
 }
 .hero-art-node {
   animation: heroArtNode 4.6s ease-in-out infinite;
@@ -232,8 +247,9 @@ header[data-header='light'] {
   --sys-glow: 1;
   --sys-line-opacity: 1;
   --sys-board-lift: -5px;
-  --sys-board-edge: 0.3;
+  --sys-board-edge: 0.34;
   --sys-complexity: 0.3;
+  --sys-focal: 0.82;
 }
 .hero-art-glow {
   opacity: var(--sys-glow, 0.92);
@@ -292,7 +308,8 @@ header[data-header='light'] {
   .hero-art-node,
   .hero-art-line,
   .hero-art-float,
-  .hero-art-complexity {
+  .hero-art-complexity,
+  .hero-art-focal {
     animation: none !important;
   }
   /* keep only the gentle opacity/stroke brightness on hover; drop motion */

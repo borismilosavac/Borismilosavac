@@ -72,7 +72,8 @@ No assets exist for Zgrada Plus, WineRoom, AI artefacts, Design System boards, o
   - **Zone 2 — Structure** (focal): the central system board — roles sidebar, workflow columns, design-system tiles; connectors resolve into clean rails. The main anchor.
   - **Zone 3 — Human-use** (foreground, brighter): clean mobile surface, action card, status + search chips — the usable, clear product experience.
   - **Selected Work** = the system's output nodes: clarity rails sweep from the board toward the real (DOM) case-study cards, which are linked via `:has()` (hover the art → outputs activate; hover an output → feeding rails brighten).
-- **Motion:** CSS-only, transform/opacity/stroke only — complexity counter-drift (22s), staggered node pulse, human-use float, and an occasional "clarity signal" sweeping the output rail (9s, faster on hover). Paused offscreen via `motion-paused`; disabled under `prefers-reduced-motion` (story still reads statically).
+- **Presence:** built for contrast, not a watermark — structure board ~60–70% presence, complexity ~20–35%, a **bright human-use focal with a soft glow**, arrowheaded rails; relaxed left mask + thinner page overlay.
+- **Motion:** CSS-only, transform/opacity/stroke only — complexity counter-drift (22s), staggered node pulse, human-use float, focal-glow breathe (transform-scale, no animated blur), and an occasional "clarity signal" sweeping the output rail (9s, faster on hover). Paused offscreen via `motion-paused`; disabled under `prefers-reduced-motion` (story still reads statically).
 - **Truth note:** Honest by construction — abstract, not a depiction of any real or fake product, so it carries no launch/metric claim. Supersedes the earlier "tri-product composite" idea (un-buildable without Zgrada + WineRoom assets).
 - **Caption / Alt text:** *(none — decorative `aria-hidden`)*
 - **Replacement TODO:** None required. Optional: fine-tune zone density / mask / signal on the Vercel preview.

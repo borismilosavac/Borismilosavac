@@ -304,7 +304,7 @@ export default function App() {
           {/* Abstract product-system illustration — desktop background layer (decorative). */}
           <div className="hero-art absolute inset-y-0 right-[-4vw] hidden w-[60vw] max-w-[1080px] lg:block">
             <HeroSystemArt variant="panel" className="h-full w-full" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-surface-dark via-surface-dark/35 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-surface-dark via-surface-dark/22 to-transparent" />
           </div>
         </div>
         <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 lg:gap-12 lg:grid-cols-[1.4fr_0.6fr]">
