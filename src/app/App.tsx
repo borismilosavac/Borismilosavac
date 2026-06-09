@@ -330,7 +330,7 @@ export default function App() {
             <div className="grid gap-2">
               <div className="type-eyebrow text-slate-400">Selected work</div>
               {caseStudies.map((item) => (
-                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-surface-dark/70 p-3.5 text-left backdrop-blur-sm transition-all duration-200 hover:border-white/25 hover:bg-surface-dark/85 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-surface-dark/80 p-3.5 text-left transition-all duration-200 hover:border-white/25 hover:bg-surface-dark/90 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
                   <span className="font-mono text-sm text-slate-400">{item.number}</span>
                   <span className="min-w-0 flex-1 truncate text-base font-semibold">{item.title}</span>
                   <ArrowUpRight size={18} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />

@@ -6,9 +6,15 @@
   Pure SVG; motion (drift / node + line pulse) is driven by CSS classes
   so it can be paused offscreen and disabled under reduced motion.
 */
+import { useId } from 'react';
+
 type Props = { className?: string };
 
 export function HeroSystemArt({ className = '' }: Props) {
+  const uid = useId().replace(/:/g, '');
+  const gridId = `hsa-grid-${uid}`;
+  const panelId = `hsa-panel-${uid}`;
+  const glowId = `hsa-glow-${uid}`;
   return (
     <svg
       viewBox="0 0 720 720"
@@ -19,14 +25,14 @@ export function HeroSystemArt({ className = '' }: Props) {
       className={className}
     >
       <defs>
-        <pattern id="hsa-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+        <pattern id={gridId} width="44" height="44" patternUnits="userSpaceOnUse">
           <path d="M44 0H0V44" stroke="#ffffff" strokeOpacity="0.04" strokeWidth="1" />
         </pattern>
-        <linearGradient id="hsa-panel" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={panelId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#ffffff" stopOpacity="0.06" />
           <stop offset="1" stopColor="#ffffff" stopOpacity="0.02" />
         </linearGradient>
-        <radialGradient id="hsa-glow" cx="0.62" cy="0.42" r="0.6">
+        <radialGradient id={glowId} cx="0.62" cy="0.42" r="0.6">
           <stop offset="0" stopColor="#60a5fa" stopOpacity="0.16" />
           <stop offset="0.55" stopColor="#a78bfa" stopOpacity="0.06" />
           <stop offset="1" stopColor="#a78bfa" stopOpacity="0" />
@@ -34,8 +40,8 @@ export function HeroSystemArt({ className = '' }: Props) {
       </defs>
 
       {/* ambient glow + grid */}
-      <rect width="720" height="720" fill="url(#hsa-glow)" />
-      <rect width="720" height="720" fill="url(#hsa-grid)" />
+      <rect width="720" height="720" fill={`url(#${glowId})`} />
+      <rect width="720" height="720" fill={`url(#${gridId})`} />
 
       {/* connector signal paths (behind panels) */}
       <g stroke="#60a5fa" strokeWidth="1.5" strokeLinecap="round">
@@ -47,7 +53,7 @@ export function HeroSystemArt({ className = '' }: Props) {
 
       {/* main system board */}
       <g>
-        <rect x="120" y="150" width="320" height="220" rx="16" fill="url(#hsa-panel)" stroke="#ffffff" strokeOpacity="0.1" />
+        <rect x="120" y="150" width="320" height="220" rx="16" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.1" />
         {/* header strip + status dots */}
         <rect x="136" y="166" width="288" height="22" rx="6" fill="#ffffff" fillOpacity="0.05" />
         <circle className="hero-art-node" cx="150" cy="177" r="3.5" fill="#22c55e" />
@@ -76,7 +82,7 @@ export function HeroSystemArt({ className = '' }: Props) {
 
       {/* mobile flow frame */}
       <g>
-        <rect x="500" y="120" width="120" height="248" rx="22" fill="url(#hsa-panel)" stroke="#ffffff" strokeOpacity="0.12" />
+        <rect x="500" y="120" width="120" height="248" rx="22" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.12" />
         <rect x="544" y="132" width="32" height="6" rx="3" fill="#ffffff" fillOpacity="0.12" />
         <rect x="516" y="156" width="88" height="40" rx="10" fill="#ffffff" fillOpacity="0.05" stroke="#60a5fa" strokeOpacity="0.22" />
         <rect x="516" y="206" width="88" height="30" rx="8" fill="#ffffff" fillOpacity="0.04" />
@@ -89,7 +95,7 @@ export function HeroSystemArt({ className = '' }: Props) {
 
       {/* commerce / search discovery card */}
       <g>
-        <rect x="120" y="400" width="200" height="230" rx="16" fill="url(#hsa-panel)" stroke="#ffffff" strokeOpacity="0.1" />
+        <rect x="120" y="400" width="200" height="230" rx="16" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.1" />
         <rect x="136" y="416" width="168" height="96" rx="10" fill="#ffffff" fillOpacity="0.05" />
         <rect x="136" y="524" width="120" height="7" rx="3.5" fill="#ffffff" fillOpacity="0.16" />
         <rect x="136" y="540" width="70" height="7" rx="3.5" fill="#ffffff" fillOpacity="0.1" />
