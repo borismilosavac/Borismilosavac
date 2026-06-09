@@ -162,11 +162,11 @@ header[data-header='light'] {
      children below stay pointer-events:none so hover resolves to the wrapper */
   pointer-events: auto;
   --sys-glow: 1;
-  --sys-line-opacity: 0.95;
+  --sys-line-opacity: 1;
   --sys-board-lift: 0px;
-  --sys-board-edge: 0.2;
-  --sys-complexity: 0.5;
-  --sys-focal: 0.55;
+  --sys-board-edge: 0.28;
+  --sys-complexity: 0.42;
+  --sys-focal: 0.62;
 }
 .hero-art svg {
   pointer-events: none;
@@ -247,9 +247,9 @@ header[data-header='light'] {
   --sys-glow: 1;
   --sys-line-opacity: 1;
   --sys-board-lift: -5px;
-  --sys-board-edge: 0.34;
-  --sys-complexity: 0.3;
-  --sys-focal: 0.82;
+  --sys-board-edge: 0.42;
+  --sys-complexity: 0.28;
+  --sys-focal: 0.95;
 }
 .hero-art-glow {
   opacity: var(--sys-glow, 0.92);
@@ -297,7 +297,7 @@ header[data-header='light'] {
    rails that feed it. :has() degrades gracefully where unsupported. */
 #top:has(.hero-art:hover) .hero-selected-work > button,
 #top:has(.hero-art:focus-within) .hero-selected-work > button {
-  border-color: rgba(96, 165, 250, 0.28);
+  border-color: rgba(96, 165, 250, 0.45);
 }
 #top:has(.hero-selected-work:hover) .hero-art-lines,
 #top:has(.hero-selected-work:focus-within) .hero-art-lines {
