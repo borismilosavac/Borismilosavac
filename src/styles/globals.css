@@ -136,8 +136,53 @@ header[data-header='light'] {
   animation-play-state: paused;
   will-change: auto;
 }
-.motion-paused .hero-signal {
+.motion-paused .hero-signal,
+.motion-paused .hero-art,
+.motion-paused .hero-art-node,
+.motion-paused .hero-art-line {
   animation-play-state: paused;
+}
+
+/* Abstract Hero system illustration — slow ambient drift on the layer,
+   subtle opacity pulse on nodes and connector lines. transform/opacity
+   only; paused offscreen; disabled under reduced motion. */
+.hero-art {
+  animation: heroArtDrift 34s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-art-node {
+  animation: heroArtNode 4.5s ease-in-out infinite;
+}
+.hero-art-node:nth-of-type(2n) {
+  animation-delay: 1.4s;
+}
+.hero-art-node:nth-of-type(3n) {
+  animation-delay: 2.7s;
+}
+.hero-art-line {
+  animation: heroArtLine 6.5s ease-in-out infinite;
+}
+.hero-art-line:nth-of-type(2n) {
+  animation-delay: 2s;
+}
+@keyframes heroArtDrift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-1.2%, 1.4%, 0); }
+}
+@keyframes heroArtNode {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+@keyframes heroArtLine {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-art,
+  .hero-art-node,
+  .hero-art-line {
+    animation: none !important;
+  }
 }
 
 /* Subtle background response synced to the headline glitch cycle:
