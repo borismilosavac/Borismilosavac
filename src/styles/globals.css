@@ -139,38 +139,52 @@ header[data-header='light'] {
 .motion-paused .hero-signal,
 .motion-paused .hero-art,
 .motion-paused .hero-art-node,
-.motion-paused .hero-art-line {
+.motion-paused .hero-art-line,
+.motion-paused .hero-art-float {
   animation-play-state: paused;
 }
 .motion-paused .hero-art {
   will-change: auto;
 }
 
-/* Abstract Hero system illustration — slow ambient drift on the layer,
-   subtle opacity pulse on nodes and connector lines. transform/opacity
-   only; paused offscreen; disabled under reduced motion. */
+/* Abstract Hero system illustration — slow ambient drift on the layer, a
+   soft opacity pulse on nodes and connector lines, and a gentle float on the
+   secondary fragments. Explicit --b/--c classes stagger the timing so the
+   motion reads as harmonic. transform/opacity only; paused offscreen;
+   disabled under reduced motion. */
 .hero-art {
-  animation: heroArtDrift 34s ease-in-out infinite;
+  animation: heroArtDrift 16s ease-in-out infinite;
   will-change: transform;
 }
 .hero-art-node {
-  animation: heroArtNode 4.5s ease-in-out infinite;
+  animation: heroArtNode 4.6s ease-in-out infinite;
 }
-.hero-art-node:nth-of-type(2n) {
-  animation-delay: 1.4s;
+.hero-art-node--b {
+  animation-delay: 1.5s;
 }
-.hero-art-node:nth-of-type(3n) {
-  animation-delay: 2.7s;
+.hero-art-node--c {
+  animation-delay: 3s;
 }
 .hero-art-line {
-  animation: heroArtLine 6.5s ease-in-out infinite;
+  animation: heroArtLine 7s ease-in-out infinite;
 }
-.hero-art-line:nth-of-type(2n) {
+.hero-art-line--b {
+  animation-delay: 2.4s;
+}
+.hero-art-float {
+  animation: heroArtFloat 10s ease-in-out infinite;
+}
+.hero-art-float--b {
   animation-delay: 2s;
+  animation-duration: 11.5s;
+}
+.hero-art-float--c {
+  animation-delay: 3.6s;
+  animation-duration: 9s;
 }
 @keyframes heroArtDrift {
   0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(-1.2%, 1.4%, 0); }
+  50% { transform: translate3d(-1%, 1%, 0); }
 }
 @keyframes heroArtNode {
   0%, 100% { opacity: 0.35; }
@@ -180,10 +194,15 @@ header[data-header='light'] {
   0%, 100% { opacity: 0.22; }
   50% { opacity: 0.55; }
 }
+@keyframes heroArtFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero-art,
   .hero-art-node,
-  .hero-art-line {
+  .hero-art-line,
+  .hero-art-float {
     animation: none !important;
   }
 }

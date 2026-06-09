@@ -62,16 +62,17 @@ No assets exist for Zgrada Plus, WineRoom, AI artefacts, Design System boards, o
 
 ---
 
-## 1. Hero composite visual
+## 1. Hero abstract system illustration
 
 - **Section:** Hero (`#top`)
-- **Position:** Right column (replacing or behind the 3 case-nav cards), or a full-bleed band directly below the hero text block.
-- **Purpose:** Immediate proof that this is a working product designer — a restrained montage signalling SaaS/B2B/e-commerce range above the fold.
-- **Ideal asset:** A controlled tri-product composite (StockLog board + Zgrada dashboard + WineRoom listing), unified tone, no device frames.
-- **Fallback placeholder:** **None.** Cannot be honestly built — two of three products have no assets. Keep the existing case-nav cards (real content, not a placeholder).
-- **Caption:** *(none — hero visuals are uncaptioned)*
-- **Alt text:** `Composite preview of three product designs: a B2B dealership operations board, a multi-role building-management dashboard, and an e-commerce product listing.`
-- **Replacement TODO:** Build composite only **after** Zgrada (Visual 8) and WineRoom (Visual 10) assets exist. Until then, hero stays text + nav cards.
+- **Implementation:** `src/app/components/HeroSystemArt.tsx` — pure inline SVG, decorative (`aria-hidden`, `pointer-events-none`). **No screenshots, no project images, no readable data/metrics.**
+- **Position:** Desktop — large right-side background layer (`variant="panel"`, `right-[-4vw] w-[60vw] max-w-[1080px]`, behind the Selected Work list, masked/faded toward the headline). Tablet/mobile — one compact board-centred card (`variant="card"`, `aspect-[3/2]`) above the Selected Work list.
+- **Purpose:** Signal senior product-system thinking above the fold without claiming any specific product. Represents (abstractly): a central system board / dashboard, multi-role sidebar, workflow columns, a mobile flow, an e-commerce/search fragment, reusable-UI tiles, an AI/process node, and connector lines/nodes.
+- **Composition:** One dominant central board (focal anchor, right-weighted), secondary floating fragments for depth, atmospheric connectors + nodes, back layer of grid + faint orbit + blue/violet glow. `panel` canvas `840×900` (matches the tall desktop slot); `card` reframes via a centred viewBox window.
+- **Motion:** CSS-only, transform/opacity only — ambient drift (16s), staggered node + line opacity pulse, secondary-fragment float (−3px). Paused offscreen via `motion-paused`; disabled under `prefers-reduced-motion`.
+- **Truth note:** Honest by construction — abstract, not a depiction of any real or fake product, so it carries no launch/metric claim. This **supersedes** the earlier "tri-product composite" idea (which could not be built honestly without Zgrada + WineRoom assets).
+- **Caption / Alt text:** *(none — decorative `aria-hidden`)*
+- **Replacement TODO:** None required. Optional: fine-tune composition/mask on the Vercel preview.
 
 ## 2. StockLog main dashboard
 
@@ -254,7 +255,7 @@ No assets exist for Zgrada Plus, WineRoom, AI artefacts, Design System boards, o
 
 | Visual | Section | Status | Blocker |
 |---|---|---|---|
-| 1 Hero composite | Hero | ⬜ | Needs Zgrada + WineRoom assets first |
+| 1 Hero abstract system illustration | Hero | ✅ | — (decorative SVG, no assets needed) |
 | 2 StockLog dashboard | StockLog | ✅ | — (compress only) |
 | 3 Vehicle card anatomy | StockLog | ⬜ | Figma export / identify `SL1`,`Frame 3063` |
 | 4 Filter/search state | StockLog | ✅ (in-context) | Optional dedicated crop |

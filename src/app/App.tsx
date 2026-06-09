@@ -302,9 +302,9 @@ export default function App() {
           <div className="hero-signal absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(120,170,255,0.45),transparent_55%)] opacity-0" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
           {/* Abstract product-system illustration — desktop background layer (decorative). */}
-          <div className="hero-art absolute inset-y-0 right-[-4vw] hidden w-[58vw] max-w-[1040px] lg:block">
-            <HeroSystemArt className="h-full w-full" />
-            <div className="absolute inset-0 bg-gradient-to-r from-surface-dark via-surface-dark/55 to-transparent" />
+          <div className="hero-art absolute inset-y-0 right-[-4vw] hidden w-[60vw] max-w-[1080px] lg:block">
+            <HeroSystemArt variant="panel" className="h-full w-full" />
+            <div className="absolute inset-0 bg-gradient-to-r from-surface-dark via-surface-dark/35 to-transparent" />
           </div>
         </div>
         <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 lg:gap-12 lg:grid-cols-[1.4fr_0.6fr]">
@@ -324,16 +324,16 @@ export default function App() {
           </div>
           <div className="relative flex min-w-0 flex-col justify-center gap-5">
             {/* Compact abstract system illustration — tablet/mobile only (desktop uses the background layer). */}
-            <div aria-hidden className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 lg:hidden">
-              <HeroSystemArt className="aspect-[16/10] w-full" />
+            <div aria-hidden className="pointer-events-none overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 lg:hidden">
+              <HeroSystemArt variant="card" className="aspect-[3/2] w-full" />
             </div>
             <div className="grid gap-2">
               <div className="type-eyebrow text-slate-400">Selected work</div>
               {caseStudies.map((item) => (
-                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-surface-dark/80 p-3.5 text-left transition-all duration-200 hover:border-white/25 hover:bg-surface-dark/90 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-surface-dark/80 p-3.5 text-left transition-all duration-200 hover:border-blue-400/40 hover:bg-surface-dark/90 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
                   <span className="font-mono text-sm text-slate-400">{item.number}</span>
                   <span className="min-w-0 flex-1 truncate text-base font-semibold">{item.title}</span>
-                  <ArrowUpRight size={18} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+                  <ArrowUpRight size={18} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5 group-hover:text-blue-300" />
                 </button>
               ))}
             </div>
