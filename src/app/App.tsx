@@ -324,7 +324,7 @@ export default function App() {
           </div>
           <div className="relative flex min-w-0 flex-col justify-center gap-5">
             {/* Compact abstract system illustration — tablet/mobile only (desktop uses the background layer). */}
-            <div aria-hidden className="pointer-events-none overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 lg:hidden">
+            <div aria-hidden className={`pointer-events-none overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 lg:hidden ${heroInView ? '' : 'motion-paused'}`}>
               <HeroSystemArt variant="card" className="aspect-[3/2] w-full" />
             </div>
             <div className="grid gap-2">
