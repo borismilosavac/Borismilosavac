@@ -46,12 +46,13 @@
   --font-pixel: 'Pixelify Sans', 'Silkscreen', monospace;
 
   /* Harmonic glitch timing for highlighted headline phrases */
-  --glitch-cycle: 13s;
-  --glitch-delay-a: 0s;
-  --glitch-delay-b: 4.5s;
+  --glitch-cycle: 13.2s;
   --glitch-shift: 2px;
+  --decode-shift: 3px;
   --glitch-burst-opacity: 0.85;
-  --pixel-burst-opacity: 1;
+  --pixel-opacity: 1;
+  --clarity-pixel-opacity: 0.85;
+  --clarity-line-opacity: 0.9;
 
   /* Typography scale tokens */
   --text-body: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);

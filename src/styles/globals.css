@@ -211,49 +211,55 @@ header[data-header='light'] {
   bottom: -0.08em;
   height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, transparent, #93c5fd, transparent);
+  background: linear-gradient(90deg, #93c5fd, #60a5fa);
   opacity: 0;
-  transform: scaleX(0.5);
-  transform-origin: center;
+  transform: scaleX(0);
+  transform-origin: left center;
   pointer-events: none;
   animation: clarityUnderline var(--glitch-cycle) ease-out infinite;
 }
 
+/* DECODE: base hides while the pixel layer scans in as slices, holds the
+   FULL pixel word clearly (with a faint chromatic edge + offset), then
+   snaps back to clean Jakarta. ~2.0-3.4s of a 13.2s cycle. */
 @keyframes decodeBase {
-  0%, 17%, 27%, 100% { opacity: 1; transform: translate(0, 0); }
-  18% { opacity: var(--glitch-burst-opacity); transform: translate(calc(var(--glitch-shift) * -1), 0); }
-  19%, 25% { opacity: 0; transform: translate(0, 0); }
-  26% { opacity: 1; transform: translate(var(--glitch-shift), 0); }
+  0%, 14%, 25%, 100% { opacity: 1; transform: translate(0, 0); }
+  15% { opacity: var(--glitch-burst-opacity); transform: translate(calc(var(--decode-shift) * -1), 0); }
+  16%, 23% { opacity: 0; transform: translate(0, 0); }
+  24% { opacity: 1; transform: translate(var(--decode-shift), 0); }
 }
 
 @keyframes decodePixel {
-  0%, 18%, 26%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
-  19% { opacity: var(--pixel-burst-opacity); transform: translate(var(--glitch-shift), 0); clip-path: inset(0 0 55% 0); }
-  21% { opacity: var(--pixel-burst-opacity); transform: translate(calc(var(--glitch-shift) * -1), 0); clip-path: inset(45% 0 25% 0); }
-  23% { opacity: var(--pixel-burst-opacity); transform: translate(var(--glitch-shift), 0); clip-path: inset(72% 0 0 0); }
-  25% { opacity: var(--pixel-burst-opacity); transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+  0%, 15%, 25%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); text-shadow: none; }
+  16% { opacity: var(--pixel-opacity); transform: translate(var(--decode-shift), 0); clip-path: inset(0 0 62% 0); }
+  18% { opacity: var(--pixel-opacity); transform: translate(calc(var(--decode-shift) * -1), 0); clip-path: inset(46% 0 22% 0); }
+  19% { opacity: var(--pixel-opacity); transform: translate(0, 0); clip-path: inset(0 0 0 0); text-shadow: -0.03em 0 rgba(56, 189, 248, 0.5), 0.03em 0 rgba(244, 114, 182, 0.45); }
+  21% { opacity: var(--pixel-opacity); transform: translate(calc(var(--decode-shift) * 0.5), 0); clip-path: inset(0 0 0 0); text-shadow: 0.03em 0 rgba(56, 189, 248, 0.45), -0.03em 0 rgba(244, 114, 182, 0.4); }
+  23% { opacity: var(--pixel-opacity); transform: translate(0, 0); clip-path: inset(0 0 0 0); text-shadow: none; }
+  24% { opacity: var(--pixel-opacity); transform: translate(0, 0); clip-path: inset(0 0 70% 0); text-shadow: none; }
 }
 
+/* CLARITY: brief soft pixel signal, base dims and settles upward into
+   place, then a clean underline draws left-to-right and fades. Calmer,
+   no slicing, no chromatic. ~6.1-7.9s. */
 @keyframes clarityBase {
-  0%, 43% { opacity: 1; }
-  46% { opacity: 0.15; }
-  48% { opacity: 0.15; }
-  51% { opacity: 1; }
-  100% { opacity: 1; }
+  0%, 46% { opacity: 1; transform: translate(0, 0); }
+  48% { opacity: 0.25; transform: translate(0, 3px); }
+  50% { opacity: 0.6; transform: translate(0, 3px); }
+  52%, 100% { opacity: 1; transform: translate(0, 0); }
 }
 
 @keyframes clarityPixel {
-  0%, 44% { opacity: 0; }
-  46% { opacity: var(--pixel-burst-opacity); }
-  48% { opacity: var(--pixel-burst-opacity); }
+  0%, 47% { opacity: 0; }
+  49% { opacity: var(--clarity-pixel-opacity); }
   51% { opacity: 0; }
   100% { opacity: 0; }
 }
 
 @keyframes clarityUnderline {
-  0%, 49% { opacity: 0; transform: scaleX(0.5); }
-  52% { opacity: 0.9; transform: scaleX(1); }
-  58% { opacity: 0; transform: scaleX(1); }
+  0%, 51% { opacity: 0; transform: scaleX(0); }
+  54% { opacity: var(--clarity-line-opacity); transform: scaleX(1); }
+  60% { opacity: 0; transform: scaleX(1); }
   100% { opacity: 0; transform: scaleX(1); }
 }
 
