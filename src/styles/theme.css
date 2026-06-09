@@ -58,7 +58,7 @@
   --text-body: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);
   --text-caption: 0.8125rem;
   --text-meta: 0.8125rem;
-  --heading-hero: clamp(2.625rem, 1.5vw + 1.5rem, 3.5rem);
+  --heading-hero: clamp(2.625rem, 3.4vw + 0.9rem, 5.25rem);
   --heading-section: clamp(2rem, 2.75vw + 0.75rem, 4rem);
   --heading-case: clamp(2.125rem, 3.5vw + 0.75rem, 4.5rem);
   --line-body: 1.62;
@@ -253,8 +253,8 @@
   .type-display {
     font-family: var(--font-display);
     font-size: var(--heading-hero);
-    line-height: 1.03;
-    letter-spacing: -0.02em;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
     font-weight: 700;
     font-style: normal;
     text-wrap: balance;
