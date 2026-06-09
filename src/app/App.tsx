@@ -317,17 +317,9 @@ export default function App() {
             </div>
           </div>
           <div className="flex min-w-0 flex-col justify-center gap-5">
-            {/*
-              TODO: Replace this ImagePlaceholder with a real StockLog product
-              screenshot before publishing (docs/portfolio/04_GRAPHIC_PROOF_PLAN
-              Visual 1). Placeholder must not ship to production.
-            */}
-            <ImagePlaceholder
-              variant="dashboard"
-              tone="dark"
-              aspectOverride="aspect-[16/9]"
-              alt="Compact preview of Boris Milosavac's product interface work."
-            />
+            <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
+              <ImageWithFallback src={stocklogUi} alt="StockLog dashboard — a preview of Boris Milosavac's product interface work." className="aspect-[16/9] w-full object-cover" />
+            </figure>
             <div className="grid gap-2">
               <div className="type-eyebrow text-slate-400">Selected work</div>
               {caseStudies.map((item) => (
