@@ -1,6 +1,6 @@
-<svg width="62" height="32" viewBox="0 0 62 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 0.4C0 0.179086 0.179086 0 0.4 0L16.8511 0C20.7993 0 24 3.13402 24 7.00002C24 10.866 20.7993 14 16.8511 14H0.399999C0.179085 14 0 13.8209 0 13.6V0.4Z" fill="currentColor" fill-opacity="0.8"/>
-<path d="M0 18.4C0 18.1791 0.179086 18 0.4 18H16.8511C20.7993 18 24 21.134 24 25C24 28.866 20.7993 32 16.8511 32H0.399999C0.179085 32 0 31.8209 0 31.6V18.4Z" fill="currentColor" fill-opacity="0.8"/>
-<path d="M27.4 32C27.1791 32 27 31.8209 27 31.6L27.0002 7.87476C27.0002 3.52565 30.5818 0 35.0001 0C39.4183 0 43 3.52565 43 7.87476V31.6C43 31.8209 42.8209 32 42.6 32H27.4Z" fill="currentColor"/>
-<path d="M46.4 32C46.1791 32 46 31.8209 46 31.6V7.87476C46 3.52565 49.5817 0 54 0C58.4182 0 62 3.52565 62 7.87476V31.6C62 31.8209 61.8209 32 61.6 32H46.4Z" fill="currentColor"/>
+<svg width="64" height="32" viewBox="0 0 64 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M49 7.5C49 3.35786 52.3579 0 56.5 0V0C60.6421 0 64 3.35786 64 7.5V32H49V7.5Z" fill="currentColor" fill-opacity="0.7"/>
+<path d="M32 7.5C32 3.35786 35.3579 0 39.5 0V0C43.6421 0 47 3.35786 47 7.5V32H32V7.5Z" fill="currentColor" fill-opacity="0.7"/>
+<path d="M6 0H10.5C14.6421 0 18 3.35786 18 7.5V7.5C18 11.6421 14.6421 15 10.5 15H6V0Z" fill="currentColor" fill-opacity="0.7"/>
+<path d="M6 17H22.5C26.6421 17 30 20.3579 30 24.5V24.5C30 28.6421 26.6421 32 22.5 32H6V17Z" fill="currentColor" fill-opacity="0.7"/>
 </svg>
