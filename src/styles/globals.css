@@ -142,6 +142,9 @@ header[data-header='light'] {
 .motion-paused .hero-art-line {
   animation-play-state: paused;
 }
+.motion-paused .hero-art {
+  will-change: auto;
+}
 
 /* Abstract Hero system illustration — slow ambient drift on the layer,
    subtle opacity pulse on nodes and connector lines. transform/opacity
