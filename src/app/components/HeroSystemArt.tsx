@@ -59,7 +59,7 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
       </defs>
 
       {/* back layer — ambient glow, grid, faint orbit rings */}
-      <rect width="840" height="900" fill={`url(#${glowId})`} />
+      <rect className="hero-art-glow" width="840" height="900" fill={`url(#${glowId})`} />
       <rect width="840" height="900" fill={`url(#${gridId})`} />
       {isPanel && (
         <g fill="none">
@@ -70,12 +70,14 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
 
       <g mask={isPanel ? `url(#${maskId})` : undefined}>
         {/* connectors (behind panels) */}
-        <g strokeWidth="1.5" strokeLinecap="round" fill="none">
+        <g className="hero-art-lines" strokeWidth="1.5" strokeLinecap="round" fill="none">
           <path className="hero-art-line" d="M698 470 C 720 485, 712 505, 706 520" stroke="#60a5fa" strokeOpacity="0.4" />
           <path className="hero-art-line hero-art-line--b" d="M540 558 C 570 590, 595 615, 606 628" stroke="#a78bfa" strokeOpacity="0.38" />
           <path className="hero-art-line" d="M380 326 C 360 345, 340 350, 322 360" stroke="#60a5fa" strokeOpacity="0.32" />
           <path className="hero-art-line hero-art-line--b" d="M470 544 C 460 565, 450 585, 446 600" stroke="#a78bfa" strokeOpacity="0.3" />
           <path className="hero-art-line" d="M300 430 C 250 432, 210 432, 180 432" stroke="#60a5fa" strokeOpacity="0.24" />
+          {/* hover-only signal travelling board -> AI node */}
+          <path className="hero-art-signal" d="M540 558 C 570 590, 595 615, 606 628" stroke="#93c5fd" strokeWidth="2.5" strokeDasharray="14 150" />
         </g>
 
         {/* commerce / search discovery fragment (secondary, floats) */}
@@ -92,8 +94,8 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
         </g>
 
         {/* main system board — focal anchor */}
-        <g>
-          <rect x="300" y="230" width="400" height="330" rx="20" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.12" />
+        <g className="hero-art-board">
+          <rect className="hero-art-board-edge" x="300" y="230" width="400" height="330" rx="20" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.12" />
           <rect x="320" y="250" width="360" height="26" rx="8" fill="#ffffff" fillOpacity="0.05" />
           <circle className="hero-art-node" cx="338" cy="263" r="4" fill="#22c55e" />
           <circle className="hero-art-node hero-art-node--b" cx="352" cy="263" r="4" fill="#60a5fa" />

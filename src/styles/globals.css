@@ -155,6 +155,16 @@ header[data-header='light'] {
 .hero-art {
   animation: heroArtDrift 16s ease-in-out infinite;
   will-change: transform;
+  /* the panel layer is the single hover/focus target; its decorative
+     children below stay pointer-events:none so hover resolves to the wrapper */
+  pointer-events: auto;
+  --sys-glow: 0.92;
+  --sys-line-opacity: 0.82;
+  --sys-board-lift: 0px;
+  --sys-board-edge: 0.12;
+}
+.hero-art svg {
+  pointer-events: none;
 }
 .hero-art-node {
   animation: heroArtNode 4.6s ease-in-out infinite;
@@ -198,12 +208,70 @@ header[data-header='light'] {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
 }
+
+/* "System activates" on hover/focus of the illustration (desktop). The single
+   hover target is .hero-art; intensity is driven by CSS variables so the
+   reaction stays calm and tunable. transform / opacity / stroke-opacity only —
+   no JS, no mousemove, no parallax, no heavy filters. */
+.hero-art:hover,
+.hero-art:focus-within {
+  --sys-glow: 1;
+  --sys-line-opacity: 1;
+  --sys-board-lift: -5px;
+  --sys-board-edge: 0.3;
+}
+.hero-art-glow {
+  opacity: var(--sys-glow, 0.92);
+  transition: opacity 320ms ease;
+}
+.hero-art-lines {
+  opacity: var(--sys-line-opacity, 0.82);
+  transition: opacity 320ms ease;
+}
+.hero-art-board {
+  transform: translateY(var(--sys-board-lift, 0px));
+  transition: transform 360ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.hero-art-board-edge {
+  stroke-opacity: var(--sys-board-edge, 0.12);
+  transition: stroke-opacity 320ms ease;
+}
+.hero-art:hover .hero-art-node,
+.hero-art:focus-within .hero-art-node {
+  animation-name: heroArtNodeStrong;
+}
+.hero-art-signal {
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+.hero-art:hover .hero-art-signal,
+.hero-art:focus-within .hero-art-signal {
+  opacity: 0.85;
+  animation: heroArtSignal 2.4s linear infinite;
+}
+@keyframes heroArtNodeStrong {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes heroArtSignal {
+  from { stroke-dashoffset: 150; }
+  to { stroke-dashoffset: -12; }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero-art,
   .hero-art-node,
   .hero-art-line,
   .hero-art-float {
     animation: none !important;
+  }
+  /* keep only the gentle opacity/stroke brightness on hover; drop motion */
+  .hero-art-board {
+    transform: none !important;
+    transition: none;
+  }
+  .hero-art-signal {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 
