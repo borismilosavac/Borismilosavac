@@ -113,29 +113,6 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
           <path className="hero-art-signal" d="M700 602 C 762 606, 802 610, 838 612" stroke="#93c5fd" strokeWidth="2.5" strokeDasharray="16 170" />
         </g>
 
-        {/* ZONE 3 (under board edge) — Human-use cluster (foreground, brighter) */}
-        <g className="hero-art-human hero-art-float hero-art-float--b">
-          {/* clean mobile surface */}
-          <rect x="540" y="480" width="104" height="266" rx="22" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.14" />
-          <rect x="578" y="492" width="28" height="6" rx="3" fill="#ffffff" fillOpacity="0.14" />
-          <rect x="556" y="514" width="72" height="40" rx="10" fill="#60a5fa" fillOpacity="0.14" stroke="#60a5fa" strokeOpacity="0.3" />
-          <rect x="556" y="564" width="72" height="26" rx="7" fill="#ffffff" fillOpacity="0.05" />
-          <rect x="556" y="598" width="72" height="26" rx="7" fill="#ffffff" fillOpacity="0.05" />
-          <circle className="hero-art-node" cx="566" cy="716" r="4" fill="#60a5fa" />
-          <circle cx="588" cy="716" r="4" fill="#ffffff" fillOpacity="0.18" />
-          <circle cx="610" cy="716" r="4" fill="#ffffff" fillOpacity="0.18" />
-          {/* clean action card */}
-          <rect x="660" y="500" width="146" height="120" rx="16" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.14" />
-          <rect x="678" y="518" width="92" height="8" rx="4" fill="#ffffff" fillOpacity="0.18" />
-          <rect x="678" y="536" width="64" height="7" rx="3.5" fill="#ffffff" fillOpacity="0.1" />
-          <rect x="678" y="576" width="110" height="26" rx="13" fill="#60a5fa" fillOpacity="0.22" stroke="#60a5fa" strokeOpacity="0.45" />
-          {/* status chip + search chip */}
-          <rect x="660" y="636" width="70" height="22" rx="11" fill="#22c55e" fillOpacity="0.12" stroke="#22c55e" strokeOpacity="0.3" />
-          <circle className="hero-art-node hero-art-node--c" cx="673" cy="647" r="3.5" fill="#22c55e" />
-          <rect x="744" y="636" width="62" height="22" rx="11" fill="#ffffff" fillOpacity="0.05" stroke="#ffffff" strokeOpacity="0.1" />
-          <circle cx="757" cy="647" r="4.5" stroke="#a78bfa" strokeOpacity="0.5" strokeWidth="1.5" />
-        </g>
-
         {/* ZONE 2 — Structure board (focal anchor) */}
         <g className="hero-art-board">
           <rect className="hero-art-board-edge" x="250" y="250" width="400" height="310" rx="20" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.12" />
@@ -167,6 +144,29 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
           <rect x="450" y="506" width="34" height="34" rx="17" fill="#ffffff" fillOpacity="0.04" />
           <rect x="492" y="506" width="34" height="34" rx="8" fill="#a78bfa" fillOpacity="0.12" stroke="#a78bfa" strokeOpacity="0.28" />
           <rect x="534" y="506" width="34" height="34" rx="8" fill="#ffffff" fillOpacity="0.04" />
+        </g>
+
+        {/* ZONE 3 — Human-use cluster (foreground, brighter, in front of board) */}
+        <g className="hero-art-human hero-art-float hero-art-float--b">
+          {/* clean mobile surface */}
+          <rect x="540" y="480" width="104" height="266" rx="22" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.14" />
+          <rect x="578" y="492" width="28" height="6" rx="3" fill="#ffffff" fillOpacity="0.14" />
+          <rect x="556" y="514" width="72" height="40" rx="10" fill="#60a5fa" fillOpacity="0.14" stroke="#60a5fa" strokeOpacity="0.3" />
+          <rect x="556" y="564" width="72" height="26" rx="7" fill="#ffffff" fillOpacity="0.05" />
+          <rect x="556" y="598" width="72" height="26" rx="7" fill="#ffffff" fillOpacity="0.05" />
+          <circle className="hero-art-node" cx="566" cy="716" r="4" fill="#60a5fa" />
+          <circle cx="588" cy="716" r="4" fill="#ffffff" fillOpacity="0.18" />
+          <circle cx="610" cy="716" r="4" fill="#ffffff" fillOpacity="0.18" />
+          {/* clean action card */}
+          <rect x="660" y="500" width="146" height="120" rx="16" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.14" />
+          <rect x="678" y="518" width="92" height="8" rx="4" fill="#ffffff" fillOpacity="0.18" />
+          <rect x="678" y="536" width="64" height="7" rx="3.5" fill="#ffffff" fillOpacity="0.1" />
+          <rect x="678" y="576" width="110" height="26" rx="13" fill="#60a5fa" fillOpacity="0.22" stroke="#60a5fa" strokeOpacity="0.45" />
+          {/* status chip + search chip */}
+          <rect x="660" y="636" width="70" height="22" rx="11" fill="#22c55e" fillOpacity="0.12" stroke="#22c55e" strokeOpacity="0.3" />
+          <circle className="hero-art-node hero-art-node--c" cx="673" cy="647" r="3.5" fill="#22c55e" />
+          <rect x="744" y="636" width="62" height="22" rx="11" fill="#ffffff" fillOpacity="0.05" stroke="#ffffff" strokeOpacity="0.1" />
+          <circle cx="757" cy="647" r="4.5" stroke="#a78bfa" strokeOpacity="0.5" strokeWidth="1.5" />
         </g>
 
         {/* free clarity node bridging board -> outputs */}
