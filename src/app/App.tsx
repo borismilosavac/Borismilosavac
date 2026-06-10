@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { ImagePlaceholder } from './components/ImagePlaceholder';
 import { HeroSystemArt } from './components/HeroSystemArt';
+import { AiStepIllustration } from './components/AiStepIllustration';
 import stocklogUi from '../SL-view.svg';
 import stocklogBoard from '../stocklog-board.svg';
 import stocklogShowroom from '../stocklog-showroom.png';
@@ -657,17 +658,17 @@ export default function App() {
               </div>
             </div>
           </div>
-          {/*
-            TODO: Replace these ImagePlaceholder frames with real process
-            artefacts (an actual prompt, wireframe and refined screen) before
-            publishing. Per 04_GRAPHIC_PROOF_PLAN Visual 14, do not fabricate —
-            placeholders must not ship to production.
-          */}
           <div className="mt-6">
-            <div role="img" aria-label="Three-step AI-assisted design example showing prompt, wireframe and refined interface direction." className="grid gap-2 sm:grid-cols-3">
-              <ImagePlaceholder variant="board" tone="dark" aspectOverride="aspect-[4/3]" />
-              <ImagePlaceholder variant="board" tone="dark" aspectOverride="aspect-[4/3]" />
-              <ImagePlaceholder variant="board" tone="dark" aspectOverride="aspect-[4/3]" />
+            <div role="img" aria-label="Three abstract illustrations representing the final AI-assisted design steps: UI refinement, accessibility check and product-ready UI direction." className="grid gap-2 sm:grid-cols-3">
+              <div className="ai-step-card overflow-hidden rounded-xl border border-white/10 bg-slate-900/60 transition-colors duration-200 hover:border-white/20">
+                <AiStepIllustration variant="07" className="w-full" />
+              </div>
+              <div className="ai-step-card overflow-hidden rounded-xl border border-white/10 bg-slate-900/60 transition-colors duration-200 hover:border-white/20">
+                <AiStepIllustration variant="08" className="w-full" />
+              </div>
+              <div className="ai-step-card overflow-hidden rounded-xl border border-white/10 bg-slate-900/60 transition-colors duration-200 hover:border-white/20">
+                <AiStepIllustration variant="09" className="w-full" />
+              </div>
             </div>
             <div className="mt-2 type-caption text-slate-400">Generated options are treated as draft material, not final design.</div>
           </div>

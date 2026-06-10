@@ -463,3 +463,26 @@ header[data-header='light'] {
     opacity: 0;
   }
 }
+
+/* ─────────────────────────────────────────────
+   AI workflow step illustration cards (steps 07–09).
+   .ai-step-card is the hover target; SVG internals use
+   .ai-step-line and .ai-step-glow for activation.
+   Reuses .hero-art-node pulse classes for node animation.
+───────────────────────────────────────────── */
+.ai-step-card .ai-step-line {
+  opacity: 0.72;
+  transition: opacity 280ms ease;
+}
+.ai-step-card:hover .ai-step-line,
+.ai-step-card:focus-within .ai-step-line {
+  opacity: 1;
+}
+.ai-step-card .ai-step-glow {
+  opacity: 0.65;
+  transition: opacity 360ms ease;
+}
+.ai-step-card:hover .ai-step-glow,
+.ai-step-card:focus-within .ai-step-glow {
+  opacity: 1;
+}
