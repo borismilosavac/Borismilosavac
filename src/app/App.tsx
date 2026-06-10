@@ -652,7 +652,7 @@ export default function App() {
                   const variant = (['07', '08', '09'] as const)[index as 0 | 1 | 2];
                   return (
                     <article key={step} className="ai-step-card group relative min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-surface-dark transition-colors duration-200 hover:border-white/20">
-                      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0">
+                      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0">
                         <AiStepIllustration variant={variant} className="aspect-[4/3] w-full" />
                       </div>
                       <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-surface-dark/90 via-surface-dark/55 to-transparent" />
