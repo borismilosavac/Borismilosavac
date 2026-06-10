@@ -84,7 +84,7 @@ export function AiStepIllustration({ variant, className = '' }: Props) {
           <line x1="142" y1="62" x2="272" y2="62" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.07" strokeDasharray="3 4" />
           <line x1="142" y1="98" x2="272" y2="98" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.07" strokeDasharray="3 4" />
           {/* decision highlight node */}
-          <circle className="hero-art-node--b" cx="262" cy="88" r="4.5" fill="#60a5fa" />
+          <circle className="hero-art-node hero-art-node--b" cx="262" cy="88" r="4.5" fill="#60a5fa" />
         </g>
       )}
 
@@ -97,7 +97,7 @@ export function AiStepIllustration({ variant, className = '' }: Props) {
           <circle className="hero-art-node" cx="70" cy="46" r="3.5" fill="#22c55e" />
           <rect x="10" y="90" width="54" height="16" rx="4" fill="#ffffff" fillOpacity="0.36" />
           <rect x="10" y="110" width="54" height="16" rx="4" fill="#ffffff" fillOpacity="0.14" />
-          <circle className="hero-art-node--c" cx="70" cy="98" r="3.5" fill="#22c55e" />
+          <circle className="hero-art-node hero-art-node--c" cx="70" cy="98" r="3.5" fill="#22c55e" />
           {/* motion-safe toggle */}
           <rect x="10" y="156" width="48" height="22" rx="11" fill="#ffffff" fillOpacity="0.07" stroke="#ffffff" strokeOpacity="0.22" />
           <circle cx="46" cy="167" r="8" fill="#60a5fa" fillOpacity="0.62" />
@@ -166,11 +166,11 @@ export function AiStepIllustration({ variant, className = '' }: Props) {
           <rect x="88" y="152" width="178" height="28" rx="8" fill="#ffffff" fillOpacity="0.05" stroke="#ffffff" strokeOpacity="0.1" />
           {/* ready-state nodes */}
           <circle className="hero-art-node" cx="108" cy="166" r="3.5" fill="#22c55e" />
-          <circle className="hero-art-node--b" cx="148" cy="166" r="3.5" fill="#22c55e" />
-          <circle className="hero-art-node--c" cx="188" cy="166" r="3.5" fill="#22c55e" />
+          <circle className="hero-art-node hero-art-node--b" cx="148" cy="166" r="3.5" fill="#22c55e" />
+          <circle className="hero-art-node hero-art-node--c" cx="188" cy="166" r="3.5" fill="#22c55e" />
           <circle cx="230" cy="166" r="3.5" fill="#60a5fa" fillOpacity="0.65" />
           {/* junction nodes at grid corners */}
-          <circle className="hero-art-node--c" cx="88" cy="48" r="2.5" fill="#60a5fa" />
+          <circle className="hero-art-node hero-art-node--c" cx="88" cy="48" r="2.5" fill="#60a5fa" />
           <circle cx="266" cy="48" r="2.5" fill="#a78bfa" fillOpacity="0.72" />
         </g>
       )}
