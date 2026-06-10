@@ -651,15 +651,15 @@ export default function App() {
                 {aiSteps.slice(6).map(([step, purpose], index) => {
                   const variant = (['07', '08', '09'] as const)[index as 0 | 1 | 2];
                   return (
-                    <article key={step} className="ai-step-card group relative min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-surface-dark transition-colors duration-200 hover:border-white/20">
-                      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0">
-                        <AiStepIllustration variant={variant} className="aspect-[4/3] w-full" />
-                      </div>
-                      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-surface-dark/90 via-surface-dark/55 to-transparent" />
-                      <div className="relative z-10 p-5">
+                    <article key={step} className="ai-step-card flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-dark transition-colors duration-200 hover:border-white/20">
+                      <div className="p-5">
                         <div className="font-mono text-sm text-slate-400">{String(index + 7).padStart(2, '0')}</div>
                         <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
                         <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
+                      </div>
+                      <div aria-hidden className="pointer-events-none relative min-h-[160px] flex-1 overflow-hidden">
+                        <AiStepIllustration variant={variant} className="absolute inset-0 h-full w-full" />
+                        <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-surface-dark to-transparent" />
                       </div>
                     </article>
                   );

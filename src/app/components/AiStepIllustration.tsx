@@ -20,7 +20,7 @@ export function AiStepIllustration({ variant, className = '' }: Props) {
   return (
     <svg
       viewBox="0 0 280 210"
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="xMidYMid slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
