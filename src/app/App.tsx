@@ -1,23 +1,21 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Briefcase, Check, Download, Eye, Mail, MapPin, RotateCcw, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Briefcase, Check, Download, Eye, Mail, MapPin, Menu, X } from 'lucide-react';
+import { ImageWithFallback } from './components/figma/ImageWithFallback';
+import { ImagePlaceholder } from './components/ImagePlaceholder';
+import { HeroSystemArt } from './components/HeroSystemArt';
+import { AiStepIllustration } from './components/AiStepIllustration';
+import stocklogUi from '../SL-view.svg';
+import stocklogBoard from '../stocklog-board.svg';
+import stocklogShowroom from '../stocklog-showroom.png';
 
-type PreferenceKey = 'largeText' | 'highContrast' | 'lessMotion' | 'quickScan';
 
-type Preferences = Record<PreferenceKey, boolean>;
-
-const preferenceOptions: { key: PreferenceKey; label: string; description: string }[] = [
-  { key: 'largeText', label: 'Larger text', description: 'Increase body copy and interface text for easier reading.' },
-  { key: 'highContrast', label: 'Higher contrast', description: 'Strengthen text, borders and surfaces for clearer separation.' },
-  { key: 'lessMotion', label: 'Less motion', description: 'Reduce animation and smooth scrolling.' },
-  { key: 'quickScan', label: 'Quick scan', description: 'Tighten spacing and reduce visual noise for faster reviewing.' },
+const navItems: { id: string; label: string }[] = [
+  { id: 'summary', label: 'Summary' },
+  { id: 'work', label: 'Work' },
+  { id: 'ai', label: 'AI workflow' },
+  { id: 'system', label: 'Systems' },
+  { id: 'contact', label: 'Contact' },
 ];
-
-const defaultPreferences: Preferences = {
-  largeText: false,
-  highContrast: false,
-  lessMotion: false,
-  quickScan: false,
-};
 
 const fitAreas = [
   {
@@ -172,104 +170,196 @@ function scrollTo(id: string, smooth: boolean) {
 }
 
 export default function App() {
-  const [panelOpen, setPanelOpen] = useState(false);
-  const [preferences, setPreferences] = useState<Preferences>(() => {
-    try {
-      return { ...defaultPreferences, ...JSON.parse(localStorage.getItem('portfolio-view-options') || '{}') };
-    } catch {
-      return defaultPreferences;
-    }
-  });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [headerTheme, setHeaderTheme] = useState<'light' | 'dark'>('dark');
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
+  const sectionPad = 'py-20 md:py-28';
+  const surface = 'border-slate-200';
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Smart sticky: compact on scroll, hide on scroll-down past a safe
+  // threshold, reappear on scroll-up. Disabled under reduced motion.
   useEffect(() => {
-    localStorage.setItem('portfolio-view-options', JSON.stringify(preferences));
-  }, [preferences]);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lastY = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      setScrolled(y > 8);
+      if (reduce) {
+        setHidden(false);
+      } else if (y > 160 && y > lastY + 4) {
+        setHidden(true);
+      } else if (y < lastY - 4 || y <= 160) {
+        setHidden(false);
+      }
+      lastY = y;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const textSize = preferences.largeText ? 'text-lg' : 'text-base';
-  const sectionPad = preferences.quickScan ? 'py-12 md:py-16' : 'py-16 md:py-28';
-  const surface = preferences.highContrast ? 'bg-white text-slate-950 border-slate-950' : 'bg-white text-slate-950 border-slate-200';
-  const smooth = !preferences.lessMotion;
+  // Section-aware header colour: a thin trip-line just below the header
+  // detects which section sits under it and adopts its light/dark theme.
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-header-theme]'));
+    if (sections.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const theme = entry.target.getAttribute('data-header-theme');
+            if (theme === 'light' || theme === 'dark') setHeaderTheme(theme);
+          }
+        });
+      },
+      { rootMargin: '-64px 0px -80% 0px', threshold: 0 },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  // Pause the hero background animation when the hero scrolls out of view,
+  // so the blurred layers stop compositing and release their GPU textures.
+  useEffect(() => {
+    const hero = document.getElementById('top');
+    if (!hero) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  const headerHidden = hidden && !menuOpen;
 
   return (
-    <main className={`min-h-screen bg-slate-50 text-slate-950 ${textSize}`}>
-      <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
-          <button onClick={() => scrollTo('top', smooth)} className="text-left font-black tracking-tight text-slate-950" aria-label="Back to top">BM</button>
-          <div className="hidden items-center gap-1 text-sm md:flex">
-            {['summary', 'work', 'ai', 'system', 'contact'].map((id) => (
-              <button key={id} onClick={() => scrollTo(id, smooth)} className="rounded-full px-4 py-2 font-medium capitalize text-slate-600 hover:bg-slate-100 hover:text-slate-950">{id}</button>
-            ))}
+    <main className="min-h-screen bg-slate-50 text-slate-950 antialiased">
+      <header
+        data-header={headerTheme}
+        style={{ color: 'var(--header-fg)' }}
+        className={`fixed inset-x-0 top-0 z-50 transition-transform duration-300 will-change-transform ${headerHidden ? '-translate-y-full' : 'translate-y-0'}`}
+      >
+        <div
+          className={`transition-colors duration-300 ${scrolled || menuOpen ? 'border-b backdrop-blur-xl' : 'border-b border-transparent'}`}
+          style={{
+            backgroundColor: scrolled || menuOpen ? 'var(--header-surface)' : 'transparent',
+            borderColor: scrolled || menuOpen ? 'var(--header-border)' : 'transparent',
+          }}
+        >
+          <div className={`mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 transition-[padding] duration-300 md:px-8 ${scrolled ? 'py-2' : 'py-3.5'}`}>
+            <button onClick={() => scrollTo('top', smooth)} className="flex items-center rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" aria-label="Boris Milosavac portfolio home">
+              <svg viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-7 w-auto">
+                <path d="M0 2C0 0.895431 0.895431 0 2 0L12.6383 0C15.5995 0 18 2.6863 18 6.00001C18 9.31371 15.5995 12 12.6383 12H2C0.89543 12 0 11.1046 0 10V2Z" fill="currentColor"/>
+                <path d="M0 16C0 14.8954 0.89543 14 2 14H16.8511C20.7993 14 24 17.5817 24 22C24 26.4183 20.7993 30 16.8511 30H2C0.895429 30 0 29.1046 0 28V16Z" fill="currentColor"/>
+                <path d="M28.06 30C28.0043 30 27.9765 30 27.9529 29.9994C26.8852 29.9743 26.0257 29.1148 26.0006 28.0471C26 28.0235 26 27.9957 26 27.94L26.0002 7.38258C26.0002 3.3053 29.5818 0 34.0001 0C38.4183 0 42 3.3053 42 7.38258V27.94C42 27.9957 42 28.0236 41.9994 28.0471C41.9743 29.1148 41.1148 29.9743 40.0471 29.9994C40.0236 30 39.9957 30 39.94 30H28.06Z" fill="currentColor"/>
+                <path d="M46 30C44.8954 30 44 29.1046 44 28V7.38258C44 3.3053 47.5817 0 52 0C56.4182 0 60 3.3053 60 7.38258V28C60 29.1046 59.1046 30 58 30H46Z" fill="currentColor"/>
+              </svg>
+            </button>
+            <div className="hidden items-center gap-0.5 text-sm md:flex">
+              {navItems.map(({ id, label }) => (
+                <button key={id} onClick={() => scrollTo(id, smooth)} className="header-link rounded-full px-3.5 py-2 font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">{label}</button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <a href="mailto:borismilosavac1985@gmail.com" style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold font-[family-name:var(--font-display)] transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:inline-flex">Get in touch</a>
+              <button onClick={() => setMenuOpen((open) => !open)} style={{ borderColor: 'var(--header-fg-muted)' }} className="header-control inline-flex items-center justify-center rounded-xl border p-2 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none md:hidden" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}>
+                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
-          <button onClick={() => setPanelOpen((open) => !open)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold hover:bg-slate-100" aria-expanded={panelOpen}>
-            <SlidersHorizontal size={16} /> View options
-          </button>
         </div>
-        {panelOpen && (
-          <div className="border-t border-slate-200 bg-white px-4 py-4 md:px-8">
-            <div className="mx-auto grid max-w-7xl gap-3 md:grid-cols-[1fr_2fr_auto] md:items-start">
-              <div>
-                <div className="font-bold">Adjust this portfolio for easier review</div>
-                <p className="text-sm text-slate-600">Change readability, contrast and motion preferences for a more comfortable viewing experience.</p>
-              </div>
-              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-                {preferenceOptions.map((option) => (
-                  <button key={option.key} onClick={() => setPreferences((current) => ({ ...current, [option.key]: !current[option.key] }))} className={`rounded-lg border p-3 text-left ${preferences[option.key] ? 'border-blue-600 bg-blue-50' : 'border-slate-200 bg-white'}`}>
-                    <span className="block font-semibold">{option.label}</span>
-                    <span className="mt-1 block text-xs text-slate-600">{option.description}</span>
-                  </button>
+        {menuOpen && (
+          <div className={`border-t px-4 py-4 backdrop-blur-xl md:hidden ${headerTheme === 'dark' ? 'border-white/10 bg-surface-dark/95 text-white' : 'border-slate-200 bg-white/95 text-slate-900'}`}>
+            <nav aria-label="Mobile navigation">
+              <div className="flex flex-col gap-1">
+                {navItems.map(({ id, label }) => (
+                  <button key={id} onClick={() => { scrollTo(id, smooth); setMenuOpen(false); }} className={`rounded-xl px-4 py-3 text-left font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${headerTheme === 'dark' ? 'text-slate-200 hover:bg-white/10 hover:text-white' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-950'}`}>{label}</button>
                 ))}
               </div>
-              <button onClick={() => setPreferences(defaultPreferences)} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold hover:bg-slate-100"><RotateCcw size={15} /> Reset preferences</button>
-            </div>
-            <div className="mx-auto mt-2 max-w-7xl text-xs text-slate-500">Saved on this device only.</div>
+              <div className={`mt-3 border-t pt-3 ${headerTheme === 'dark' ? 'border-white/10' : 'border-slate-100'}`}>
+                <a href="mailto:borismilosavac1985@gmail.com" onClick={() => setMenuOpen(false)} style={{ backgroundColor: 'var(--header-cta-bg)', color: 'var(--header-cta-fg)' }} className="inline-flex items-center gap-2 rounded-xl px-4 py-3 font-semibold font-[family-name:var(--font-display)] transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><Mail size={16} /> Get in touch</a>
+              </div>
+            </nav>
           </div>
         )}
-      </nav>
+      </header>
 
-      <section id="top" className="bg-slate-950 text-white">
-        <div className="mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl content-center gap-12 px-4 py-16 md:grid-cols-[1.1fr_0.9fr] md:px-8">
-          <div>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80"><MapPin size={16} /> Munich, Germany · Authorised to work in Germany</div>
-            <h1 className="max-w-5xl text-5xl font-black leading-[0.98] tracking-tight sm:text-6xl md:text-7xl">I design complex digital products that people can actually use.</h1>
-            <p className="mt-6 max-w-3xl text-xl leading-relaxed text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
-            <p className="mt-4 max-w-3xl leading-relaxed text-slate-400">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
-            <div className="mt-6 flex flex-wrap gap-2 text-sm text-slate-200">
-              {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">{tag}</span>)}
+      <section id="top" data-header-theme="dark" className="relative overflow-hidden bg-surface-dark text-white">
+        <div aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${heroInView ? '' : 'motion-paused'}`}>
+          <div className="hero-aurora hero-aurora-1 absolute -top-44 left-1/3 h-[42rem] w-[42rem] max-w-[120vw] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[90px]" />
+          <div className="hero-aurora hero-aurora-2 absolute -bottom-52 right-0 h-[36rem] w-[36rem] max-w-[110vw] rounded-full bg-indigo-600/15 blur-[90px]" />
+          <div className="hero-signal absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(120,170,255,0.45),transparent_55%)] opacity-0" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
+          {/* Abstract product-system illustration — desktop background layer (decorative). */}
+          <div className="hero-art absolute inset-y-0 right-[-4vw] hidden w-[60vw] max-w-[1080px] lg:block">
+            <HeroSystemArt variant="panel" className="h-full w-full" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-surface-dark via-surface-dark/22 to-transparent" />
+          </div>
+        </div>
+        <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 lg:gap-12 lg:grid-cols-[1.4fr_0.6fr]">
+          <div className="min-w-0">
+            <div className="mb-5 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
+            <h1 className="max-w-[15em] text-balance type-display [overflow-wrap:break-word] hyphens-manual">I design <span className="hero-emphasis hero-emphasis--decode"><span className="hero-emphasis__base">complex digital products</span><span className="hero-emphasis__pixel" aria-hidden="true">complex digital products</span></span> that people can <span className="hero-emphasis"><span className="hero-emphasis__base">actually use</span></span>.</h1>
+            <p className="mt-5 max-w-xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
+            <p className="hero-subcopy mt-3 max-w-xl text-sm leading-relaxed text-slate-400 md:text-base">My strongest work sits where products become operationally complex: dashboards, multi-role workflows, filters, tables, permissions, mobile utility, and reusable UI systems that keep teams moving.</p>
+            <div className="mt-5 flex flex-wrap gap-2 text-sm text-slate-200">
+              {['Munich-based', 'English fluent', 'Learning German', 'Web + Mobile', 'SaaS / B2B / E-commerce', 'AI-assisted, human-led workflow'].map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{tag}</span>)}
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-bold text-slate-950 hover:bg-slate-200">View selected work <ArrowRight size={18} /></button>
-              <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-bold text-white hover:bg-white/10">Read the 60-second summary</button>
-              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-bold text-white hover:bg-white/10">Contact Boris</a>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button onClick={() => scrollTo('work', smooth)} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 font-semibold text-slate-950 transition-colors duration-150 hover:bg-slate-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">View selected work <ArrowRight size={18} /></button>
+              <button onClick={() => scrollTo('summary', smooth)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Read the 60-second summary</button>
+              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 font-semibold font-[family-name:var(--font-display)] text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
-          <div className="grid content-center gap-4">
-            {caseStudies.map((item) => (
-              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group rounded-2xl border border-white/10 bg-white/[0.06] p-5 text-left transition hover:bg-white/[0.1]">
-                <div className="text-sm font-semibold text-blue-200">Case Study {item.number}</div>
-                <div className="mt-2 text-2xl font-black">{item.title}</div>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">{item.why}</p>
-              </button>
-            ))}
+          <div className="relative flex min-w-0 flex-col justify-center gap-3 lg:gap-5">
+            {/* Compact abstract system illustration — tablet/mobile only (desktop uses the
+                background layer). Full-bleed below sm (negative margins mirror the page
+                padding exactly); contained, width-capped card on tablet. */}
+            <div aria-hidden className={`pointer-events-none -mx-4 overflow-hidden bg-slate-900/40 sm:mx-auto sm:w-full sm:max-w-xl sm:rounded-3xl sm:border sm:border-white/10 lg:hidden ${heroInView ? '' : 'motion-paused'}`}>
+              <HeroSystemArt variant="card" className="aspect-[3/2] w-full" />
+            </div>
+            <div className="hero-selected-work grid gap-2">
+              <div className="type-eyebrow text-slate-400">Selected work</div>
+              {caseStudies.map((item) => (
+                <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex items-center gap-3 rounded-xl border border-white/10 border-l-2 border-l-blue-400/30 bg-surface-dark/90 p-3.5 text-left transition-all duration-200 hover:border-blue-400/50 hover:bg-surface-dark/95 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+                  <span className="font-mono text-sm text-slate-400">{item.number}</span>
+                  <span className="min-w-0 flex-1 truncate text-base font-semibold">{item.title}</span>
+                  <ArrowUpRight size={18} className="shrink-0 text-slate-400 transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5 group-hover:text-blue-300" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="summary" className={`${sectionPad} px-4 md:px-8`}>
+      <section id="summary" data-header-theme="light" className={`${sectionPad} px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
-          <div className={`rounded-3xl border p-6 md:p-10 ${surface}`}>
-            <div className="mb-4 inline-flex rounded-full bg-blue-50 px-3 py-1 text-sm font-bold text-blue-700">60-second recruiter summary</div>
-            <h2 className="max-w-4xl text-3xl font-black leading-tight md:text-5xl">If you are hiring for a Munich-based Product Designer or Senior UX/UI Designer, here is the short version.</h2>
-            <div className="mt-6 grid gap-5 text-slate-700 md:grid-cols-2">
+          <div className={`rounded-3xl border bg-white p-6 shadow-sm md:p-12 ${surface}`}>
+            <div className="mb-5 inline-flex items-center rounded-full bg-blue-50 px-3 py-1 type-eyebrow text-blue-700">60-second recruiter summary</div>
+            <h2 className="max-w-4xl type-h2">If you are hiring for a Munich-based Product Designer or Senior UX/UI Designer, here is the short version.</h2>
+            <div className="mt-8 grid gap-6 leading-relaxed text-slate-700 md:grid-cols-2">
               <p>I bring 14+ years of hands-on digital design experience, with the strongest fit in SaaS products, B2B dashboards, operational tools, e-commerce UX, and design-system-aware product teams.</p>
               <p>I work best on products that need structure: dashboards, complex workflows, multi-role permissions, responsive behaviour, and interface states that need to stay clear as products grow.</p>
               <p>I am based in Munich, authorised to work in Germany, fluent in English, and currently learning German.</p>
               <p>I use AI to speed up exploration and prototyping, but I keep final product decisions human, deliberate and accountable.</p>
             </div>
           </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
             {fitAreas.map((area) => (
-              <article key={area.title} className={`rounded-2xl border p-5 ${surface}`}>
-                <h3 className="font-black">{area.title}</h3>
+              <article key={area.title} className={`rounded-2xl border bg-white p-6 transition-colors duration-150 hover:border-slate-300 ${surface}`}>
+                <h3 className="font-semibold tracking-tight text-slate-900">{area.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{area.body}</p>
               </article>
             ))}
@@ -277,21 +367,24 @@ export default function App() {
         </div>
       </section>
 
-      <section id="work" className={`${sectionPad} bg-slate-100 px-4 md:px-8`}>
+      <section id="work" data-header-theme="light" className={`${sectionPad} border-y border-slate-200 bg-slate-100 px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 flex items-end justify-between gap-6">
-            <div>
-              <div className="text-sm font-bold uppercase tracking-wider text-slate-500">Selected work</div>
-              <h2 className="mt-2 text-4xl font-black md:text-6xl">Three product design cases</h2>
-            </div>
+          <div className="mb-12 max-w-3xl">
+            <div className="type-eyebrow text-slate-500">Selected work</div>
+            <h2 className="mt-3 type-h2">Three product design cases</h2>
+            <p className="mt-4 type-lead text-slate-600">A B2B operations platform, a multi-role SaaS product, and a real e-commerce optimisation — each shown as a product problem, not a gallery.</p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {caseStudies.map((item) => (
-              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-                <div className="text-sm font-bold text-blue-700">{item.eyebrow}</div>
-                <h3 className="mt-3 text-3xl font-black">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{item.intro}</p>
-                <p className="mt-5 text-sm font-bold text-slate-950">Why it matters: <span className="font-medium text-slate-600">{item.why}</span></p>
+              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-7 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-slate-400">{item.number}</span>
+                  <ArrowUpRight size={20} className="text-slate-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-slate-900" />
+                </div>
+                <div className="mt-5 type-eyebrow text-blue-700">{item.eyebrow}</div>
+                <h3 className="mt-2 type-h3-lg">{item.title}</h3>
+                <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-slate-600">{item.intro}</p>
+                <p className="mt-5 border-t border-slate-100 pt-4 text-sm leading-relaxed text-slate-500"><span className="font-semibold text-slate-900">Why it matters:</span> {item.why}</p>
               </button>
             ))}
           </div>
@@ -300,18 +393,55 @@ export default function App() {
 
       {caseStudies.map((item) => {
         const dark = item.id !== 'zgrada-plus';
+        const cardSurface = dark ? 'border-white/10 bg-white/[0.05]' : 'border-sky-200 bg-white/85';
+        const subText = dark ? 'text-slate-300' : 'text-slate-600';
+        const listItem = dark ? 'border-white/10 bg-white/[0.04] text-slate-300' : 'border-sky-100 bg-sky-50/80 text-slate-700';
         return (
-          <section key={item.id} id={item.id} className={`${sectionPad} px-4 md:px-8 ${dark ? `bg-gradient-to-br ${item.palette} text-white` : `bg-gradient-to-br ${item.palette} text-slate-950`}`}>
-            <div className="mx-auto max-w-7xl">
-              <div className="mb-8 flex flex-wrap items-center gap-3">
-                <span className={`text-6xl font-black ${dark ? 'text-white/10' : 'text-slate-900/10'}`}>{item.number}</span>
-                <span className={`rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-wider ${dark ? 'border-white/15 bg-white/10 text-slate-200' : 'border-sky-200 bg-white/70 text-sky-800'}`}>{item.eyebrow}</span>
+          <section key={item.id} id={item.id} data-header-theme={dark ? 'dark' : 'light'} className={`relative overflow-hidden ${sectionPad} px-4 md:px-8 bg-gradient-to-br ${item.palette} ${dark ? 'text-white' : 'text-slate-950'}`}>
+            <div className="relative mx-auto max-w-7xl">
+              <div className="flex flex-wrap items-center gap-4">
+                <span className={`font-mono text-5xl font-semibold md:text-6xl ${dark ? 'text-white/15' : 'text-slate-900/15'}`}>{item.number}</span>
+                <span className={`rounded-full border px-4 py-2 type-eyebrow ${dark ? 'border-white/15 bg-white/10 text-slate-200' : 'border-sky-200 bg-white/70 text-sky-800'}`}>{item.eyebrow}</span>
+                {item.id === 'stocklog' && <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-4 py-2 type-eyebrow text-amber-200">Flagship case</span>}
               </div>
-              <h2 className="text-5xl font-black tracking-tight md:text-7xl">{item.title}</h2>
-              <p className={`mt-5 max-w-4xl text-2xl font-bold leading-tight ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{item.headline}</p>
-              <p className={`mt-5 max-w-4xl leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>{item.intro}</p>
+              <h2 className="mt-6 text-balance type-title">{item.title}</h2>
+              <p className={`mt-5 max-w-4xl text-xl font-medium leading-snug md:text-2xl ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{item.headline}</p>
+              <p className={`mt-5 max-w-[65ch] leading-relaxed ${subText}`}>{item.intro}</p>
 
-              <div className="mt-10 grid gap-3 md:grid-cols-5">
+              {item.id === 'stocklog' && (
+                <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
+                  <ImageWithFallback src={stocklogUi} alt="StockLog dashboard concept showing dealership inventory cards, filters and sales performance structure." className="w-full" />
+                  <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Two-board structure separates inventory visibility from sales performance.</figcaption>
+                </figure>
+              )}
+
+              {item.id === 'zgrada-plus' && (
+                <ImagePlaceholder
+                  variant="ecosystem"
+                  tone="light"
+                  className="mt-10"
+                  alt="Zgrada Plus role ecosystem showing residents, managers, accounting, partners, city roles and admins."
+                  caption="Role-based structure keeps resident tasks simple while supporting dense manager workflows."
+                />
+              )}
+
+              {item.id === 'wineroom' && (
+                /*
+                  TODO: Replace this ImagePlaceholder with real WineRoom
+                  screenshot before publishing. Per 04_GRAPHIC_PROOF_PLAN
+                  Visual 10, the placeholder must not ship to production.
+                  Needs live site URL to capture desktop product listing.
+                */
+                <ImagePlaceholder
+                  variant="ecommerce"
+                  tone="dark"
+                  className="mt-10"
+                  alt="WineRoom e-commerce product listing with filters, sorting and scannable product cards."
+                  caption="Product discovery starts with clear listing, filtering and sorting."
+                />
+              )}
+
+              <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-5">
                 {[
                   ['Status', item.status],
                   ['Industry', item.industry],
@@ -319,48 +449,151 @@ export default function App() {
                   ['My role', item.role],
                   ['Focus', item.focus],
                 ].map(([label, value]) => (
-                  <div key={label} className={`rounded-2xl border p-4 ${dark ? 'border-white/10 bg-white/10' : 'border-sky-200 bg-white/80'}`}>
-                    <div className={`text-xs font-bold uppercase tracking-wider ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{label}</div>
-                    <div className="mt-2 text-sm font-semibold">{value}</div>
+                  <div key={label} className={`rounded-2xl border p-4 ${dark ? 'border-white/10 bg-white/[0.05]' : 'border-sky-200 bg-white/80'}`}>
+                    <div className={`text-[11px] font-semibold uppercase tracking-[0.12em] ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{label}</div>
+                    <div className="mt-2 text-sm font-semibold leading-snug">{value}</div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-10 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-white/10 bg-white/10' : 'border-sky-200 bg-white/85'}`}>
-                  <h3 className="text-2xl font-black">The problem</h3>
-                  <p className={`mt-4 leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>{item.problem}</p>
+              <div className="mt-6 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+                <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
+                  <h3 className="type-h3">The problem</h3>
+                  <p className={`mt-4 leading-relaxed ${subText}`}>{item.problem}</p>
                 </article>
-                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-white/10 bg-white/10' : 'border-sky-200 bg-white/85'}`}>
-                  <h3 className="text-2xl font-black">Core UX challenge</h3>
-                  <p className={`mt-4 leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>{item.challenge}</p>
-                  <div className={`mt-5 rounded-2xl border p-4 text-sm font-semibold ${dark ? 'border-white/10 bg-black/20 text-slate-200' : 'border-sky-200 bg-sky-50 text-slate-800'}`}>{item.flow}</div>
+                <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
+                  <h3 className="type-h3">Core UX challenge</h3>
+                  <p className={`mt-4 leading-relaxed ${subText}`}>{item.challenge}</p>
+                  <div className={`mt-5 rounded-2xl border p-4 font-mono text-sm leading-relaxed ${dark ? 'border-white/10 bg-black/25 text-slate-200' : 'border-sky-200 bg-sky-50 text-slate-800'}`}>{item.flow}</div>
                 </article>
               </div>
 
               <div className="mt-5 grid gap-5 lg:grid-cols-2">
-                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-white/10 bg-white/10' : 'border-sky-200 bg-white/85'}`}>
-                  <h3 className="text-2xl font-black">Users</h3>
+                <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
+                  <h3 className="type-h3">Users</h3>
                   <ul className="mt-4 space-y-3">
-                    {item.users.map((user) => <li key={user} className={`rounded-xl border p-3 text-sm ${dark ? 'border-white/10 bg-white/5 text-slate-300' : 'border-sky-100 bg-sky-50 text-slate-700'}`}>{user}</li>)}
+                    {item.users.map((user) => <li key={user} className={`rounded-xl border p-3.5 text-[0.9375rem] leading-relaxed ${listItem}`}>{user}</li>)}
                   </ul>
                 </article>
-                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-white/10 bg-white/10' : 'border-sky-200 bg-white/85'}`}>
-                  <h3 className="text-2xl font-black">Key design decisions</h3>
+                <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
+                  <h3 className="type-h3">Key design decisions</h3>
                   <ol className="mt-4 space-y-3">
-                    {item.decisions.map((decision, index) => <li key={decision} className={`rounded-xl border p-3 text-sm ${dark ? 'border-white/10 bg-white/5 text-slate-300' : 'border-sky-100 bg-sky-50 text-slate-700'}`}><strong>{index + 1}.</strong> {decision}</li>)}
+                    {item.decisions.map((decision, index) => (
+                      <li key={decision} className={`flex gap-3 rounded-xl border p-3.5 text-[0.9375rem] leading-relaxed ${listItem}`}>
+                        <span className={`mt-px font-mono text-xs ${dark ? 'text-slate-400' : 'text-sky-700'}`}>{String(index + 1).padStart(2, '0')}</span>
+                        <span>{decision}</span>
+                      </li>
+                    ))}
                   </ol>
                 </article>
               </div>
 
+              {item.id === 'stocklog' && (
+                <>
+                  {/*
+                    TODO: Replace the ImagePlaceholder frames (vehicle card
+                    anatomy, mobile view) with real StockLog UI exports before
+                    publishing. Per 04_GRAPHIC_PROOF_PLAN Visuals 3 & 5, blank
+                    placeholders must not ship to production.
+                  */}
+                  <div className="mt-5 grid gap-5 lg:grid-cols-2 lg:items-start">
+                    <ImagePlaceholder
+                      variant="board"
+                      tone="dark"
+                      aspectOverride="aspect-[4/3]"
+                      alt="Vehicle card anatomy showing key dealership inventory data fields."
+                      caption="Vehicle cards keep operational data scannable at board level."
+                    />
+                    <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
+                      <ImageWithFallback src={stocklogBoard} alt="Search and filter interface for dealership inventory and sales workflow." className="w-full" />
+                      <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Precise search supports lookup-heavy dealership workflows.</figcaption>
+                    </figure>
+                  </div>
+                  <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_1.4fr] lg:items-start">
+                    <ImagePlaceholder
+                      variant="mobile"
+                      tone="dark"
+                      className="mx-auto w-full max-w-[280px]"
+                      alt="Mobile StockLog interface showing vehicle cards and operational actions."
+                      caption="Mobile view supports quick access to inventory and deal status."
+                    />
+                    <figure className="overflow-hidden rounded-3xl border border-white/10">
+                      <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
+                      <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
+                    </figure>
+                  </div>
+                </>
+              )}
+
+              {item.id === 'zgrada-plus' && (
+                <>
+                  {/*
+                    TODO: Replace these ImagePlaceholder frames with real Zgrada Plus
+                    screen exports before publishing. Per 04_GRAPHIC_PROOF_PLAN
+                    Visuals 6-9, blank placeholders must not ship to production.
+                  */}
+                  <ImagePlaceholder
+                    variant="dashboard"
+                    tone="light"
+                    className="mt-5"
+                    alt="Zgrada Plus manager dashboard showing building management overview and operational modules."
+                    caption="Manager workflows use denser web layouts for overview and control."
+                  />
+                  <div className="mt-5 grid gap-5 lg:grid-cols-2 lg:items-start">
+                    <div role="img" aria-label="Mobile resident flow for building management, issue reporting and status tracking.">
+                      <div className="grid grid-cols-3 gap-2">
+                        <ImagePlaceholder variant="mobile" tone="light" />
+                        <ImagePlaceholder variant="mobile" tone="light" />
+                        <ImagePlaceholder variant="mobile" tone="light" />
+                      </div>
+                      <div className="mt-2 type-caption text-slate-500">Resident flows stay mobile-first and task-focused.</div>
+                    </div>
+                    <ImagePlaceholder
+                      variant="board"
+                      tone="light"
+                      aspectOverride="aspect-[4/3]"
+                      alt="Zgrada Plus interface states showing status badges, consent controls and form feedback."
+                      caption="Accessibility is shown through readable states, labels and predictable controls."
+                    />
+                  </div>
+                </>
+              )}
+
+              {item.id === 'wineroom' && (
+                <>
+                  {/*
+                    TODO: Replace these ImagePlaceholder frames with real WineRoom
+                    screenshots before publishing. Per 04_GRAPHIC_PROOF_PLAN
+                    Visuals 11 & 12, placeholders must not ship to production.
+                    Needs live site URL to capture mobile toolbar and filter state.
+                  */}
+                  <div className="mt-5 grid gap-5 lg:grid-cols-2 lg:items-start">
+                    <ImagePlaceholder
+                      variant="mobile"
+                      tone="dark"
+                      className="mx-auto w-full max-w-[280px]"
+                      alt="WineRoom mobile product listing with filter, sort and search toolbar."
+                      caption="Mobile toolbar keeps filter, sort and search available during browsing."
+                    />
+                    <ImagePlaceholder
+                      variant="ecommerce"
+                      tone="dark"
+                      aspectOverride="aspect-[4/3]"
+                      alt="WineRoom filter and search interface for product discovery."
+                      caption="Search and filters reduce browsing friction before checkout."
+                    />
+                  </div>
+                </>
+              )}
+
               <div className="mt-5 grid gap-5 lg:grid-cols-2">
-                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-white/10 bg-white/10' : 'border-sky-200 bg-white/85'}`}>
-                  <h3 className="text-2xl font-black">Design outcome</h3>
-                  <p className={`mt-4 leading-relaxed ${dark ? 'text-slate-300' : 'text-slate-600'}`}>{item.outcome}</p>
+                <article className={`rounded-3xl border p-6 md:p-8 ${cardSurface}`}>
+                  <h3 className="type-h3">Design outcome</h3>
+                  <p className={`mt-4 leading-relaxed ${subText}`}>{item.outcome}</p>
                 </article>
-                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-amber-300/20 bg-amber-300/10' : 'border-amber-300 bg-amber-50'}`}>
-                  <h3 className="text-2xl font-black">Truth layer</h3>
-                  <p className={`mt-4 leading-relaxed ${dark ? 'text-amber-100' : 'text-amber-900'}`}>{item.truth}</p>
+                <article className={`rounded-3xl border p-6 md:p-8 ${dark ? 'border-amber-300/25 bg-amber-300/[0.08]' : 'border-amber-300 bg-amber-50'}`}>
+                  <h3 className={`type-h3 ${dark ? 'text-amber-200' : 'text-amber-900'}`}>Truth layer</h3>
+                  <p className={`mt-4 leading-relaxed ${dark ? 'text-amber-100/90' : 'text-amber-900'}`}>{item.truth}</p>
                 </article>
               </div>
             </div>
@@ -368,95 +601,182 @@ export default function App() {
         );
       })}
 
-      <section id="ai" className={`${sectionPad} bg-slate-950 px-4 text-white md:px-8`}>
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-4xl">
-            <div className="text-sm font-bold uppercase tracking-wider text-sky-300">AI-assisted workflow</div>
-            <h2 className="mt-3 text-4xl font-black leading-tight md:text-6xl">Using AI to accelerate exploration without outsourcing design judgement.</h2>
-            <p className="mt-5 text-xl leading-relaxed text-slate-300">I use AI as a design accelerator for ideation, flow exploration, structured prompting and rapid prototyping. The final judgement, refinement and accessibility review stay human-led.</p>
+      <section id="ai" data-header-theme="dark" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_45%)]" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <div className="type-eyebrow text-slate-400">AI-assisted workflow</div>
+            <h2 className="mt-3 type-h2">Using AI to accelerate exploration without outsourcing design judgement.</h2>
+            <p className="mt-5 type-lead text-slate-300">I use AI as a design accelerator for ideation, flow exploration, structured prompting and rapid prototyping. The final judgement, refinement and accessibility review stay human-led.</p>
           </div>
-          <div className="mt-10 grid gap-3 md:grid-cols-3">
-            {aiSteps.map(([step, purpose], index) => (
-              <div key={step} className="rounded-2xl border border-white/10 bg-white/10 p-5">
-                <div className="text-3xl font-black text-sky-300">{index + 1}</div>
-                <h3 className="mt-3 font-black">{step}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">{purpose}</p>
+          <div className="mt-12 space-y-5">
+            <div>
+              <div className="mb-3 flex flex-wrap items-center gap-3 type-eyebrow text-slate-400">
+                <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1">Steps 01–05</span>
+                AI-assisted exploration
               </div>
-            ))}
+              <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
+                {aiSteps.slice(0, 5).map(([step, purpose], index) => (
+                  <div key={step} className="bg-surface-dark p-5 transition-colors duration-150 hover:bg-slate-900">
+                    <div className="font-mono text-sm text-slate-400">{String(index + 1).padStart(2, '0')}</div>
+                    <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
+                    <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-400">{purpose}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div aria-hidden className="flex justify-center text-slate-600">
+              <ArrowRight size={20} className="rotate-90" />
+            </div>
+
+            <div className="rounded-2xl border-2 border-blue-500/60 bg-blue-500/[0.12] p-6 md:p-7">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-blue-500 text-white"><Eye size={20} /></span>
+                <span className="font-mono text-sm text-blue-300">06</span>
+                <span className="rounded-full bg-blue-500/20 px-3 py-1 type-eyebrow text-blue-200">Human-led checkpoint</span>
+              </div>
+              <h3 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">{aiSteps[5][0]}</h3>
+              <p className="mt-2 max-w-2xl leading-relaxed text-slate-200">{aiSteps[5][1]}</p>
+            </div>
+
+            <div aria-hidden className="flex justify-center text-slate-600">
+              <ArrowRight size={20} className="rotate-90" />
+            </div>
+
+            <div>
+              <div className="mb-3 flex flex-wrap items-center gap-3 type-eyebrow text-slate-400">
+                <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1">Steps 07–09</span>
+                Human-led refinement &amp; delivery
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {aiSteps.slice(6).map(([step, purpose], index) => {
+                  const variant = (['07', '08', '09'] as const)[index as 0 | 1 | 2];
+                  return (
+                    <article key={step} className="ai-step-card flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-dark transition-colors duration-200 hover:border-white/20">
+                      <div className="border-b border-white/[0.08] bg-white/[0.04] p-5">
+                        <div className="font-mono text-sm text-blue-400/80">{String(index + 7).padStart(2, '0')}</div>
+                        <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
+                        <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-300">{purpose}</p>
+                      </div>
+                      <div aria-hidden className="pointer-events-none flex min-h-[180px] flex-1 items-center justify-center p-5">
+                        <AiStepIllustration variant={variant} className="max-h-[200px] w-[88%] max-w-[250px]" />
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-          <div className="mt-8 rounded-3xl border border-white/10 bg-white/10 p-6 md:p-8">
-            <p className="text-2xl font-black">AI gives range. Human review gives judgement.</p>
-            <p className="mt-3 text-slate-300">Truth layer: AI-assisted exploration, prompt structuring, workflow acceleration and human-led review are claimed. Fully automated design, AI-generated final products, fake productivity metrics and replacement of design judgement are not claimed.</p>
+          <p className="mt-2 type-caption text-slate-400">Generated options are treated as draft material, not final design.</p>
+          <div className="mt-6 grid gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6 md:grid-cols-[1fr_1.4fr] md:p-8">
+            <p className="text-2xl font-semibold tracking-tight md:text-3xl">AI gives range.<br />Human review gives judgement.</p>
+            <p className="leading-relaxed text-slate-300">Truth layer: AI-assisted exploration, prompt structuring, workflow acceleration and human-led review are claimed. Fully automated design, AI-generated final products, fake productivity metrics and replacement of design judgement are not claimed.</p>
           </div>
         </div>
       </section>
 
-      <section id="system" className={`${sectionPad} bg-white px-4 md:px-8`}>
+      <section id="system" data-header-theme="light" className={`${sectionPad} bg-white px-4 md:px-8`}>
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-4xl">
-            <div className="text-sm font-bold uppercase tracking-wider text-blue-700">Design System Snapshot</div>
-            <h2 className="mt-3 text-4xl font-black leading-tight md:text-6xl">Designing screens, and the reusable rules behind them.</h2>
-            <p className="mt-5 text-xl leading-relaxed text-slate-600">This section shows how I think about reusability across cards, tables, forms, filters, states, mobile controls and accessibility notes. It is evidence of scalable UI thinking, not a claim that every project has a finished enterprise library.</p>
+          <div className="max-w-3xl">
+            <div className="type-eyebrow text-blue-700">Design system snapshot</div>
+            <h2 className="mt-3 type-h2">Designing screens, and the reusable rules behind them.</h2>
+            <p className="mt-5 type-lead text-slate-600">This section shows how I think about reusability across cards, tables, forms, filters, states, mobile controls and accessibility notes. It is evidence of scalable UI thinking, not a claim that every project has a finished enterprise library.</p>
           </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {/*
+            TODO: Replace this ImagePlaceholder with a real component board
+            (StockLog's can be cropped from existing UI) before publishing. Per
+            04_GRAPHIC_PROOF_PLAN Visual 15, placeholder must not ship; the
+            project-specific chip cards below remain the honest baseline.
+          */}
+          <ImagePlaceholder
+            variant="board"
+            tone="light"
+            className="mt-12"
+            alt="Portfolio design system snapshot showing reusable project-specific cards, badges, filters and controls."
+            caption="Reusable UI patterns make complex products easier to scale."
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {systemGroups.map(([title, ...items]) => (
-              <article key={title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                <h3 className="text-xl font-black">{title}</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {items.map((item) => <span key={item} className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700">{item}</span>)}
+              <article key={title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-7">
+                <h3 className="text-lg font-semibold tracking-tight text-slate-900">{title}</h3>
+                <div className="mt-2 text-xs font-medium uppercase tracking-[0.12em] text-slate-400">{items.length} components</div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {items.map((component) => <span key={component} className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700">{component}</span>)}
                 </div>
               </article>
             ))}
           </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            <article className="rounded-3xl bg-slate-950 p-6 text-white md:p-8">
-              <h3 className="text-2xl font-black">Key system principles</h3>
-              <ul className="mt-4 space-y-3 text-slate-300">
-                <li>Reuse patterns where products repeat decisions.</li>
-                <li>Design states, not only screens.</li>
-                <li>Make clarity scalable as roles, modules and data are added.</li>
-                <li>Treat accessibility as system quality.</li>
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            <article className="rounded-3xl bg-surface-dark p-6 text-white md:p-8">
+              <h3 className="type-h3">Key system principles</h3>
+              <ul className="mt-5 space-y-3 text-slate-300">
+                {['Reuse patterns where products repeat decisions.', 'Design states, not only screens.', 'Make clarity scalable as roles, modules and data are added.', 'Treat accessibility as system quality.'].map((principle) => (
+                  <li key={principle} className="flex gap-3"><Check size={18} className="mt-0.5 shrink-0 text-blue-400" /> {principle}</li>
+                ))}
               </ul>
             </article>
             <article className="rounded-3xl border border-amber-300 bg-amber-50 p-6 text-amber-950 md:p-8">
-              <h3 className="text-2xl font-black">Truth layer</h3>
-              <p className="mt-4 leading-relaxed">Claimed: reusable UI thinking, state design, component grouping, accessibility-aware product patterns. Not claimed: a final production design system for every project unless verified.</p>
+              <h3 className="type-h3 text-amber-900">Truth layer</h3>
+              <p className="mt-5 leading-relaxed">Claimed: reusable UI thinking, state design, component grouping, accessibility-aware product patterns. Not claimed: a final production design system for every project unless verified.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section id="contact" className={`${sectionPad} bg-slate-950 px-4 text-white md:px-8`}>
-        <div className="mx-auto max-w-7xl">
-          <h2 className="max-w-4xl text-4xl font-black leading-tight md:text-7xl">Let’s build clearer digital product experiences.</h2>
-          <p className="mt-5 max-w-3xl text-xl leading-relaxed text-slate-300">I am a Munich-based Product Designer focused on SaaS, B2B operations, e-commerce UX, reusable UI systems, accessibility, and AI-assisted product exploration.</p>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            <div className="rounded-3xl border border-white/10 bg-white/10 p-6 md:p-8">
-              <h3 className="text-2xl font-black">Contact</h3>
-              <dl className="mt-5 grid gap-4">
-                <div><dt className="text-sm text-slate-400">Name</dt><dd className="font-bold">Boris Milosavac</dd></div>
-                <div><dt className="text-sm text-slate-400">Location</dt><dd className="font-bold">Munich, Germany</dd></div>
-                <div><dt className="text-sm text-slate-400">Work authorisation</dt><dd className="font-bold">Authorised to work in Germany</dd></div>
-                <div><dt className="text-sm text-slate-400">Languages</dt><dd className="font-bold">English fluent · Learning German</dd></div>
-                <div><dt className="text-sm text-slate-400">Email</dt><dd className="font-bold">borismilosavac1985@gmail.com</dd></div>
-                <div><dt className="text-sm text-slate-400">Portfolio</dt><dd className="font-bold">borism.design</dd></div>
+      <section id="contact" data-header-theme="dark" className={`relative overflow-hidden ${sectionPad} bg-surface-dark px-4 text-white md:px-8`}>
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute -bottom-40 left-1/4 h-[34rem] w-[34rem] rounded-full bg-blue-600/15 blur-[130px]" />
+        </div>
+        <div className="relative mx-auto max-w-7xl">
+          <div className="max-w-4xl">
+            <div className="type-eyebrow text-slate-400">Contact</div>
+            <h2 className="mt-3 text-balance type-title">Let’s build clearer digital product experiences.</h2>
+            <p className="mt-6 max-w-3xl type-lead text-slate-300">I am a Munich-based Product Designer focused on SaaS, B2B operations, e-commerce UX, reusable UI systems, accessibility, and AI-assisted product exploration.</p>
+          </div>
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 md:p-8">
+              <h3 className="type-h3">Contact details</h3>
+              <dl className="mt-6 grid gap-5 sm:grid-cols-2">
+                <div><dt className="text-sm text-slate-400">Name</dt><dd className="mt-0.5 font-semibold">Boris Milosavac</dd></div>
+                <div><dt className="text-sm text-slate-400">Location</dt><dd className="mt-0.5 font-semibold">Munich, Germany</dd></div>
+                <div><dt className="text-sm text-slate-400">Work authorisation</dt><dd className="mt-0.5 font-semibold">Authorised to work in Germany</dd></div>
+                <div><dt className="text-sm text-slate-400">Languages</dt><dd className="mt-0.5 font-semibold">English fluent · Learning German</dd></div>
+                <div><dt className="text-sm text-slate-400">Email</dt><dd className="mt-0.5 font-semibold break-words">borismilosavac1985@gmail.com</dd></div>
+                <div><dt className="text-sm text-slate-400">Portfolio</dt><dd className="mt-0.5 font-semibold">borism.design</dd></div>
               </dl>
             </div>
             <div className="grid content-start gap-3">
-              <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center justify-between rounded-2xl bg-white p-5 font-black text-slate-950 hover:bg-slate-200"><span className="inline-flex items-center gap-3"><Mail size={22} /> Email Boris</span><ArrowRight /></a>
-              <button onClick={() => window.print()} className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 p-5 font-black text-white hover:bg-white/15"><span className="inline-flex items-center gap-3"><Download size={22} /> Download CV / PDF</span><ArrowRight /></button>
-              <button onClick={() => scrollTo('top', smooth)} className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 p-5 font-black text-white hover:bg-white/15"><span className="inline-flex items-center gap-3"><Eye size={22} /> Back to top</span><ArrowRight /></button>
-              <div className="rounded-2xl border border-white/10 bg-white/10 p-5">
-                <div className="inline-flex items-center gap-2 text-slate-300"><Briefcase size={20} /> Availability</div>
-                <p className="mt-2 font-bold">Open to Product Designer, Senior UX/UI Designer and UX/UI Designer roles in Munich, onsite, hybrid or remote.</p>
+              <a href="mailto:borismilosavac1985@gmail.com" className="group inline-flex items-center justify-between rounded-2xl bg-white p-5 font-semibold font-[family-name:var(--font-display)] text-slate-950 transition-colors duration-150 hover:bg-slate-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Mail size={20} /> Email Boris</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></a>
+              <button onClick={() => window.print()} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Download size={20} /> Print / Save as PDF</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></button>
+              <button onClick={() => scrollTo('top', smooth)} className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-5 font-semibold text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"><span className="inline-flex items-center gap-3"><Eye size={20} /> Back to top</span><ArrowRight size={20} className="transition-all duration-200 group-hover:translate-x-0.5" /></button>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+                <div className="inline-flex items-center gap-2 text-sm text-slate-300"><Briefcase size={18} /> Availability</div>
+                <p className="mt-2 font-semibold leading-relaxed">Open to Product Designer, Senior UX/UI Designer and UX/UI Designer roles in Munich, onsite, hybrid or remote.</p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/10 p-5">
-                <div className="inline-flex items-center gap-2 text-slate-300"><Check size={20} /> Best fit</div>
-                <p className="mt-2 text-slate-300">SaaS products · B2B dashboards · Operational tools · E-commerce UX · Design systems · AI-assisted workflows</p>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+                <div className="inline-flex items-center gap-2 text-sm text-slate-300"><Check size={18} /> Best fit</div>
+                <p className="mt-2 leading-relaxed text-slate-300">SaaS products · B2B dashboards · Operational tools · E-commerce UX · Design systems · AI-assisted workflows</p>
               </div>
             </div>
           </div>
-          <div className="mt-12 text-sm text-slate-500">© 2026 Boris Milosavac</div>
+          {/*
+            TODO: Replace this subtle ImagePlaceholder strip with a small real
+            preview of project interfaces before publishing. Per
+            04_GRAPHIC_PROOF_PLAN Visual 16, placeholder must not ship. Kept
+            secondary so it never competes with the contact CTAs above.
+          */}
+          <ImagePlaceholder
+            variant="board"
+            tone="dark"
+            className="mt-12 opacity-80"
+            aspectOverride="aspect-[5/1]"
+            alt="Small visual preview strip of Boris Milosavac's product design portfolio."
+          />
+          <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 type-caption text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+            <span>© 2026 Boris Milosavac</span>
+            <span>Munich, Germany · borism.design</span>
+          </div>
         </div>
       </section>
     </main>

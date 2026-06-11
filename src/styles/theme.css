@@ -40,6 +40,31 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
+  /* Font tokens */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-pixel: 'Pixelify Sans', 'Silkscreen', monospace;
+
+  /* Harmonic glitch timing for highlighted headline phrases */
+  --glitch-cycle: 13.2s;
+  --glitch-shift: 2px;
+  --decode-shift: 3px;
+  --glitch-burst-opacity: 0.85;
+  --pixel-opacity: 1;
+  --clarity-pixel-opacity: 0.85;
+  --clarity-line-opacity: 0.9;
+
+  /* Typography scale tokens */
+  --text-body: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);
+  --text-caption: 0.8125rem;
+  --text-meta: 0.8125rem;
+  --heading-hero: clamp(2.625rem, 3.4vw + 0.9rem, 5.25rem);
+  --heading-section: clamp(2rem, 2.75vw + 0.75rem, 4rem);
+  --heading-case: clamp(2.125rem, 3.5vw + 0.75rem, 4.5rem);
+  --line-body: 1.62;
+  --line-heading: 1.04;
+  --tracking-label: 0.13em;
+
   /* 2026 High-End Portfolio Colors */
   --off-white: #F7F8FA;
   --pure-white: #FFFFFF;
@@ -49,10 +74,8 @@
   --muted-text: #6B7280;
   --soft-border: #E5E7EB;
   --product-blue: #2563EB;
-  --electric-indigo: #4F46E5;
-  --soft-cyan: #06B6D4;
-  --warm-sand: #EAD7A6;
   --success-green: #22C55E;
+  --surface-dark: #0B1120;
   --warning-amber: #F59E0B;
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.2);
@@ -135,6 +158,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-surface-dark: var(--surface-dark);
 }
 
 @layer base {
@@ -144,11 +168,17 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--line-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /**
   * Default typography styles for HTML elements (h1-h4, p, label, button, input).
   * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  * type-* component classes further override these for all portfolio headings.
   */
 
   html {
@@ -156,48 +186,135 @@
   }
 
   h1 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   h2 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.2;
   }
 
   h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.3;
   }
 
   h4 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+    line-height: 1.4;
   }
 
   label {
+    font-family: var(--font-sans);
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }
 
   button {
+    font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }
 
   input {
+    font-family: var(--font-sans);
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Typography token classes — one source of truth.
+   Sizes use clamp() for fluid mobile-to-desktop
+   scaling. Body never drops below 16px.
+
+   Font pairing:
+   Plus Jakarta Sans → display + headings: hero H1, case
+                 titles, section heads, sub-heads, card
+                 titles, nav, buttons (the premium identity)
+   Inter       → body, lead, meta, captions, eyebrows,
+                 labels, UI microcopy (readability)
+   Pixelify Sans → hero highlight spans only (unchanged)
+───────────────────────────────────────────── */
+@layer components {
+  /* Hero H1 — Plus Jakarta Sans display */
+  .type-display {
+    font-family: var(--font-display);
+    font-size: var(--heading-hero);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    font-style: normal;
+    text-wrap: balance;
+  }
+  /* Case study titles, contact H2 — Plus Jakarta Sans display */
+  .type-title {
+    font-family: var(--font-display);
+    font-size: var(--heading-case);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    font-style: normal;
+    text-wrap: balance;
+  }
+  /* Section headings — Plus Jakarta Sans */
+  .type-h2 {
+    font-family: var(--font-display);
+    font-size: var(--heading-section);
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  /* Work-index card titles — Plus Jakarta Sans */
+  .type-h3-lg {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    font-weight: 600;
+  }
+  /* Article sub-heads, card titles — Plus Jakarta Sans */
+  .type-h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.008em;
+    font-weight: 600;
+  }
+  /* Hero and section intro paragraphs — Inter */
+  .type-lead {
+    font-family: var(--font-sans);
+    font-size: clamp(1.0625rem, 0.4vw + 1rem, 1.3125rem);
+    line-height: 1.62;
+    font-weight: 400;
+  }
+  /* Uppercase section labels, chips — Inter */
+  .type-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: var(--tracking-label);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  /* Image captions, footer — Inter */
+  .type-caption {
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);
+    line-height: 1.5;
+    font-weight: 400;
   }
 }
