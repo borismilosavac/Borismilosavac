@@ -323,9 +323,11 @@ export default function App() {
               <a href="mailto:borismilosavac1985@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 font-semibold font-[family-name:var(--font-display)] text-white transition-colors duration-150 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">Contact Boris</a>
             </div>
           </div>
-          <div className="relative flex min-w-0 flex-col justify-center gap-5">
-            {/* Compact abstract system illustration — tablet/mobile only (desktop uses the background layer). */}
-            <div aria-hidden className={`pointer-events-none overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 lg:hidden ${heroInView ? '' : 'motion-paused'}`}>
+          <div className="relative flex min-w-0 flex-col justify-center gap-3 lg:gap-5">
+            {/* Compact abstract system illustration — tablet/mobile only (desktop uses the
+                background layer). Full-bleed below sm (negative margins mirror the page
+                padding exactly); contained, width-capped card on tablet. */}
+            <div aria-hidden className={`pointer-events-none -mx-4 overflow-hidden bg-slate-900/40 sm:mx-auto sm:w-full sm:max-w-xl sm:rounded-3xl sm:border sm:border-white/10 lg:hidden ${heroInView ? '' : 'motion-paused'}`}>
               <HeroSystemArt variant="card" className="aspect-[3/2] w-full" />
             </div>
             <div className="hero-selected-work grid gap-2">

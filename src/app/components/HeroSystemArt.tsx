@@ -116,9 +116,10 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
           {/* board -> human-use (clean, directed) */}
           <path className="hero-art-line" d="M650 466 C 690 486, 700 506, 702 520" stroke="#60a5fa" strokeWidth="2" strokeOpacity="0.62" markerEnd={`url(#${arrowId})`} />
           <path className="hero-art-line hero-art-line--b" d="M628 520 C 660 556, 672 588, 676 608" stroke="#a78bfa" strokeWidth="2" strokeOpacity="0.56" markerEnd={`url(#${arrowId})`} />
-          {/* output rail -> right edge (toward Selected Work) */}
-          <path className="hero-art-line" d="M690 556 C 760 550, 802 547, 832 545" stroke="#93c5fd" strokeWidth="2.4" strokeOpacity="0.62" markerEnd={`url(#${arrowId})`} />
-          <path className="hero-art-signal" d="M700 602 C 762 606, 802 610, 836 612" stroke="#dbeafe" strokeWidth="3" strokeDasharray="18 170" />
+          {/* output rails -> right edge, angled up so they land on the Selected
+              Work list zone (the cards sit vertically centred on desktop) */}
+          <path className="hero-art-line" d="M690 540 C 758 522, 800 504, 832 488" stroke="#93c5fd" strokeWidth="2.4" strokeOpacity="0.62" markerEnd={`url(#${arrowId})`} />
+          <path className="hero-art-signal" d="M700 584 C 760 576, 800 562, 836 548" stroke="#dbeafe" strokeWidth="3" strokeDasharray="18 170" />
         </g>
 
         {/* ZONE 2 — Structure board (focal anchor, strongest of the wireframe) */}
@@ -156,8 +157,9 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
 
         {/* ZONE 3 — Human-use cluster (bright foreground focal, in front of board) */}
         <g className="hero-art-human hero-art-float hero-art-float--b">
-          {/* focal glow behind the usable surface */}
-          <ellipse className="hero-art-focal" cx="700" cy="566" rx="200" ry="172" fill={`url(#${focalId})`} />
+          {/* focal glow behind the usable surface — centre raised so the halo
+              also backs the Selected Work list zone in front of the canvas */}
+          <ellipse className="hero-art-focal" cx="700" cy="520" rx="200" ry="190" fill={`url(#${focalId})`} />
           {/* clean mobile surface */}
           <rect x="540" y="480" width="104" height="266" rx="22" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.3" />
           <rect x="578" y="492" width="28" height="6" rx="3" fill="#ffffff" fillOpacity="0.26" />
@@ -180,7 +182,7 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
         </g>
 
         {/* free clarity node bridging board -> outputs */}
-        <circle className="hero-art-node hero-art-node--c" cx="690" cy="556" r="4.5" fill="#93c5fd" />
+        <circle className="hero-art-node hero-art-node--c" cx="690" cy="540" r="4.5" fill="#93c5fd" />
       </g>
     </svg>
   );
