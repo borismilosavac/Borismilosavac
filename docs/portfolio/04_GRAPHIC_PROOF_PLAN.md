@@ -231,6 +231,7 @@ No assets exist for Zgrada Plus, WineRoom, AI artefacts, Design System boards, o
 - **Caption:** `Reusable components, grouped by the product they were designed for.`
 - **Alt text:** `A board of reusable interface components from StockLog: vehicle card, board column, status chip, filter chip, leaderboard row and notification card.`
 - **Replacement TODO:** 🟡 StockLog component board can be produced now from existing UI. Zgrada/WineRoom boards wait on their assets. Until then, chips stay.
+- **Section-top visual:** ✅ The former blank 16:9 placeholder above the chip cards is now `src/app/components/DesignSystemBoard.tsx` — an abstract "Reusable UI System Board" SVG (token markers, central reusable component with focal glow, variant tiles, dashboard/mobile/chips/badges/table contexts, connector rails). Decorative `aria-hidden` artwork inside a `role="img"` figure; honest by construction (no project claim, no readable text/metrics). Caption unchanged.
 
 ## 16. Contact visual
 

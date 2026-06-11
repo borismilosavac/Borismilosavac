@@ -486,3 +486,27 @@ header[data-header='light'] {
 .ai-step-card:focus-within .ai-step-glow {
   opacity: 1;
 }
+
+/* ─────────────────────────────────────────────
+   Design System Snapshot — reusable UI system board.
+   .ds-board (the figure) is the hover target; connectors
+   clarify and the core focal glow activates. Node/line/float
+   animation reuses the hero-art classes (already paused-safe
+   and disabled under prefers-reduced-motion).
+───────────────────────────────────────────── */
+.ds-board .ds-board-lines {
+  opacity: 0.8;
+  transition: opacity 300ms ease;
+}
+.ds-board:hover .ds-board-lines,
+.ds-board:focus-within .ds-board-lines {
+  opacity: 1;
+}
+.ds-board .ds-board-core {
+  opacity: 0.65;
+  transition: opacity 360ms ease;
+}
+.ds-board:hover .ds-board-core,
+.ds-board:focus-within .ds-board-core {
+  opacity: 0.95;
+}

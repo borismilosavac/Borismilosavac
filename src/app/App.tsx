@@ -4,6 +4,7 @@ import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { ImagePlaceholder } from './components/ImagePlaceholder';
 import { HeroSystemArt } from './components/HeroSystemArt';
 import { AiStepIllustration } from './components/AiStepIllustration';
+import { DesignSystemBoard } from './components/DesignSystemBoard';
 import stocklogUi from '../SL-view.svg';
 import stocklogBoard from '../stocklog-board.svg';
 import stocklogShowroom from '../stocklog-showroom.png';
@@ -683,19 +684,12 @@ export default function App() {
             <h2 className="mt-3 type-h2">Designing screens, and the reusable rules behind them.</h2>
             <p className="mt-5 type-lead text-slate-600">This section shows how I think about reusability across cards, tables, forms, filters, states, mobile controls and accessibility notes. It is evidence of scalable UI thinking, not a claim that every project has a finished enterprise library.</p>
           </div>
-          {/*
-            TODO: Replace this ImagePlaceholder with a real component board
-            (StockLog's can be cropped from existing UI) before publishing. Per
-            04_GRAPHIC_PROOF_PLAN Visual 15, placeholder must not ship; the
-            project-specific chip cards below remain the honest baseline.
-          */}
-          <ImagePlaceholder
-            variant="board"
-            tone="light"
-            className="mt-12"
-            alt="Portfolio design system snapshot showing reusable project-specific cards, badges, filters and controls."
-            caption="Reusable UI patterns make complex products easier to scale."
-          />
+          <figure className="ds-board mt-12 overflow-hidden rounded-3xl border border-slate-200 transition-colors duration-200 hover:border-slate-300">
+            <div role="img" aria-label="Abstract design system illustration showing reusable UI components, tokens and connected product patterns." className="bg-surface-dark">
+              <DesignSystemBoard className="block h-auto w-full" />
+            </div>
+            <figcaption className="border-t border-slate-200 bg-white px-5 py-3 type-caption text-slate-500">Reusable UI patterns make complex products easier to scale.</figcaption>
+          </figure>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {systemGroups.map(([title, ...items]) => (
               <article key={title} className="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-7">
