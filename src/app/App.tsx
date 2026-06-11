@@ -260,11 +260,11 @@ export default function App() {
         >
           <div className={`mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 transition-[padding] duration-300 md:px-8 ${scrolled ? 'py-2' : 'py-3.5'}`}>
             <button onClick={() => scrollTo('top', smooth)} className="flex items-center rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" aria-label="Boris Milosavac portfolio home">
-              <svg viewBox="0 0 60 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-7 w-auto">
-                <path d="M0 1C0 0.447716 0.447715 0 1 0L14.0426 0C17.3328 0 20 3.13402 20 7.00002C20 10.866 17.3328 14 14.0426 14H1C0.447716 14 0 13.5523 0 13V1Z" fill="currentColor"/>
-                <path d="M0 17C0 16.4477 0.447715 16 1 16H16.8511C20.7993 16 24 19.5817 24 24C24 28.4183 20.7993 32 16.8511 32H0.999999C0.447715 32 0 31.5523 0 31V17Z" fill="currentColor"/>
-                <path d="M27.03 32C27.0022 32 26.9882 32 26.9764 31.9997C26.4426 31.9871 26.0129 31.5574 26.0003 31.0236C26 31.0118 26 30.9978 26 30.97L26.0002 7.87476C26.0002 3.52565 29.5818 0 34.0001 0C38.4183 0 42 3.52565 42 7.87476V30.97C42 30.9979 42 31.0118 41.9997 31.0236C41.9871 31.5574 41.5574 31.9871 41.0236 31.9997C41.0118 32 40.9979 32 40.97 32H27.03Z" fill="currentColor"/>
-                <path d="M45 32C44.4477 32 44 31.5523 44 31V7.87476C44 3.52565 47.5817 0 52 0C56.4182 0 60 3.52565 60 7.87476V31C60 31.5523 59.5523 32 59 32H45Z" fill="currentColor"/>
+              <svg viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-7 w-auto">
+                <path d="M0 2C0 0.895431 0.895431 0 2 0L12.6383 0C15.5995 0 18 2.6863 18 6.00001C18 9.31371 15.5995 12 12.6383 12H2C0.89543 12 0 11.1046 0 10V2Z" fill="currentColor"/>
+                <path d="M0 16C0 14.8954 0.89543 14 2 14H16.8511C20.7993 14 24 17.5817 24 22C24 26.4183 20.7993 30 16.8511 30H2C0.895429 30 0 29.1046 0 28V16Z" fill="currentColor"/>
+                <path d="M28.06 30C28.0043 30 27.9765 30 27.9529 29.9994C26.8852 29.9743 26.0257 29.1148 26.0006 28.0471C26 28.0235 26 27.9957 26 27.94L26.0002 7.38258C26.0002 3.3053 29.5818 0 34.0001 0C38.4183 0 42 3.3053 42 7.38258V27.94C42 27.9957 42 28.0236 41.9994 28.0471C41.9743 29.1148 41.1148 29.9743 40.0471 29.9994C40.0236 30 39.9957 30 39.94 30H28.06Z" fill="currentColor"/>
+                <path d="M46 30C44.8954 30 44 29.1046 44 28V7.38258C44 3.3053 47.5817 0 52 0C56.4182 0 60 3.3053 60 7.38258V28C60 29.1046 59.1046 30 58 30H46Z" fill="currentColor"/>
               </svg>
             </button>
             <div className="hidden items-center gap-0.5 text-sm md:flex">
