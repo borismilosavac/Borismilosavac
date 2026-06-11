@@ -657,8 +657,8 @@ export default function App() {
                         <h3 className="mt-2 text-sm font-semibold tracking-tight text-white">{step}</h3>
                         <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-slate-300">{purpose}</p>
                       </div>
-                      <div aria-hidden className="pointer-events-none flex flex-1 items-center justify-center px-5 py-5">
-                        <AiStepIllustration variant={variant} className="w-full max-w-[260px]" />
+                      <div aria-hidden className="pointer-events-none flex min-h-[180px] flex-1 items-center justify-center p-5">
+                        <AiStepIllustration variant={variant} className="max-h-[200px] w-[88%] max-w-[250px]" />
                       </div>
                     </article>
                   );
