@@ -85,32 +85,39 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
 
       <g mask={isPanel ? `url(#${maskId})` : undefined}>
 
-        {/* ─── ZONE 1: Raw complexity (left) ─────────────────────────────────
-            Cells on the grid with broken edges + ¼-unit offsets = controlled
-            disorder. Opacity driven by --sys-complexity (0.55 → 0.22 hover). */}
+        {/* ─── ZONE 1: Complexity field (left) ───────────────────────────────
+            Raw complexity as a CONVERGING BUS — every node is a source or a
+            route junction; nothing floats. Sources (x240) feed a vertical
+            collector spine (x360) that docks into the structure core (x420).
+            All on the 60-unit grid; fragment tiles axis-aligned (no offset, no
+            broken edges). Opacity driven by --sys-complexity (0.55 → 0.22). */}
         <g className="hero-art-complexity">
-          {/* shared minimal — renders in both variants */}
-          <rect x="240" y="300" width="40" height="40" rx="6" fill="#ffffff" fillOpacity="0.10" stroke="#ffffff" strokeOpacity="0.16" />
-          <rect x="315" y="300" width="40" height="40" rx="6" fill="#ffffff" fillOpacity="0.07" />
-          <path d="M240 400 V360 H280" stroke="#ffffff" strokeOpacity="0.16" strokeWidth="1.25" fill="none" />
-          <circle className="hero-art-node" cx="300" cy="360" r="3" fill="#60a5fa" />
-          <circle className="hero-art-node hero-art-node--b" cx="360" cy="420" r="3" fill="#a78bfa" />
-          {/* complexity entering the structure (orthogonal, dims on hover) */}
-          <path d="M360 360 H420" stroke="#60a5fa" strokeOpacity="0.34" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-          <path d="M360 480 H420" stroke="#a78bfa" strokeOpacity="0.30" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+          {/* faint grid-aligned fragment tiles, each anchored to a source node */}
+          <rect x="210" y="288" width="30" height="24" rx="4" fill="#ffffff" fillOpacity="0.07" />
+          <rect x="210" y="408" width="30" height="24" rx="4" fill="#ffffff" fillOpacity="0.06" />
+          {/* converging routes: sources → collector spine → structure dock */}
+          <g stroke="#60a5fa" strokeWidth="1.5" strokeLinecap="round" fill="none">
+            <path d="M240 300 H360" strokeOpacity="0.30" />
+            <path d="M240 420 H360" strokeOpacity="0.30" />
+            <path d="M360 300 V420" strokeOpacity="0.34" />
+            <path d="M360 360 H420" stroke="#93c5fd" strokeOpacity="0.42" />
+          </g>
+          {/* source + junction nodes — every node sits on a route */}
+          <circle className="hero-art-node" cx="240" cy="300" r="3" fill="#60a5fa" />
+          <circle className="hero-art-node hero-art-node--b" cx="240" cy="420" r="3" fill="#a78bfa" />
+          <circle className="hero-art-node hero-art-node--c" cx="360" cy="360" r="3.5" fill="#93c5fd" />
 
-          {/* panel-only denser field */}
+          {/* panel-only — a third source + deeper bus + second dock */}
           {isPanel && (
             <>
-              <rect x="240" y="435" width="40" height="40" rx="6" fill="#ffffff" fillOpacity="0.08" />
-              <path d="M300 420 H340 V460" stroke="#ffffff" strokeOpacity="0.16" strokeWidth="1.25" fill="none" />
-              <rect x="300" y="540" width="40" height="40" rx="6" fill="#ffffff" fillOpacity="0.07" stroke="#ffffff" strokeOpacity="0.12" />
-              <rect x="255" y="480" width="40" height="40" rx="6" fill="#ffffff" fillOpacity="0.05" />
-              <rect x="360" y="300" width="36" height="36" rx="6" fill="#ffffff" fillOpacity="0.05" />
-              <path d="M300 540 H360 V480" stroke="#60a5fa" strokeOpacity="0.22" strokeWidth="1.25" fill="none" />
-              <circle className="hero-art-node hero-art-node--c" cx="300" cy="480" r="2.5" fill="#ffffff" fillOpacity="0.5" />
-              <circle className="hero-art-node hero-art-node--b" cx="360" cy="540" r="3" fill="#60a5fa" />
-              <circle className="hero-art-node" cx="240" cy="300" r="2.5" fill="#a78bfa" />
+              <rect x="210" y="528" width="30" height="24" rx="4" fill="#ffffff" fillOpacity="0.05" />
+              <g stroke="#60a5fa" strokeWidth="1.5" strokeLinecap="round" fill="none">
+                <path d="M240 540 H360" strokeOpacity="0.28" />
+                <path d="M360 420 V540" strokeOpacity="0.30" />
+                <path d="M360 480 H420" stroke="#a78bfa" strokeOpacity="0.36" />
+              </g>
+              <circle className="hero-art-node hero-art-node--b" cx="240" cy="540" r="3" fill="#60a5fa" />
+              <circle className="hero-art-node" cx="360" cy="480" r="3.5" fill="#a78bfa" />
             </>
           )}
         </g>
