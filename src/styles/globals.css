@@ -165,7 +165,7 @@ header[data-header='light'] {
   --sys-line-opacity: 1;
   --sys-board-lift: 0px;
   --sys-board-edge: 0.28;
-  --sys-complexity: 0.42;
+  --sys-complexity: 0.55;
   --sys-focal: 0.62;
 }
 .hero-art svg {
@@ -247,8 +247,8 @@ header[data-header='light'] {
   --sys-glow: 1;
   --sys-line-opacity: 1;
   --sys-board-lift: -5px;
-  --sys-board-edge: 0.42;
-  --sys-complexity: 0.28;
+  --sys-board-edge: 0.48;
+  --sys-complexity: 0.22;
   --sys-focal: 0.95;
 }
 .hero-art-glow {
@@ -286,10 +286,10 @@ header[data-header='light'] {
   50% { opacity: 1; }
 }
 @keyframes heroArtSignal {
-  0% { stroke-dashoffset: 150; opacity: 0; }
+  0% { stroke-dashoffset: 150; opacity: 0.06; }
   12% { opacity: 0.45; }
   80% { opacity: 0.45; }
-  100% { stroke-dashoffset: -12; opacity: 0; }
+  100% { stroke-dashoffset: -12; opacity: 0.06; }
 }
 
 /* Narrative link — Selected Work are the system's output nodes. Hovering the

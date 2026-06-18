@@ -6,8 +6,9 @@
   and the human-use focal read as real elevated panels.
 
   Zones (background → foreground, dim → bright = complexity → clarity):
-    1. Complexity — a few scattered nodes, broken lines, tilted fragments
-       (raw systems before design). Background, ~20-30% presence.
+    1. Complexity — scattered nodes, broken lines, tilted fragments, status-dot
+       clusters (raw systems before design). Background, ~55% presence in
+       default state; dims to ~22% on hover so the system reads as resolving.
     2. Structure — the central system map: roles sidebar, workflow columns,
        design-system tiles; clean connector paths. The strongest anchor.
     3. Human-use — bright foreground cluster with a focal glow: clean mobile
@@ -17,7 +18,12 @@
 
   Two variants share the element set:
     • panel — tall right-side desktop canvas, fades left toward the headline.
-    • card  — compact board + human-use window for tablet/mobile (no complexity).
+              Dense complexity field (14 nodes, 10 broken lines, 6 fragments,
+              2 status clusters) fills the upper canvas.
+    • card  — compact board + human-use window for tablet/mobile. Shared
+              minimal complexity: 2 edge nodes + 2 broken lines + 2 tilted
+              fragments appear at the card corners, giving the story context
+              without overwhelming the small canvas.
   Motion (drift / pulse / float / focal breathe / clarity signal) is CSS-driven
   so it pauses offscreen and disables under prefers-reduced-motion.
 */
@@ -48,7 +54,6 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
         <pattern id={gridId} width="46" height="46" patternUnits="userSpaceOnUse">
           <path d="M46 0H0V46" stroke="#ffffff" strokeOpacity="0.05" strokeWidth="1" />
         </pattern>
-        {/* semi-opaque slate glass — gives panels real elevation vs the bg */}
         <linearGradient id={panelId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#1e2c48" stopOpacity="0.96" />
           <stop offset="1" stopColor="#121a2e" stopOpacity="0.92" />
@@ -85,28 +90,74 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
       <rect width="840" height="900" fill={`url(#${gridId})`} />
 
       <g mask={isPanel ? `url(#${maskId})` : undefined}>
-        {/* ZONE 1 — Complexity (background, controlled chaos, few elements) */}
-        {isPanel && (
-          <g className="hero-art-complexity">
-            {/* broken connector lines */}
-            <g stroke="#60a5fa" strokeWidth="1.25" strokeLinecap="round" fill="none" strokeOpacity="0.38">
-              <path d="M118 150 L 196 118" />
-              <path d="M300 96 L 248 198" />
-              <path d="M690 150 L 636 252" stroke="#a78bfa" />
-              <path d="M150 360 L 232 322" />
-            </g>
-            {/* fragmented / tilted cards */}
-            <rect x="150" y="170" width="70" height="44" rx="8" fill="#ffffff" fillOpacity="0.07" transform="rotate(-9 185 192)" />
-            <rect x="690" y="196" width="64" height="40" rx="8" fill="#ffffff" fillOpacity="0.06" transform="rotate(7 722 216)" />
-            {/* scattered nodes */}
-            <circle className="hero-art-node hero-art-node--b" cx="118" cy="150" r="3.5" fill="#60a5fa" fillOpacity="0.85" />
-            <circle className="hero-art-node" cx="196" cy="118" r="3" fill="#a78bfa" fillOpacity="0.75" />
-            <circle className="hero-art-node hero-art-node--c" cx="300" cy="96" r="3.5" fill="#60a5fa" fillOpacity="0.7" />
-            <circle className="hero-art-node hero-art-node--b" cx="560" cy="132" r="3" fill="#60a5fa" fillOpacity="0.7" />
-            <circle className="hero-art-node hero-art-node--c" cx="690" cy="150" r="3.5" fill="#a78bfa" fillOpacity="0.75" />
-            <circle className="hero-art-node hero-art-node--b" cx="742" cy="300" r="3.5" fill="#a78bfa" fillOpacity="0.7" />
+
+        {/* ─── ZONE 1: Complexity ────────────────────────────────────────────
+            Opacity driven by --sys-complexity (default 0.55, dims to 0.22 on
+            hover). Structured as two tiers:
+              A) shared-minimal — 2 edge nodes + lines + fragments; falls in
+                 card viewBox (180 230 540 360) giving mobile the story context.
+              B) panel-dense   — isPanel only: 8 more nodes, 6 more broken
+                 lines, 4 more tilted fragments, 2 status-dot clusters.
+        ──────────────────────────────────────────────────────────────────── */}
+        <g className="hero-art-complexity">
+
+          {/* A) Shared minimal — visible in both card and panel */}
+          <circle className="hero-art-node hero-art-node--b" cx="210" cy="262" r="3" fill="#60a5fa" fillOpacity="0.75" />
+          <circle className="hero-art-node hero-art-node--c" cx="698" cy="258" r="3" fill="#a78bfa" fillOpacity="0.7" />
+          <g stroke="#60a5fa" strokeWidth="1.25" strokeLinecap="round" fill="none">
+            <path d="M210 262 L 258 294" strokeOpacity="0.32" />
+            <path d="M698 258 L 652 290" stroke="#a78bfa" strokeOpacity="0.3" />
           </g>
-        )}
+          <rect x="190" y="270" width="50" height="32" rx="7" fill="#ffffff" fillOpacity="0.06" transform="rotate(-8 215 286)" />
+          <rect x="672" y="248" width="44" height="28" rx="6" fill="#ffffff" fillOpacity="0.05" transform="rotate(9 694 262)" />
+
+          {/* B) Panel-dense complexity field */}
+          {isPanel && (
+            <>
+              {/* broken connector lines — entering from raw system noise */}
+              <g stroke="#60a5fa" strokeWidth="1.25" strokeLinecap="round" fill="none" strokeOpacity="0.38">
+                <path d="M118 150 L 196 118" />
+                <path d="M300 96 L 248 198" />
+                <path d="M690 150 L 636 252" stroke="#a78bfa" />
+                <path d="M150 360 L 232 322" />
+                <path d="M420 84 L 382 178" stroke="#a78bfa" strokeOpacity="0.3" />
+                <path d="M604 80 L 562 134" strokeOpacity="0.32" />
+                <path d="M762 182 L 744 300" stroke="#a78bfa" strokeOpacity="0.3" />
+                <path d="M142 502 L 202 292" strokeOpacity="0.22" />
+                <path d="M464 154 L 422 86" strokeOpacity="0.28" />
+                <path d="M382 178 L 340 232" strokeOpacity="0.2" />
+              </g>
+              {/* fragmented / tilted UI blocks */}
+              <rect x="150" y="170" width="70" height="44" rx="8" fill="#ffffff" fillOpacity="0.07" transform="rotate(-9 185 192)" />
+              <rect x="690" y="196" width="64" height="40" rx="8" fill="#ffffff" fillOpacity="0.06" transform="rotate(7 722 216)" />
+              <rect x="400" y="100" width="58" height="36" rx="7" fill="#ffffff" fillOpacity="0.05" transform="rotate(12 429 118)" />
+              <rect x="200" y="244" width="52" height="34" rx="7" fill="#ffffff" fillOpacity="0.06" transform="rotate(-6 226 261)" />
+              <rect x="598" y="64" width="46" height="30" rx="6" fill="#ffffff" fillOpacity="0.05" transform="rotate(-11 621 79)" />
+              <rect x="724" y="360" width="60" height="38" rx="8" fill="#ffffff" fillOpacity="0.05" transform="rotate(5 754 379)" />
+              {/* scattered nodes — 14 total across the canvas */}
+              <circle className="hero-art-node hero-art-node--b" cx="118" cy="150" r="3.5" fill="#60a5fa" fillOpacity="0.85" />
+              <circle className="hero-art-node" cx="196" cy="118" r="3" fill="#a78bfa" fillOpacity="0.75" />
+              <circle className="hero-art-node hero-art-node--c" cx="300" cy="96" r="3.5" fill="#60a5fa" fillOpacity="0.7" />
+              <circle className="hero-art-node hero-art-node--b" cx="560" cy="132" r="3" fill="#60a5fa" fillOpacity="0.7" />
+              <circle className="hero-art-node hero-art-node--c" cx="690" cy="150" r="3.5" fill="#a78bfa" fillOpacity="0.75" />
+              <circle className="hero-art-node hero-art-node--b" cx="742" cy="300" r="3.5" fill="#a78bfa" fillOpacity="0.7" />
+              <circle className="hero-art-node" cx="420" cy="84" r="3" fill="#a78bfa" fillOpacity="0.65" />
+              <circle className="hero-art-node hero-art-node--c" cx="200" cy="292" r="3" fill="#60a5fa" fillOpacity="0.6" />
+              <circle className="hero-art-node" cx="382" cy="178" r="2.5" fill="#ffffff" fillOpacity="0.45" />
+              <circle className="hero-art-node hero-art-node--b" cx="604" cy="80" r="3" fill="#60a5fa" fillOpacity="0.6" />
+              <circle className="hero-art-node" cx="762" cy="182" r="2.5" fill="#a78bfa" fillOpacity="0.55" />
+              <circle className="hero-art-node hero-art-node--c" cx="142" cy="502" r="3" fill="#60a5fa" fillOpacity="0.55" />
+              <circle className="hero-art-node hero-art-node--b" cx="464" cy="154" r="2.5" fill="#a78bfa" fillOpacity="0.55" />
+              <circle className="hero-art-node" cx="340" cy="232" r="2.5" fill="#60a5fa" fillOpacity="0.5" />
+              {/* status-dot clusters — raw system states before structure orders them */}
+              <circle cx="442" cy="116" r="3" fill="#22c55e" fillOpacity="0.6" />
+              <circle cx="454" cy="118" r="3" fill="#f59e0b" fillOpacity="0.55" />
+              <circle cx="466" cy="116" r="3" fill="#ef4444" fillOpacity="0.5" />
+              <circle cx="726" cy="264" r="2.5" fill="#22c55e" fillOpacity="0.55" />
+              <circle cx="738" cy="264" r="2.5" fill="#60a5fa" fillOpacity="0.55" />
+            </>
+          )}
+        </g>
 
         {/* connector flow — complexity entering, then clean rails toward outputs */}
         <g className="hero-art-lines" strokeLinecap="round" fill="none">
@@ -157,8 +208,7 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
 
         {/* ZONE 3 — Human-use cluster (bright foreground focal, in front of board) */}
         <g className="hero-art-human hero-art-float hero-art-float--b">
-          {/* focal glow behind the usable surface — centre raised so the halo
-              also backs the Selected Work list zone in front of the canvas */}
+          {/* focal glow behind the usable surface */}
           <ellipse className="hero-art-focal" cx="700" cy="520" rx="200" ry="190" fill={`url(#${focalId})`} />
           {/* clean mobile surface */}
           <rect x="540" y="480" width="104" height="266" rx="22" fill={`url(#${panelId})`} stroke="#ffffff" strokeOpacity="0.3" />
@@ -181,7 +231,7 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
           <circle cx="757" cy="647" r="4.5" stroke="#a78bfa" strokeOpacity="0.7" strokeWidth="1.5" />
         </g>
 
-        {/* free clarity node bridging board -> outputs */}
+        {/* clarity node bridging board -> outputs */}
         <circle className="hero-art-node hero-art-node--c" cx="690" cy="540" r="4.5" fill="#93c5fd" />
       </g>
     </svg>
