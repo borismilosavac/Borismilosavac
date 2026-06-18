@@ -140,10 +140,8 @@ header[data-header='light'] {
 .motion-paused .hero-art,
 .motion-paused .hero-art-node,
 .motion-paused .hero-art-line,
-.motion-paused .hero-art-float,
 .motion-paused .hero-art-complexity,
-.motion-paused .hero-art-focal,
-.motion-paused .hero-art-signal {
+.motion-paused .hero-art-focal {
   animation-play-state: paused;
 }
 .motion-paused .hero-art {
@@ -161,7 +159,6 @@ header[data-header='light'] {
   /* the panel layer is the single hover/focus target; its decorative
      children below stay pointer-events:none so hover resolves to the wrapper */
   pointer-events: auto;
-  --sys-glow: 1;
   --sys-line-opacity: 1;
   --sys-board-lift: 0px;
   --sys-board-edge: 0.28;
@@ -244,16 +241,11 @@ header[data-header='light'] {
    no JS, no mousemove, no parallax, no heavy filters. */
 .hero-art:hover,
 .hero-art:focus-within {
-  --sys-glow: 1;
   --sys-line-opacity: 1;
   --sys-board-lift: -5px;
   --sys-board-edge: 0.48;
   --sys-complexity: 0.22;
   --sys-focal: 0.95;
-}
-.hero-art-glow {
-  opacity: var(--sys-glow, 0.92);
-  transition: opacity 320ms ease;
 }
 .hero-art-lines {
   opacity: var(--sys-line-opacity, 0.82);
@@ -271,25 +263,26 @@ header[data-header='light'] {
 .hero-art:focus-within .hero-art-node {
   animation-name: heroArtNodeStrong;
 }
-/* Zone 3 — occasional "clarity signal" that sweeps the output rail toward the
-   Selected Work cards. Subtle and ambient; runs faster + brighter on hover. */
-.hero-art-signal {
-  opacity: 0;
-  animation: heroArtSignal 9s linear infinite;
+/* Zone 3 — outcome tiles brighten in sequence on hover/focus (left→right
+   "the system resolves into usable outputs"). Opacity only; staggered via
+   transition-delay so it reads as a directed pulse, not a flash. */
+.hero-art-output {
+  opacity: 0.82;
+  transition: opacity 320ms ease;
 }
-.hero-art:hover .hero-art-signal,
-.hero-art:focus-within .hero-art-signal {
-  animation-duration: 3.4s;
+.hero-art-output--b {
+  transition-delay: 110ms;
+}
+.hero-art-output--c {
+  transition-delay: 220ms;
+}
+.hero-art:hover .hero-art-output,
+.hero-art:focus-within .hero-art-output {
+  opacity: 1;
 }
 @keyframes heroArtNodeStrong {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
-}
-@keyframes heroArtSignal {
-  0% { stroke-dashoffset: 150; opacity: 0.06; }
-  12% { opacity: 0.45; }
-  80% { opacity: 0.45; }
-  100% { stroke-dashoffset: -12; opacity: 0.06; }
 }
 
 /* Narrative link — Selected Work are the system's output nodes. Hovering the
@@ -300,14 +293,15 @@ header[data-header='light'] {
   border-color: rgba(96, 165, 250, 0.45);
 }
 #top:has(.hero-selected-work:hover) .hero-art-lines,
-#top:has(.hero-selected-work:focus-within) .hero-art-lines {
+#top:has(.hero-selected-work:focus-within) .hero-art-lines,
+#top:has(.hero-selected-work:hover) .hero-art-output,
+#top:has(.hero-selected-work:focus-within) .hero-art-output {
   opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-art,
   .hero-art-node,
   .hero-art-line,
-  .hero-art-float,
   .hero-art-complexity,
   .hero-art-focal {
     animation: none !important;
@@ -316,10 +310,6 @@ header[data-header='light'] {
   .hero-art-board {
     transform: none !important;
     transition: none;
-  }
-  .hero-art-signal {
-    animation: none !important;
-    opacity: 0 !important;
   }
 }
 
