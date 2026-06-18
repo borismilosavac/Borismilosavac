@@ -149,10 +149,12 @@ export function HeroSystemArt({ className = '', variant = 'panel' }: Props) {
               <circle className="hero-art-node hero-art-node--c" cx="142" cy="502" r="3" fill="#60a5fa" fillOpacity="0.55" />
               <circle className="hero-art-node hero-art-node--b" cx="464" cy="154" r="2.5" fill="#a78bfa" fillOpacity="0.55" />
               <circle className="hero-art-node" cx="340" cy="232" r="2.5" fill="#60a5fa" fillOpacity="0.5" />
-              {/* status-dot clusters — raw system states before structure orders them */}
+              {/* status-dot clusters — raw system states before structure orders
+                  them. On-palette (blue/violet/green); amber stays reserved for
+                  the Truth Layer cards, so it is not used in the hero. */}
               <circle cx="442" cy="116" r="3" fill="#22c55e" fillOpacity="0.6" />
-              <circle cx="454" cy="118" r="3" fill="#f59e0b" fillOpacity="0.55" />
-              <circle cx="466" cy="116" r="3" fill="#ef4444" fillOpacity="0.5" />
+              <circle cx="454" cy="118" r="3" fill="#60a5fa" fillOpacity="0.55" />
+              <circle cx="466" cy="116" r="3" fill="#a78bfa" fillOpacity="0.5" />
               <circle cx="726" cy="264" r="2.5" fill="#22c55e" fillOpacity="0.55" />
               <circle cx="738" cy="264" r="2.5" fill="#60a5fa" fillOpacity="0.55" />
             </>
