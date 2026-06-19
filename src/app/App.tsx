@@ -5,6 +5,7 @@ import { ImagePlaceholder } from './components/ImagePlaceholder';
 import { HeroSystemArt } from './components/HeroSystemArt';
 import { AiStepIllustration } from './components/AiStepIllustration';
 import { DesignSystemBoard } from './components/DesignSystemBoard';
+import { RippleGrid } from './components/RippleGrid';
 import stocklogUi from '../SL-view.svg';
 import stocklogBoard from '../stocklog-board.svg';
 import stocklogShowroom from '../stocklog-showroom.png';
@@ -303,6 +304,29 @@ export default function App() {
           <div className="hero-aurora hero-aurora-2 absolute -bottom-52 right-0 h-[36rem] w-[36rem] max-w-[110vw] rounded-full bg-indigo-600/15 blur-[90px]" />
           <div className="hero-signal absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(120,170,255,0.45),transparent_55%)] opacity-0" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_55%)]" />
+          {/* RippleGrid — subtle WebGL grid, behind the SVG illustration.
+              Desktop-only (hidden lg:block); same footprint as hero-art so it
+              stays inside the illustration area. Left edge masked to match the
+              SVG's own left-fade gradient. Reduced-motion: bails inside component
+              before any WebGL context is created. */}
+          <div
+            className="absolute inset-y-0 right-[-4vw] hidden w-[60vw] max-w-[1080px] overflow-hidden lg:block"
+            style={{ maskImage: 'linear-gradient(to right, transparent 10%, black 22%)' }}
+          >
+            <RippleGrid
+              enableRainbow={false}
+              gridColor="#6EA8FF"
+              rippleIntensity={0.025}
+              gridSize={10}
+              gridThickness={12}
+              fadeDistance={1.6}
+              vignetteStrength={2.5}
+              glowIntensity={0.06}
+              opacity={0.22}
+              gridRotation={-10}
+              mouseInteraction={false}
+            />
+          </div>
           {/* Abstract product-system illustration — desktop background layer (decorative). */}
           <div className="hero-art absolute inset-y-0 right-[-4vw] hidden w-[60vw] max-w-[1080px] lg:block">
             <HeroSystemArt variant="panel" className="h-full w-full" />
