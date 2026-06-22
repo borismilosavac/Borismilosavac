@@ -246,19 +246,19 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // First parallax moment — Hero exit + Selected Work entrance.
-  // gsap + ScrollTrigger on native scroll (no Lenis: keeps anchor nav and the
-  // smart header untouched). Transform/opacity only. gsap.matchMedia gates the
-  // scrub parallax to desktop and disables everything under reduced motion;
-  // mm.revert() on cleanup restores inline styles so nothing duplicates on
-  // re-mount or breakpoint change.
+  // Parallax moments — gsap + ScrollTrigger on native scroll (no Lenis: keeps
+  // anchor nav and the smart header untouched). Transform/opacity only.
+  // gsap.matchMedia gates motion to breakpoint + reduced-motion; mm.revert()
+  // on cleanup restores inline styles so nothing duplicates on re-mount or
+  // breakpoint change, and the pin-spacer is torn down cleanly.
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
 
-    // Desktop + motion allowed — hero parallax: content lags scroll slightly,
-    // the background layer lags a touch more (depth without overpowering text).
+    // ── Desktop + motion allowed ──────────────────────────────────────────
     mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      // Moment 1 — hero parallax: content lags scroll slightly, the background
+      // layer lags a touch more (depth without overpowering text).
       gsap.to('.hero-parallax-content', {
         y: 40,
         ease: 'none',
@@ -269,10 +269,34 @@ export default function App() {
         ease: 'none',
         scrollTrigger: { trigger: '#top', start: 'top top', end: 'bottom top', scrub: true },
       });
+
+      // Moment 2 — Selected Work showcase: briefly pin the section so the
+      // heading/metadata stays stable while the three cards resolve in
+      // sequence on scrub. Not scroll-jacking — scroll drives progress 1:1.
+      const work = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#work',
+          start: 'top top',
+          end: '+=80%',
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          scrub: true,
+        },
+      });
+      work.from('.work-card', {
+        y: 40,
+        opacity: 0.35,
+        scale: 0.97,
+        stagger: 0.18,
+        ease: 'none',
+      });
     });
 
-    // Any width + motion allowed — Selected Work cards enter once on scroll-in.
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
+    // ── Mobile / tablet + motion allowed ──────────────────────────────────
+    // No pin (avoids scroll-jacking / layout risk on touch). Plain stacked
+    // reveal: each card enters once as it scrolls into view.
+    mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
       gsap.from('.work-card', {
         opacity: 0,
         y: 24,
