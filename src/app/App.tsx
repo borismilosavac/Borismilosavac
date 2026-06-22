@@ -311,7 +311,7 @@ export default function App() {
               before any WebGL context is created. */}
           <div
             className="absolute inset-y-0 right-[-4vw] hidden w-[60vw] max-w-[1080px] overflow-hidden lg:block"
-            style={{ maskImage: 'linear-gradient(to right, transparent 10%, black 22%)' }}
+            style={{ maskImage: 'linear-gradient(to right, transparent 10%, black 22%)', WebkitMaskImage: 'linear-gradient(to right, transparent 10%, black 22%)' }}
           >
             <RippleGrid
               enableRainbow={false}

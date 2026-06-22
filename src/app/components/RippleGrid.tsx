@@ -130,6 +130,12 @@ export function RippleGrid({
     const wrap = wrapRef.current;
     if (!wrap) return;
 
+    /* Desktop-only guard — CSS 'hidden lg:block' hides the wrapper visually
+       but React still mounts and runs this effect on every viewport. Skip
+       WebGL init entirely on narrow screens to avoid a wasted context on
+       an invisible element. 1024 matches Tailwind's lg breakpoint. */
+    if (window.innerWidth < 1024) return;
+
     /* Hard bail on reduced-motion — no context created */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
