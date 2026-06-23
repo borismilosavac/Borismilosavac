@@ -270,27 +270,10 @@ export default function App() {
         scrollTrigger: { trigger: '#top', start: 'top top', end: 'bottom top', scrub: true },
       });
 
-      // Moment 2 — Selected Work showcase: briefly pin the section so the
-      // heading/metadata stays stable while the three cards resolve in
-      // sequence on scrub. Not scroll-jacking — scroll drives progress 1:1.
-      const work = gsap.timeline({
-        scrollTrigger: {
-          trigger: '#work',
-          start: 'top top',
-          end: '+=80%',
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          scrub: true,
-        },
-      });
-      work.from('.work-card', {
-        y: 40,
-        opacity: 0.35,
-        scale: 0.97,
-        stagger: 0.18,
-        ease: 'none',
-      });
+      // (Selected Work cards use the shared one-shot entrance below at every
+      // width — a scrubbed pin here left the cards faint at their from-state
+      // while the section scrolled into view, and pinning three short text
+      // cards read as over-animation. Reverted to the clean reveal.)
 
       // Moment 3 — case study depth: each real mockup/screen drifts subtly as
       // it crosses the viewport (24px total travel, within the 20-40px band).
@@ -310,10 +293,12 @@ export default function App() {
       });
     });
 
-    // ── Mobile / tablet + motion allowed ──────────────────────────────────
-    // No pin (avoids scroll-jacking / layout risk on touch). Plain stacked
-    // reveal: each card enters once as it scrolls into view.
-    mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+    // ── Selected Work entrance (all widths) + motion allowed ──────────────
+    // Clean one-shot reveal: each card slides/fades in once as it enters view
+    // and settles at its natural, fully-readable state. No pin (no scroll-jack,
+    // no faint pre-pin window). 'top 80%' fires as the section enters so the
+    // fade is brief; once:true keeps it from replaying on scroll-up.
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
       gsap.from('.work-card', {
         opacity: 0,
         y: 24,
