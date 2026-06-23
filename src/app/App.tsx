@@ -6,6 +6,8 @@ import { HeroSystemArt } from './components/HeroSystemArt';
 import { AiStepIllustration } from './components/AiStepIllustration';
 import { DesignSystemBoard } from './components/DesignSystemBoard';
 import { RippleGrid } from './components/RippleGrid';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import stocklogUi from '../SL-view.svg';
 import stocklogBoard from '../stocklog-board.svg';
 import stocklogShowroom from '../stocklog-showroom.png';
@@ -244,6 +246,88 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
+  // Parallax moments — gsap + ScrollTrigger on native scroll (no Lenis: keeps
+  // anchor nav and the smart header untouched). Transform/opacity only.
+  // gsap.matchMedia gates motion to breakpoint + reduced-motion; mm.revert()
+  // on cleanup restores inline styles so nothing duplicates on re-mount or
+  // breakpoint change, and the pin-spacer is torn down cleanly.
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+
+    // ── Desktop + motion allowed ──────────────────────────────────────────
+    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      // Moment 1 — hero parallax: content lags scroll slightly, the background
+      // layer lags a touch more (depth without overpowering text).
+      gsap.to('.hero-parallax-content', {
+        y: 40,
+        ease: 'none',
+        scrollTrigger: { trigger: '#top', start: 'top top', end: 'bottom top', scrub: true },
+      });
+      gsap.to('.hero-parallax-bg', {
+        y: 72,
+        ease: 'none',
+        scrollTrigger: { trigger: '#top', start: 'top top', end: 'bottom top', scrub: true },
+      });
+
+      // Moment 2 — Selected Work showcase: briefly pin the section so the
+      // heading/metadata stays stable while the three cards resolve in
+      // sequence on scrub. Not scroll-jacking — scroll drives progress 1:1.
+      const work = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#work',
+          start: 'top top',
+          end: '+=80%',
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          scrub: true,
+        },
+      });
+      work.from('.work-card', {
+        y: 40,
+        opacity: 0.35,
+        scale: 0.97,
+        stagger: 0.18,
+        ease: 'none',
+      });
+
+      // Moment 3 — case study depth: each real mockup/screen drifts subtly as
+      // it crosses the viewport (24px total travel, within the 20-40px band).
+      // Transform only; trigger is the element itself so it stays local. Paired
+      // figures carry the class on both cells so their top edges stay aligned.
+      // Captions ride with their figure (one unit); body text is untouched.
+      gsap.utils.toArray<HTMLElement>('.cs-mockup').forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 12 },
+          {
+            y: -12,
+            ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+          },
+        );
+      });
+    });
+
+    // ── Mobile / tablet + motion allowed ──────────────────────────────────
+    // No pin (avoids scroll-jacking / layout risk on touch). Plain stacked
+    // reveal: each card enters once as it scrolls into view.
+    mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+      gsap.from('.work-card', {
+        opacity: 0,
+        y: 24,
+        scale: 0.98,
+        duration: 0.6,
+        ease: 'power2.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger: '#work', start: 'top 80%', once: true },
+      });
+    });
+
+    return () => mm.revert();
+  }, []);
+
   const headerHidden = hidden && !menuOpen;
 
   return (
@@ -299,7 +383,7 @@ export default function App() {
       </header>
 
       <section id="top" data-header-theme="dark" className="relative overflow-hidden bg-surface-dark text-white">
-        <div aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${heroInView ? '' : 'motion-paused'}`}>
+        <div aria-hidden className={`hero-parallax-bg pointer-events-none absolute inset-0 overflow-hidden ${heroInView ? '' : 'motion-paused'}`}>
           <div className="hero-aurora hero-aurora-1 absolute -top-44 left-1/3 h-[42rem] w-[42rem] max-w-[120vw] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[90px]" />
           <div className="hero-aurora hero-aurora-2 absolute -bottom-52 right-0 h-[36rem] w-[36rem] max-w-[110vw] rounded-full bg-indigo-600/15 blur-[90px]" />
           <div className="hero-signal absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(120,170,255,0.45),transparent_55%)] opacity-0" />
@@ -334,7 +418,7 @@ export default function App() {
           </div>
         </div>
         <div className="relative mx-auto grid min-h-svh w-full max-w-7xl items-center gap-8 px-4 pb-12 pt-24 md:px-8 lg:gap-12 lg:grid-cols-[1.4fr_0.6fr]">
-          <div className="min-w-0">
+          <div className="hero-parallax-content min-w-0">
             <div className="mb-5 inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm text-white/80 backdrop-blur"><MapPin size={15} className="shrink-0" /><span className="truncate">Munich, Germany · Authorised to work in Germany</span></div>
             <h1 className="max-w-[15em] text-balance type-display [overflow-wrap:break-word] hyphens-manual">I design <span className="hero-emphasis hero-emphasis--decode"><span className="hero-emphasis__base">complex digital products</span><span className="hero-emphasis__pixel" aria-hidden="true">complex digital products</span></span> that people can <span className="hero-emphasis"><span className="hero-emphasis__base">actually use</span></span>.</h1>
             <p className="mt-5 max-w-xl type-lead text-slate-300">Product Designer / Senior UX/UI Designer with 14+ years of hands-on experience across SaaS, B2B operations and e-commerce.</p>
@@ -401,7 +485,7 @@ export default function App() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {caseStudies.map((item) => (
-              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-7 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">
+              <button key={item.id} onClick={() => scrollTo(item.id, smooth)} className="work-card group flex flex-col rounded-3xl border border-slate-200 bg-white p-7 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-sm text-slate-400">{item.number}</span>
                   <ArrowUpRight size={20} className="text-slate-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-slate-900" />
@@ -434,7 +518,7 @@ export default function App() {
               <p className={`mt-5 max-w-[65ch] leading-relaxed ${subText}`}>{item.intro}</p>
 
               {item.id === 'stocklog' && (
-                <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
+                <figure className="cs-mockup mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
                   <ImageWithFallback src={stocklogUi} alt="StockLog dashboard concept showing dealership inventory cards, filters and sales performance structure." className="w-full" />
                   <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Two-board structure separates inventory visibility from sales performance.</figcaption>
                 </figure>
@@ -525,11 +609,12 @@ export default function App() {
                     <ImagePlaceholder
                       variant="board"
                       tone="dark"
+                      className="cs-mockup"
                       aspectOverride="aspect-[4/3]"
                       alt="Vehicle card anatomy showing key dealership inventory data fields."
                       caption="Vehicle cards keep operational data scannable at board level."
                     />
-                    <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
+                    <figure className="cs-mockup overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
                       <ImageWithFallback src={stocklogBoard} alt="Search and filter interface for dealership inventory and sales workflow." className="w-full" />
                       <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Precise search supports lookup-heavy dealership workflows.</figcaption>
                     </figure>
@@ -538,11 +623,11 @@ export default function App() {
                     <ImagePlaceholder
                       variant="mobile"
                       tone="dark"
-                      className="mx-auto w-full max-w-[280px]"
+                      className="cs-mockup mx-auto w-full max-w-[280px]"
                       alt="Mobile StockLog interface showing vehicle cards and operational actions."
                       caption="Mobile view supports quick access to inventory and deal status."
                     />
-                    <figure className="overflow-hidden rounded-3xl border border-white/10">
+                    <figure className="cs-mockup overflow-hidden rounded-3xl border border-white/10">
                       <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
                       <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
                     </figure>
