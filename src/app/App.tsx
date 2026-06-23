@@ -291,6 +291,23 @@ export default function App() {
         stagger: 0.18,
         ease: 'none',
       });
+
+      // Moment 3 — case study depth: each real mockup/screen drifts subtly as
+      // it crosses the viewport (24px total travel, within the 20-40px band).
+      // Transform only; trigger is the element itself so it stays local. Paired
+      // figures carry the class on both cells so their top edges stay aligned.
+      // Captions ride with their figure (one unit); body text is untouched.
+      gsap.utils.toArray<HTMLElement>('.cs-mockup').forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 12 },
+          {
+            y: -12,
+            ease: 'none',
+            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+          },
+        );
+      });
     });
 
     // ── Mobile / tablet + motion allowed ──────────────────────────────────
@@ -501,7 +518,7 @@ export default function App() {
               <p className={`mt-5 max-w-[65ch] leading-relaxed ${subText}`}>{item.intro}</p>
 
               {item.id === 'stocklog' && (
-                <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
+                <figure className="cs-mockup mt-10 overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/40">
                   <ImageWithFallback src={stocklogUi} alt="StockLog dashboard concept showing dealership inventory cards, filters and sales performance structure." className="w-full" />
                   <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Two-board structure separates inventory visibility from sales performance.</figcaption>
                 </figure>
@@ -592,11 +609,12 @@ export default function App() {
                     <ImagePlaceholder
                       variant="board"
                       tone="dark"
+                      className="cs-mockup"
                       aspectOverride="aspect-[4/3]"
                       alt="Vehicle card anatomy showing key dealership inventory data fields."
                       caption="Vehicle cards keep operational data scannable at board level."
                     />
-                    <figure className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
+                    <figure className="cs-mockup overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40">
                       <ImageWithFallback src={stocklogBoard} alt="Search and filter interface for dealership inventory and sales workflow." className="w-full" />
                       <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Precise search supports lookup-heavy dealership workflows.</figcaption>
                     </figure>
@@ -605,11 +623,11 @@ export default function App() {
                     <ImagePlaceholder
                       variant="mobile"
                       tone="dark"
-                      className="mx-auto w-full max-w-[280px]"
+                      className="cs-mockup mx-auto w-full max-w-[280px]"
                       alt="Mobile StockLog interface showing vehicle cards and operational actions."
                       caption="Mobile view supports quick access to inventory and deal status."
                     />
-                    <figure className="overflow-hidden rounded-3xl border border-white/10">
+                    <figure className="cs-mockup overflow-hidden rounded-3xl border border-white/10">
                       <ImageWithFallback src={stocklogShowroom} alt="Concept visualisation of the StockLog board displayed on a large screen in an automotive showroom environment." className="w-full" />
                       <figcaption className="border-t border-white/10 px-5 py-3 type-caption text-slate-400">Concept visualisation — context only.</figcaption>
                     </figure>
