@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# npm lockfile (project uses pnpm)
+package-lock.json
+
+# Local Claude settings (machine-specific)
+.claude/settings.local.json
+
+# Editor / OS
+.DS_Store
+*.local
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
